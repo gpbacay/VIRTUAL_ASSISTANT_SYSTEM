@@ -11,34 +11,34 @@ import subprocess
 import webbrowser
 
 #______________________________________________________CORE_MEMORY_BANK (TEMPORARY)
-#Run Command: python Jarvis.py
+#Run Command: python haraya.py
 Name = []
 
 
 #______________________________________________________VOICE_ACTIVATION_COMMAND_FUNCTIONS
-#Run Command: python Jarvis.py
+#Run Command: python haraya.py
 listener = sr.Recognizer()
-jarvis_engine = pyttsx3.init()
-voices = jarvis_engine.getProperty('voices')
-jarvis_engine.setProperty('voice', voices[0].id)
+haraya_engine = pyttsx3.init()
+voices = haraya_engine.getProperty('voices')
+haraya_engine.setProperty('voice', voices[0].id)
 
 
 def talk(text):
-    jarvis_engine.say(text)
-    jarvis_engine.runAndWait()
+    haraya_engine.say(text)
+    haraya_engine.runAndWait()
 
 
 #______________________________START_UP_MAIN_FUNCTION
-#Run Command: python Jarvis.py
+#Run Command: python haraya.py
 def Start_Up_command_MainFunction():
 
-    response = "Jarvis is online. How can I help you sir?"
+    response = "Haraya is online. How can I help you sir?"
     print(response)
     talk(response)
 
 
 #______________________________LISTEN_COMMAND_MAIN_FUNCTION
-#Run Command: python Jarvis.py
+#Run Command: python haraya.py
 def Listen_command_MainFunction():
     global command
     command = ''
@@ -56,7 +56,7 @@ def Listen_command_MainFunction():
 
 
 #______________________________ADD_COMMAND_MAIN_FUNCTION
-#Run Command: python Jarvis.py
+#Run Command: python haraya.py
 def Add_command_MainFunction(command):
     
     Interrogative_words = ['what', ' what ', 'what ', ' what',
@@ -89,7 +89,7 @@ def Add_command_MainFunction(command):
 
 
 #______________________________WAIT_COMMAND_MAIN_FUNCTION
-#Run Command: python Jarvis.py
+#Run Command: python haraya.py
 def Wait_command_MainFunction():
     global command
     command = ''
@@ -106,9 +106,9 @@ def Wait_command_MainFunction():
     return command
 
 
-#_______________________________________________________________________________JARVIS_CORE_FUNCTION
-#Run Command: python Jarvis.py
-def run_jarvis():
+#_______________________________________________________________________________haraya_CORE_FUNCTION
+#Run Command: python haraya.py
+def run_haraya():
     #_________________________________Import Libraries/Packages
     import os
     import time
@@ -118,9 +118,9 @@ def run_jarvis():
     import random
 
     #________________________________________________LISTS_OF_POSSIBLE_COMMANDS/KEY_WORDS
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     Standby_Commands = ["standby",
-                        "jarvis stand by",
+                        "haraya stand by",
                         "just stand by",
                         "wait",
                         "wait a sec",
@@ -148,8 +148,8 @@ def run_jarvis():
                         " thank you ",
                         "thank you ",
                         " thank you",
-                        "jarvis thank you",
-                        "thank you jarvis",
+                        "haraya thank you",
+                        "thank you haraya",
                         "you've done enough",
                         "that would be all",
                         "thanks",
@@ -159,9 +159,9 @@ def run_jarvis():
                         "I said thanks",
                         "I said thank you",
                         "you've done great",
-                        "you've done great jarvis",
+                        "you've done great haraya",
                         "no thank you",
-                        "im good thank you jarvis",
+                        "im good thank you haraya",
                         "i'm good thank you",
                         "no i'm good thanks"]
 
@@ -170,10 +170,10 @@ def run_jarvis():
                         "goodbye ",
                         " goodbye",
                         "good bye",
-                        "jarvis goodbye",
-                        "goodbye jarvis",
-                        "jarvis bye",
-                        "bye jarvis",
+                        "haraya goodbye",
+                        "goodbye haraya",
+                        "haraya bye",
+                        "bye haraya",
                         "bye",
                         " bye ",
                         "bye ",
@@ -184,13 +184,13 @@ def run_jarvis():
                         "you can go now",
                         "you can go to sleep now"]
 
-    Stop_Commands = ["jarvis stop",
+    Stop_Commands = ["haraya stop",
                     "stop please",
                     "go to sleep",
                     "go to rest",
                     "just go to sleep",
                     "just go to rest",
-                    "go to sleep jarvis",
+                    "go to sleep haraya",
                     "stop listening",
                     "terminate yourself",
                     "enough",
@@ -237,12 +237,12 @@ def run_jarvis():
                     "there's nothing",
                     "there's none",
                     "you've done great",
-                    "you've done great jarvis",
+                    "you've done great haraya",
                     "you're good to go",
                     "you can go now",
                     "you're good to go now",
                     "i'm good",
-                    "im good thank you jarvis",
+                    "im good thank you haraya",
                     "i'm good thank you",
                     "no that's all",
                     "no i'm good thanks",
@@ -293,10 +293,10 @@ def run_jarvis():
                         " how"]
     
     Repeat_KeyWords = ["repeat after me",
-                    "jarvis repeat after me",
-                    "repeat after me jarvis",
+                    "haraya repeat after me",
+                    "repeat after me haraya",
                     "say what i'm going to say",
-                    "jarvis say what i'm going to say"]
+                    "haraya say what i'm going to say"]
     
     Open_KeyWords = ["open",
                 "access"]
@@ -346,8 +346,8 @@ def run_jarvis():
     
     Hello_Hi_KeyWords = ["hello",
                         "hi",
-                        "hello jarvis",
-                        "hi jarvis"]
+                        "hello haraya",
+                        "hi haraya"]
     
     WhoAreYou_Key = ["who are you",
                     "what is your name",
@@ -389,18 +389,18 @@ def run_jarvis():
                             "can you tell me what time is it"]
 
     #_______________________________________________________________________STANDBY_SUBFUNCTION
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     def Standby_SubFunction():
         while True:
             command = Wait_command_MainFunction()
-            if 'jarvis' in command:
+            if 'haraya' in command:
                 response = "Yes Sir? How can I help you?"
                 print(response)
                 talk(response)
-                exit(run_jarvis())
+                exit(run_haraya())
 
     #_______________________________________________________________________CONFIRMATION_SUBFUNCTION
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     def Confirmation_SubFunction(command):
         command = Add_command_MainFunction(command)
         
@@ -410,7 +410,7 @@ def run_jarvis():
             response = "Then, please do tell."
             print(response)
             talk(response)
-            exit(run_jarvis())
+            exit(run_haraya())
         elif command in No_Commands:
             command = command.replace(command, '')
             response = "Is that so? all right then. Signing off."
@@ -430,10 +430,10 @@ def run_jarvis():
             response = "Come again?"
             print(response)
             talk(response)
-            exit(run_jarvis())
+            exit(run_haraya())
 
     #_______________________________________________________________________REPEAT_SUBFUNCTION
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     def Repeat_SubFunction():
         command = ''
         
@@ -454,7 +454,7 @@ def run_jarvis():
         Confirmation_SubFunction(command)
 
     #________________________________________________________________AUTO_REPLACEMENT_SUBFUNCTION
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     def Auto_Replacement_Subfunction(command):
 
         try:
@@ -475,11 +475,11 @@ def run_jarvis():
         return command
 
     #_____________________________________________________COMMAND_ASSIGNMENT_STATEMENT (CORE SCRIPT)
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     command = Listen_command_MainFunction()
 
     #_________________________________________________________________CONVERSATIONAL_STATEMENTS
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     if command in Hello_Hi_KeyWords:
         if "hello" in command:
             try:
@@ -495,7 +495,7 @@ def run_jarvis():
                 response = "Hello, how can I help you?"
         print(response)
         talk(response)
-        exit(run_jarvis())
+        exit(run_haraya())
 
     elif "how are you" in command:
         response = ''
@@ -505,13 +505,14 @@ def run_jarvis():
             response = "I'm perfectly fine! Thanks for asking."
         print(response)
         talk(response)
-        exit(run_jarvis())
+        exit(run_haraya())
 
     elif command in WhoAreYou_Key:
         response = """
-        Let me introduce myself.
-        I am Jarvis, short term for Just A Rather Very Intelligent System. 
-        I am created by Gianne P. Bacay to be his personal virtual assistant.
+        Allow me to introduce myself.
+        I am haraya, it means imagination or vision in Filipino language. 
+        I am a semi-autonomous artificial intelligence virtual assistant.
+        Created by Gianne P. Bacay on the 16th day of October year 2022.
         """
         print(response)
         talk(response)
@@ -528,7 +529,7 @@ def run_jarvis():
             """
         print(response)
         talk(response)
-        exit(run_jarvis())
+        exit(run_haraya())
 
     elif command in Query_KeyWords:
         try:
@@ -542,13 +543,13 @@ def run_jarvis():
             """
         print(response)
         talk(response)
-        exit(run_jarvis())
+        exit(run_haraya())
 
     elif command in AskMyName_KeyWords:
         response = "If you don't mind, can you tell me your name?"
         print(response)
         talk(response)
-        exit(run_jarvis())
+        exit(run_haraya())
 
     elif command in SayMyName_KeyWords:
         try:
@@ -562,10 +563,10 @@ def run_jarvis():
             """
         print(response)
         talk(response)
-        exit(run_jarvis())
+        exit(run_haraya())
 
     elif "my name is" in command or "i am" in command or "i'm" in command:
-        if "jarvis" in command:
+        if "haraya" in command:
             command = command.replace("hi", '')
             command = command.replace("hello", '')
             name = command.replace("my name is", '')
@@ -573,10 +574,10 @@ def run_jarvis():
             name = name.replace("i'm", '')
             command = name
             Name.append(name)
-            response = "What a coincidence, my name is Jarvis too. Nice meeting you sir Jarvis!"
+            response = "What a coincidence, my name is haraya too. Nice meeting you sir haraya!"
             print(response)
             talk(response)
-            exit(run_jarvis())
+            exit(run_haraya())
         else:
             command = command.replace("hi", '')
             command = command.replace("hello", '')
@@ -588,12 +589,12 @@ def run_jarvis():
             response = Name[-1] + ", " + "I'll keep that in mind. Nice knowing you " + Name[-1] + "!"
             print(response)
             talk(response)
-            exit(run_jarvis())
+            exit(run_haraya())
 
     elif "and you are" in command or "and your name is" in command:
         response = """
-        Jarvis, Jarvis is my name. 
-        Short term for Just A Rather Very Intelligent System.
+        Haraya, Haraya is my name. 
+        Haraya means imagination or vision in Filipino language.
         """
         print(response)
         talk(response)
@@ -614,12 +615,12 @@ def run_jarvis():
 
 
     #________________________________________________________________REPEAT_STATEMENTS
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     if command in Repeat_KeyWords:
         Repeat_SubFunction()
 
     #_________________________________________________________________ARITHMETICAL_STATEMENTS
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     if "+" in command:
         Addition = []
         command = command.replace(command, int(command))
@@ -630,10 +631,10 @@ def run_jarvis():
         num2 = Addition[1]
         Sum = num1 + num2
         print(Sum)
-        exit(run_jarvis())
+        exit(run_haraya())
 
     #________________________________________________________________TERMINATION_STATEMENTS
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     if command in Stop_Commands:
         print(command)
         response = "As you wish. Signing off."
@@ -663,13 +664,13 @@ def run_jarvis():
         exit()
 
     #____________________________________________________________________INTERNET_SEARCH_STATEMENTS
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     elif "search in google" in command or "in google search" in command:
         response = "Just a moment."
         print(response)
         talk(response)
         information = command.replace("search in google", '')
-        information = information.replace("jarvis", '')
+        information = information.replace("haraya", '')
         print(information)
         talk("Searching " + information)
         search = information.replace(' ', '+')
@@ -685,7 +686,7 @@ def run_jarvis():
         song_title = command.replace("in youtube play", '')
         song_title = song_title.replace("in youtube play", '')
         song_title = song_title.replace("youtube", '')
-        song_title = song_title.replace("jarvis", '')
+        song_title = song_title.replace("haraya", '')
         song_title = song_title.replace("search in youtube", '')
         song_title = song_title.replace("in youtube search", '')
         pywhatkit.playonyt(song_title)
@@ -700,7 +701,7 @@ def run_jarvis():
         talk(response)
         person = command.replace("search in wikipedia", '')
         person = person.replace("in wikipedia search", '')
-        person = person.replace("jarvis", '')
+        person = person.replace("haraya", '')
         person = person.replace("who is", '')
         info = wikipedia.summary(person, 1)
         print(info)
@@ -730,7 +731,7 @@ def run_jarvis():
         Confirmation_SubFunction(command)
 
     #_____________________________________________________________________OPEN/ACCESS_STATEMENTS
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     elif "open" in command or "access" in command:
         try:
             if "chrome" in command:
@@ -813,10 +814,10 @@ def run_jarvis():
             response = """Access denied! It looks like I cannot access or open the said program."""
             print(response)
             talk(response)
-            exit(run_jarvis())
+            exit(run_haraya())
 
     #_______________________________________________DATE_and_TIME_STATEMENTS
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     elif command in CurrentDate_KeyWords:
         print(command)
         date = datetime.datetime.now().strftime("%m/%d/%y")
@@ -834,7 +835,7 @@ def run_jarvis():
         Confirmation_SubFunction(command) 
 
     #________________________________________________________________________QUERY_STATEMENTS
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     elif "what do you think about humans" in command:
         command = Auto_Replacement_Subfunction(command + " do you think about humans?")
         response = ["Humans are odd. ",
@@ -883,7 +884,7 @@ def run_jarvis():
         Confirmation_SubFunction(command)
 
     #________________________________________________________________________SHUTDOWN_STATEMENTS
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     elif "shutdown my computer" in command:
         response = "as you wish! shutting down your computer."
         print(response)
@@ -906,7 +907,7 @@ def run_jarvis():
         exit()
 
     #________________________________________________________________________STANDBY_STATEMENTS
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     elif command in Standby_Commands:
         response = "Understood! Take your time. Just call me if you need anything."
         print(response)
@@ -914,7 +915,7 @@ def run_jarvis():
         Standby_SubFunction()
 
     #_______________________________________________________NoCommands/NotClearCommands_STATEMENTS
-    #Run Command: python Jarvis.py
+    #Run Command: python haraya.py
     if '' == command:
         time.sleep(3)
         print(command)
@@ -929,10 +930,10 @@ def run_jarvis():
         response = "Pardon me sir, come again?"
         print(response)
         talk(response)
-        exit(run_jarvis())
+        exit(run_haraya())
 
-#______________________________________RUN_JARVIS_IN_A_LOOP_STATEMENT
+#______________________________________RUN_haraya_IN_A_LOOP_STATEMENT
 while True:
     Start_Up_command_MainFunction()
-    run_jarvis()
-#Run Command: python Jarvis.py
+    run_haraya()
+#Run Command: python haraya.py
