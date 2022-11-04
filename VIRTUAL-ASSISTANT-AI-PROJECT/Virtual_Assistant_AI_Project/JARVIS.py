@@ -14,6 +14,7 @@ import webbrowser
 #Run Command: python Jarvis.py
 Name = []
 
+
 #______________________________________________________VOICE_ACTIVATION_COMMAND_FUNCTIONS
 #Run Command: python Jarvis.py
 listener = sr.Recognizer()
@@ -834,7 +835,6 @@ def run_jarvis():
 
     #________________________________________________________________________QUERY_STATEMENTS
     #Run Command: python Jarvis.py
-
     elif "what do you think about humans" in command:
         command = Auto_Replacement_Subfunction(command + " do you think about humans?")
         response = ["Humans are odd. ",
@@ -881,7 +881,6 @@ def run_jarvis():
         print(response)
         talk(response)
         Confirmation_SubFunction(command)
-
 
     #________________________________________________________________________SHUTDOWN_STATEMENTS
     #Run Command: python Jarvis.py
