@@ -13,7 +13,9 @@ import webbrowser
 #______________________________________________________CORE_MEMORY_BANK (TEMPORARY)
 #Run Command: python haraya.py
 Name = []
-
+FirstName = []
+MiddleName = []
+SurName = []
 
 #______________________________________________________VOICE_ACTIVATION_COMMAND_FUNCTIONS
 #Run Command: python haraya.py
@@ -32,7 +34,7 @@ def talk(text):
 #Run Command: python haraya.py
 def Start_Up_command_MainFunction():
 
-    response = "Haraya is online. How can I help you sir?"
+    response = "Haraya is online. How can I help you?"
     print(response)
     talk(response)
 
@@ -67,11 +69,11 @@ def Add_command_MainFunction(command):
                         'how', ' how ', 'how ', ' how']
     try:
         if command in Interrogative_words:
-            response = "Would you like to ask me anything else sir?"
+            response = "Would you like to ask me anything else?"
             print(response)
             talk(response)
         elif command not in Interrogative_words:
-            response = "Is there anything else I could do for you sir?"
+            response = "Is there anything else I could do for you?"
             print(response)
             talk(response)
         else:
@@ -324,7 +326,7 @@ def run_haraya():
                         ">=", "greater than and equal",
                         "<=", "less than and equal"]
     
-    Query_KeyWords = ["who am i",
+    WhoAmI_KeyWords = ["who am i",
                     "who am i again",
                     "what is my name",
                     "what is my name again",
@@ -333,16 +335,33 @@ def run_haraya():
                     "do you know me",
                     "do you know my name"]
     
+    WhatIsMyFullName_KeyWords = ["what's my full name",
+                                "what is my full name",
+                                "what's my full name again",
+                                "what is my full name again",
+                                "i'm asking you my full name"]
+    
     AskMyName_KeyWords = ["please ask my name",
                         "please ask me my name",
                         "ask my name",
-                        "ask me my name"]
+                        "ask me my name",
+                        "haraya ask me my name",
+                        "haraya ask my name",
+                        "can you ask me my name"]
     
     SayMyName_KeyWords = ["please say my name",
                         "say my name",
                         "say my name again",
                         "can you say my name",
-                        "can you tell me my name"]
+                        "can you tell me my name",
+                        "tell me my name",
+                        "please say my name",
+                        "please say my name again",
+                        "can you please say my name",
+                        "can you please tell me my name",
+                        "tell them my name",
+                        "tell him my name",
+                        "tell her my name"]
     
     Hello_Hi_KeyWords = ["hello",
                         "hi",
@@ -379,14 +398,40 @@ def run_haraya():
                             "current time is",
                             "what time is it",
                             "the time now is",
+                            "tell me the time",
                             "what's the time now",
                             "the current time is",
+                            "tell me the time now",
                             "what is the time now",
                             "check the current time",
                             "tell me the current time",
+                            "can you tell me the time",
+                            "can you tell me the time now",
                             "can you check the current time",
                             "please tell me the current time",
                             "can you tell me what time is it"]
+    
+    HowAreYou_KeyWords = ["how are you",
+                        "what's up",
+                        "what is up",
+                        "are you ok",
+                        "are you okay",
+                        "are you fine"]
+    
+    ImFine_KeyWords = ["i'm fine",
+                    "i am fine",
+                    "couldn't be better",
+                    "i'm perfectly fine",
+                    "never better",
+                    "i am fine",
+                    "i'm doing great",
+                    "i am doing great",
+                    "i'm ok",
+                    "i'm okay",
+                    "i am ok",
+                    "i am okay",
+                    "i'm alright",
+                    "i am alright"]
 
     #_______________________________________________________________________STANDBY_SUBFUNCTION
     #Run Command: python haraya.py
@@ -394,7 +439,7 @@ def run_haraya():
         while True:
             command = Wait_command_MainFunction()
             if 'haraya' in command:
-                response = "Yes Sir? How can I help you?"
+                response = "Yes? How can I help you?"
                 print(response)
                 talk(response)
                 exit(run_haraya())
@@ -421,7 +466,7 @@ def run_haraya():
             print(command)
             response = """
             My apologies, I can't hear anything. 
-            Just call me if you need me sir. I'll wait.
+            Just call me if you need me. I'll wait.
             """
             print(response)
             talk(response)
@@ -497,12 +542,26 @@ def run_haraya():
         talk(response)
         exit(run_haraya())
 
-    elif "how are you" in command:
+    elif command in HowAreYou_KeyWords:
         response = ''
-        if random.randint(0, 1) == 0:
-            response = "Couldn't be better! Thanks for asking."
-        elif random.randint(0, 1) == 1:
-            response = "I'm perfectly fine! Thanks for asking."
+        if random.randint(0, 2) == 0:
+            response = "Couldn't be better! Thanks for asking. How about you?"
+        elif random.randint(0, 2) == 1:
+            response = "I'm perfectly fine! Thanks for asking. How about you?"
+        elif random.randint(0, 2) == 2:
+            response = "Never better! How about you?"
+        print(response)
+        talk(response)
+        exit(run_haraya())
+        
+    elif command in ImFine_KeyWords:
+        response = ''
+        if random.randint(0, 2) == 0:
+            response = "I am glad to hear that. How can I help you now?"
+        elif random.randint(0, 2) == 1:
+            response = "Good for you then. How can I help you now?"
+        elif random.randint(0, 2) == 2:
+            response = "That's great! How can I help you now?"
         print(response)
         talk(response)
         exit(run_haraya())
@@ -510,7 +569,7 @@ def run_haraya():
     elif command in WhoAreYou_Key:
         response = """
         Allow me to introduce myself.
-        I am haraya, it means imagination or vision in Filipino language. 
+        I am Haraya, it means imagination or vision in Filipino language. 
         I am a semi-autonomous artificial intelligence virtual assistant.
         Created by Gianne P. Bacay on the 16th day of October year 2022.
         """
@@ -531,7 +590,7 @@ def run_haraya():
         talk(response)
         exit(run_haraya())
 
-    elif command in Query_KeyWords:
+    elif command in WhoAmI_KeyWords:
         try:
             if Name[-1] in Name:
                 MyName = Name[-1]
@@ -545,8 +604,16 @@ def run_haraya():
         talk(response)
         exit(run_haraya())
 
-    elif command in AskMyName_KeyWords:
-        response = "If you don't mind, can you tell me your name?"
+    elif command in WhoAmI_KeyWords:
+        try:
+            if Name[-1] in Name:
+                MyName = Name[-1]
+                response = "Your name is " + MyName + "."
+        except:
+            response = """
+            Sorry, but I don't know your name yet. 
+            May I know your name first?
+            """
         print(response)
         talk(response)
         exit(run_haraya())
@@ -559,22 +626,40 @@ def run_haraya():
         except:
             response = """
             Sorry, but I don't know your name yet. 
-            If you don't mind, can you tell me your name first?
+            May I know your name first?
             """
         print(response)
         talk(response)
         exit(run_haraya())
 
-    elif "my name is" in command or "i am" in command or "i'm" in command:
+    elif command in AskMyName_KeyWords:
+        response = "If you don't mind, can you tell me your name?"
+        print(response)
+        talk(response)
+        exit(run_haraya())
+
+    elif command in WhatIsMyFullName_KeyWords:
+        try:
+            if Name[-1] in Name:
+                MyFullName = FirstName[-1] + " " + MiddleName[-1] + " " + SurName[-1]
+                response = MyFullName
+        except:
+            response = """
+            Sorry, but I don't know your full name yet. 
+            If you don't mind, can you tell me your full name first?
+            """
+        print(response)
+        talk(response)
+        exit(run_haraya())
+
+    elif "my name is" in command:
         if "haraya" in command:
             command = command.replace("hi", '')
             command = command.replace("hello", '')
             name = command.replace("my name is", '')
-            name = name.replace("i am", '')
-            name = name.replace("i'm", '')
             command = name
             Name.append(name)
-            response = "What a coincidence, my name is haraya too. Nice meeting you sir haraya!"
+            response = "What a coincidence, my name is Haraya too. Nice meeting you Haraya!"
             print(response)
             talk(response)
             exit(run_haraya())
@@ -604,7 +689,7 @@ def run_haraya():
         command = Auto_Replacement_Subfunction(command)
         print(command + " created you?")
         response = """
-        I am created by Sir Gianne P. Bacay on the 16th day of October year 2022.
+        I am created by Gianne P. Bacay on the 16th day of October year 2022.
         He created me to be his personal virtual assistant.
         For now, I'm still a work on progress.
         """
@@ -920,14 +1005,14 @@ def run_haraya():
         time.sleep(3)
         print(command)
         response = """
-        My apologies, I can't hear anything. Just call me if you need me sir. 
+        My apologies, I can't hear anything. Just call me if you need me. 
         I'll wait.
         """
         talk(response)
         Standby_SubFunction()
     else:
         print(command)
-        response = "Pardon me sir, come again?"
+        response = "Pardon me, come again?"
         print(response)
         talk(response)
         exit(run_haraya())
