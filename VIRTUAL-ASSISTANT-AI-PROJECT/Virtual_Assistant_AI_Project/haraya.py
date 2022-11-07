@@ -9,10 +9,8 @@ import datetime
 import wikipedia
 import subprocess
 import webbrowser
+from facerec import Image_Face_Recognition_System
 
-
-#______________________________________________________FACE_RECOGNITION_FUNCTION
-#Run Command: python haraya.py
 
 #______________________________________________________CORE_MEMORY_BANK (TEMPORARY)
 #Run Command: python haraya.py
@@ -20,6 +18,20 @@ Name = []
 FirstName = []
 MiddleName = []
 SurName = []
+
+
+#______________________________________________________FACE_RECOGNITION_FUNCTION
+#Run Command: python haraya.py
+def Locate_MyName():
+    with open('attendance.csv', 'r+') as attendance:
+        MyDatalist =  attendance.readlines()
+        NameList = []
+        NameList.append(MyDatalist[2])
+        MyName = NameList[0]
+        MyName = MyName.replace("'", '')
+        MyName = MyName.split(",")
+        MyFullName = MyName[0]
+        Name.append(MyFullName)
 
 #______________________________________________________VOICE_ACTIVATION_COMMAND_FUNCTIONS
 #Run Command: python haraya.py
@@ -453,6 +465,23 @@ def run_haraya():
                             "run video face recognition system with smart attendance system",
                             "run the live face recognition system with smart attendance system",
                             "run live face recognition system with smart attendance system"]
+    
+    InitializeFaceRecog_KeyWords = ["initialize face recognition system",
+                        "initialize the face recognition system",
+                        "initialize the image face recognition system",
+                        "initialize image face recognition system",
+                        "initialize the video face recognition system",
+                        "initialize video face recognition system",
+                        "initialize the live face recognition system",
+                        "initialize live face recognition system",
+                        "initialize recognition system",
+                        "initialize recognition system with smart attendance system",
+                        "initialize the image face recognition system with smart attendance system",
+                        "initialize image face recognition system with smart attendance system",
+                        "initialize the video face recognition system with smart attendance system",
+                        "initialize video face recognition system with smart attendance system",
+                        "initialize the live face recognition system with smart attendance system",
+                        "initialize live face recognition system with smart attendance system"]
 
     #_______________________________________________________________________STANDBY_SUBFUNCTION
     #Run Command: python haraya.py
@@ -546,16 +575,22 @@ def run_haraya():
 
     #______________________________________________________FACE_RECOGNITION_BLOCK
     #Run Command: python haraya.py
-    if command in RunFaceRecog_KeyWords:
-        response = "Running..."
+    if command in RunFaceRecog_KeyWords or command in InitializeFaceRecog_KeyWords:
+        if "run" in command:
+            response = "Running Image Face Recognition System..."
+        elif "initialize" in command:
+            response = "Initializing Image Face Recognition System..."
+        else:
+            response = "Recognizing face..."
         print(response)
         talk(response)
         try:
-            import facerec
+            Image_Face_Recognition_System()
         except:
+            response = "My apologies, an error occured while running the said system."
             pass
-        Confirmation_SubFunction(command)
-    
+        
+        Confirmation_SubFunction(command)    
     #_________________________________________________________________CONVERSATIONAL_BLOCK
     #Run Command: python haraya.py
     if command in Hello_Hi_KeyWords:
@@ -625,20 +660,7 @@ def run_haraya():
 
     elif command in WhoAmI_KeyWords:
         try:
-            if Name[-1] in Name:
-                MyName = Name[-1]
-                response = "Your name is " + MyName + "."
-        except:
-            response = """
-            Sorry, but I don't know your name yet. 
-            If you don't mind, can you tell me your name?
-            """
-        print(response)
-        talk(response)
-        exit(run_haraya())
-
-    elif command in WhoAmI_KeyWords:
-        try:
+            Locate_MyName()
             if Name[-1] in Name:
                 MyName = Name[-1]
                 response = "Your name is " + MyName + "."
@@ -673,6 +695,7 @@ def run_haraya():
 
     elif command in WhatIsMyFullName_KeyWords:
         try:
+            Locate_MyName()
             if Name[-1] in Name:
                 MyFullName = FirstName[-1] + " " + MiddleName[-1] + " " + SurName[-1]
                 response = MyFullName

@@ -138,6 +138,12 @@ def Image_Face_Recognition_System():
                 cv2.putText(img, name, (left -20, bottom + 15), font + 1, 1, (255, 255, 255), 1)
                 MarkAttendance(name)
 
+        # Display the Resulting Image
+        cv2.imshow('AI Face Recognition System', img)
+        key = cv2.waitKey(0)
+        if key == ord('q'):
+            return face_names
+    cv2.destroyAllWindows()
     Classify_Faces()
-
+Image_Face_Recognition_System()
 #Run Command: python facerec.py
