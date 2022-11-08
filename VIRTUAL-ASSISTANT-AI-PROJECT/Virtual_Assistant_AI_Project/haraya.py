@@ -103,6 +103,7 @@ PersonNameHA = PersonName_Honorific_Address[-1]
 #Run Command: python haraya.py
 def Start_Up_command_MainFunction():
     try:
+        MyName = Name[-1]
         response = "Haraya is online. How can I help you " + PersonNameHA + " " + MyName + "?"
     except:
         response = "Haraya is online. How can I help you?"
