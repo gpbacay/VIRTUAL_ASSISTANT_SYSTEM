@@ -1,4 +1,4 @@
-#Import Libraries
+#Import Libraries/Modules
 from distutils.cmd import Command
 from multiprocessing.connection import wait
 from click import CommandCollection
@@ -12,28 +12,7 @@ import webbrowser
 from facerec import Image_Face_Recognition_System
 
 
-#______________________________________________________CORE_MEMORY_BANK (TEMPORARY)
-#Run Command: python haraya.py
-Name = []
-FirstName = []
-MiddleName = []
-SurName = []
-
-
-#______________________________________________________FACE_RECOGNITION_FUNCTION
-#Run Command: python haraya.py
-def Locate_MyName():
-    with open('attendance.csv', 'r+') as attendance:
-        MyDatalist =  attendance.readlines()
-        NameList = []
-        NameList.append(MyDatalist[2])
-        MyName = NameList[0]
-        MyName = MyName.replace("'", '')
-        MyName = MyName.split(",")
-        MyFullName = MyName[0]
-        Name.append(MyFullName)
-
-#______________________________________________________VOICE_ACTIVATION_COMMAND_FUNCTIONS
+#______________________________________________________VOICE_BOX_PRIMARY_BLOCK/FUNCTION
 #Run Command: python haraya.py
 listener = sr.Recognizer()
 haraya_engine = pyttsx3.init()
@@ -46,11 +25,87 @@ def talk(text):
     haraya_engine.runAndWait()
 
 
-#______________________________START_UP_MAIN_FUNCTION
+#______________________________________________________CORE_TEMPORARY_MEMORY_BANKS
+#Run Command: python haraya.py
+Name = []
+PersonName_Honorific_Address = []
+
+
+#______________________________________________________FACE_RECOGNITION_BLOCK/FUNCTION
+#Run Command: python haraya.py
+def Locate_MyFullName():
+    with open('attendance.csv', 'r+') as attendance:
+        MyDatalist =  attendance.readlines()
+        NameList = []
+        NameList.append(MyDatalist[2])
+        
+        MyName = NameList[0]
+        MyName = MyName.replace("'", '')
+        MyName = MyName.split(",")
+        
+        MyFullName = MyName[0]
+        Name.append(MyFullName)
+        
+        
+"""
+Locate MyFullName from the Face Recognition System
+and append it into the Name list in the memory banks.
+"""
+try:
+    Locate_MyFullName()
+except:
+    pass
+
+
+#_____________________________________________INITIALIZE_FACE_RECOGNITION_SYSTEM_BLOCK/FUNCTION
+#Run Command: python haraya.py
+def Initialize_Image_Face_Recognition_System():
+    try:
+        print("Recognizing face...")
+        Image_Face_Recognition_System()
+    except:
+        response = "My apologies, a system error occured."
+        print()
+        talk(response)
+        pass
+    Locate_MyFullName()
+Initialize_Image_Face_Recognition_System()
+
+
+#_______________________________________Binary-Gendered_Honorifics_Selection_BLOCK/FUNCTION
+#Run Command: python haraya.py
+def Locate_PersonNameHA():
+    Male_PersonNames = ["Gianne Bacay",
+                        "Earl Jay Tagud",
+                        "Gemmuel Balceda"]
+
+    Female_PersonNames = ["Kleinier Pearl Candis Bacay",
+                        "Princess Viznar",
+                        "Nichi Bacay",
+                        "Roz Waeschet Bacay"]
+
+    try:
+        PersonName = Name[-1]
+        if PersonName in Male_PersonNames:
+            Honorific_Address = "Sir"
+        elif PersonName in Female_PersonNames:
+            Honorific_Address = "Ma'am"
+        else:
+            Honorific_Address = "Boss"
+    except:
+        Honorific_Address = "Master"
+    PersonName_Honorific_Address.append(Honorific_Address)
+Locate_PersonNameHA()
+PersonNameHA = PersonName_Honorific_Address[-1]
+
+
+#_______________________________________START_UP_MAIN_FUNCTION
 #Run Command: python haraya.py
 def Start_Up_command_MainFunction():
-
-    response = "Haraya is online. How can I help you?"
+    try:
+        response = "Haraya is online. How can I help you " + PersonNameHA + " " + MyName + "?"
+    except:
+        response = "Haraya is online. How can I help you?"
     print(response)
     talk(response)
 
@@ -135,9 +190,9 @@ def run_haraya():
     from bs4 import BeautifulSoup as bs
     import random
 
-    #________________________________________________LISTS_OF_POSSIBLE_COMMANDS/KEY_WORDS
+    #________________________________________________LISTS_OF_COMMAND_KEY_WORDS
     #Run Command: python haraya.py
-    Standby_Commands = ["standby",
+    Standby_KeyWords = ["standby",
                         "haraya stand by",
                         "just stand by",
                         "wait",
@@ -162,7 +217,7 @@ def run_haraya():
                         "i'll be back",
                         "be right back"]
 
-    Thankyou_Commands = ["thank you",
+    ThankYou_KeyWords = ["thank you",
                         " thank you ",
                         "thank you ",
                         " thank you",
@@ -183,7 +238,7 @@ def run_haraya():
                         "i'm good thank you",
                         "no i'm good thanks"]
 
-    Goodbye_Commands = ["goodbye",
+    GoodBye_KeyWords = ["goodbye",
                         " goodbye ",
                         "goodbye ",
                         " goodbye",
@@ -202,7 +257,7 @@ def run_haraya():
                         "you can go now",
                         "you can go to sleep now"]
 
-    Stop_Commands = ["haraya stop",
+    Stop_KeyWords = ["haraya stop",
                     "stop please",
                     "go to sleep",
                     "go to rest",
@@ -222,7 +277,7 @@ def run_haraya():
                     "i told you to stop",
                     "didn't i told you to stop"]
 
-    No_Commands = ["no",
+    No_KeyWords = ["no",
                     "nah",
                     "none",
                     "none so far",
@@ -266,7 +321,7 @@ def run_haraya():
                     "no i'm good thanks",
                     "no that's enough"]
 
-    Yes_Commands = ["yes",
+    Yes_KeyWords = ["yes",
                     "yup",
                     "yes please",
                     "of course yes",
@@ -449,7 +504,8 @@ def run_haraya():
                     "i'm alright",
                     "i am alright"]
     
-    RunFaceRecog_KeyWords = ["run face recognition system",
+    RunFaceRecog_KeyWords = ["face recognition system",
+                            "run face recognition system",
                             "run the face recognition system",
                             "run the image face recognition system",
                             "run image face recognition system",
@@ -466,7 +522,8 @@ def run_haraya():
                             "run the live face recognition system with smart attendance system",
                             "run live face recognition system with smart attendance system"]
     
-    InitializeFaceRecog_KeyWords = ["initialize face recognition system",
+    InitializeFaceRecog_KeyWords = ["face recognition system",
+                        "initialize face recognition system",
                         "initialize the face recognition system",
                         "initialize the image face recognition system",
                         "initialize image face recognition system",
@@ -474,7 +531,7 @@ def run_haraya():
                         "initialize video face recognition system",
                         "initialize the live face recognition system",
                         "initialize live face recognition system",
-                        "initialize recognition system",
+                        "face recognition system",
                         "initialize recognition system with smart attendance system",
                         "initialize the image face recognition system with smart attendance system",
                         "initialize image face recognition system with smart attendance system",
@@ -482,6 +539,23 @@ def run_haraya():
                         "initialize video face recognition system with smart attendance system",
                         "initialize the live face recognition system with smart attendance system",
                         "initialize live face recognition system with smart attendance system"]
+    
+    ActivateFaceRecog_KeyWords = ["face recognition system",
+                        "activate face recognition system",
+                        "activate the face recognition system",
+                        "activate the image face recognition system",
+                        "activate image face recognition system",
+                        "activate the video face recognition system",
+                        "activate video face recognition system",
+                        "activate the live face recognition system",
+                        "activate live face recognition system",
+                        "activate recognition system with smart attendance system",
+                        "activate the image face recognition system with smart attendance system",
+                        "activate image face recognition system with smart attendance system",
+                        "activate the video face recognition system with smart attendance system",
+                        "activate video face recognition system with smart attendance system",
+                        "activate the live face recognition system with smart attendance system",
+                        "activate live face recognition system with smart attendance system"]
 
     #_______________________________________________________________________STANDBY_SUBFUNCTION
     #Run Command: python haraya.py
@@ -499,14 +573,14 @@ def run_haraya():
     def Confirmation_SubFunction(command):
         command = Add_command_MainFunction(command)
         
-        if command in Yes_Commands:
+        if command in Yes_KeyWords:
             print(command)
             command = command.replace(command, '')
             response = "Then, please do tell."
             print(response)
             talk(response)
             exit(run_haraya())
-        elif command in No_Commands:
+        elif command in No_KeyWords:
             command = command.replace(command, '')
             response = "Is that so? all right then. Signing off."
             print(response)
@@ -575,21 +649,24 @@ def run_haraya():
 
     #______________________________________________________FACE_RECOGNITION_BLOCK
     #Run Command: python haraya.py
-    if command in RunFaceRecog_KeyWords or command in InitializeFaceRecog_KeyWords:
+    if command in RunFaceRecog_KeyWords or command in InitializeFaceRecog_KeyWords or command in ActivateFaceRecog_KeyWords:
         if "run" in command:
             response = "Running Image Face Recognition System..."
         elif "initialize" in command:
             response = "Initializing Image Face Recognition System..."
+        elif "activate" in command:
+            response = "Activating Image Face Recognition System..."
         else:
-            response = "Recognizing face..."
+            response = "Running Image Face Recognition System..."
         print(response)
         talk(response)
-        try:
-            Image_Face_Recognition_System()
-        except:
-            response = "My apologies, an error occured while running the said system."
-            pass
         
+        Initialize_Image_Face_Recognition_System()
+        
+        MyName = Name[-1]
+        response = "Hello " + PersonNameHA + " " + MyName + "!"
+        print(response)
+        talk(response)
         Confirmation_SubFunction(command)    
     #_________________________________________________________________CONVERSATIONAL_BLOCK
     #Run Command: python haraya.py
@@ -660,7 +737,6 @@ def run_haraya():
 
     elif command in WhoAmI_KeyWords:
         try:
-            Locate_MyName()
             if Name[-1] in Name:
                 MyName = Name[-1]
                 response = "Your name is " + MyName + "."
@@ -695,9 +771,8 @@ def run_haraya():
 
     elif command in WhatIsMyFullName_KeyWords:
         try:
-            Locate_MyName()
             if Name[-1] in Name:
-                MyFullName = FirstName[-1] + " " + MiddleName[-1] + " " + SurName[-1]
+                MyFullName = Name[-1]
                 response = MyFullName
         except:
             response = """
@@ -709,7 +784,7 @@ def run_haraya():
         exit(run_haraya())
 
     elif "my name is" in command:
-        if "haraya" in command:
+        if "my name is haraya" in command:
             command = command.replace("hi", '')
             command = command.replace("hello", '')
             name = command.replace("my name is", '')
@@ -723,8 +798,6 @@ def run_haraya():
             command = command.replace("hi", '')
             command = command.replace("hello", '')
             name = command.replace("my name is", '')
-            name = name.replace("i am", '')
-            name = name.replace("i'm", '')
             command = name
             Name.append(name)
             response = Name[-1] + ", " + "I'll keep that in mind. Nice knowing you " + Name[-1] + "!"
@@ -776,28 +849,28 @@ def run_haraya():
 
     #________________________________________________________________TERMINATION_BLOCK
     #Run Command: python haraya.py
-    if command in Stop_Commands:
+    if command in Stop_KeyWords:
         print(command)
         response = "As you wish. Signing off."
         print(response)
         talk(response)
         exit()
 
-    elif command in Thankyou_Commands:
+    elif command in ThankYou_KeyWords or "thank you" in command:
         print(command)
         response = "it's my pleasure. Signing off."
         print(response)
         talk(response)
         exit()
 
-    elif command in No_Commands:
+    elif command in No_KeyWords:
         print(command)
         response = "Is that so? all right then. Signing off."
         print(response)
         talk(response)
         exit()
 
-    elif command in Goodbye_Commands:
+    elif command in GoodBye_KeyWords:
         print(command)
         response = "Goodbye Sir! Have a great day!"
         print(response)
@@ -1049,7 +1122,7 @@ def run_haraya():
 
     #________________________________________________________________________STANDBY_BLOCK
     #Run Command: python haraya.py
-    elif command in Standby_Commands:
+    elif command in Standby_KeyWords:
         response = "Understood! Take your time. Just call me if you need anything."
         print(response)
         talk(response)
