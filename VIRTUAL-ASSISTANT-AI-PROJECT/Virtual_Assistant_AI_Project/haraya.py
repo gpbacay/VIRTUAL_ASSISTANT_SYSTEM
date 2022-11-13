@@ -11,7 +11,6 @@ import subprocess
 import webbrowser
 from facerec import Image_Face_Recognition_System
 
-
 #______________________________________________________VOICE_BOX_PRIMARY_BLOCK/FUNCTION
 #Run Command: python haraya.py
 listener = sr.Recognizer()
@@ -63,6 +62,10 @@ def Initialize_Image_Face_Recognition_System():
     try:
         print("Recognizing face...")
         Image_Face_Recognition_System()
+        def Play_Sound():
+            from playsound import playsound
+            playsound("C:\\Users\\NEID\\Desktop\\loading3.mp3")
+        Play_Sound()
     except:
         response = "My apologies, a system error occured."
         print()
@@ -102,6 +105,11 @@ PersonNameHA = PersonName_Honorific_Address[-1]
 #_______________________________________START_UP_MAIN_FUNCTION
 #Run Command: python haraya.py
 def Start_Up_command_MainFunction():
+    def StartUp_Sound():
+        from playsound import playsound
+        playsound("C:\\Users\\NEID\\Desktop\\startup4.mp3")
+    StartUp_Sound()
+    
     try:
         MyName = Name[-1]
         response = "Haraya is online. How can I help you " + PersonNameHA + " " + MyName + "?"
@@ -503,7 +511,21 @@ def run_haraya():
                     "i am ok",
                     "i am okay",
                     "i'm alright",
-                    "i am alright"]
+                    "i am alright",
+                    "i'm also ok",
+                    "i'm also fine",
+                    "i'm also good",
+                    "i'm also alright",
+                    "i'm also prefectly fine",
+                    "i'm ok too",
+                    "i'm fine too",
+                    "i'm good too",
+                    "i'm perfectly fine too",
+                    "i'm at my best",
+                    "likewise",
+                    "like wise",
+                    "just like you",
+                    "i'm very well"]
     
     RunFaceRecog_KeyWords = ["face recognition system",
                             "run face recognition system",
@@ -689,13 +711,14 @@ def run_haraya():
         exit(run_haraya())
 
     elif command in HowAreYou_KeyWords:
-        response = ''
         if random.randint(0, 2) == 0:
             response = "Couldn't be better! Thanks for asking. How about you?"
         elif random.randint(0, 2) == 1:
             response = "I'm perfectly fine! Thanks for asking. How about you?"
         elif random.randint(0, 2) == 2:
             response = "Never better! How about you?"
+        else:
+            response = "I'm okay, Thanks for asking. How about you?"
         print(response)
         talk(response)
         exit(run_haraya())
@@ -1047,7 +1070,7 @@ def run_haraya():
         print(time)
         time = time.replace(':', ' ')
         talk("Current time is" + time)
-        Confirmation_SubFunction(command) 
+        Confirmation_SubFunction(command)
 
     #________________________________________________________________________QUERY_BLOCK
     #Run Command: python haraya.py
