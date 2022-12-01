@@ -64,7 +64,7 @@ def Initialize_Image_Face_Recognition_System():
         Image_Face_Recognition_System()
         def Play_Sound():
             from playsound import playsound
-            playsound("C:\\Users\\NEID\\Desktop\\loading3.mp3")
+            playsound('C:\\Users\\Gianne Bacay\\Desktop\\loading3.mp3')
         Play_Sound()
     except:
         response = "My apologies, a system error occured."
@@ -107,7 +107,7 @@ PersonNameHA = PersonName_Honorific_Address[-1]
 def Start_Up_command_MainFunction():
     def StartUp_Sound():
         from playsound import playsound
-        playsound("C:\\Users\\NEID\\Desktop\\startup4.mp3")
+        playsound("C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
     StartUp_Sound()
     
     try:
@@ -921,11 +921,15 @@ def run_haraya():
     elif "in youtube play" in command or "play in youtube" in command or "search in youtube" in command or "in youtube search" in command:
         response = "Searching..."
         talk(response)
-        song_title = command.replace("in youtube play", '')
-        song_title = song_title.replace("in youtube play", '')
+        song_title = command.replace("haraya", '')
+        song_title = song_title.replace("play", '')
+        song_title = song_title.replace("in", '')
         song_title = song_title.replace("youtube", '')
-        song_title = song_title.replace("haraya", '')
-        song_title = song_title.replace("search in youtube", '')
+        song_title = song_title.replace("in youtube search", '')
+        song_title = song_title.replace("in youtube", '')
+        song_title = song_title.replace("search in", '')
+        song_title = song_title.replace("play in", '')
+        song_title = song_title.replace("in youtube play", '')
         song_title = song_title.replace("in youtube search", '')
         pywhatkit.playonyt(song_title)
         response = "Playing " + song_title
@@ -1042,7 +1046,7 @@ def run_haraya():
                 response = "As you wish!"
                 print(response)
                 talk(response)
-                program = "C:\\Users\\NEID\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+                program = "C:\\Users\Gianne Bacay\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
                 subprocess.Popen([program])
                 response = "Opening Visual Studio Code"
                 print(response)
