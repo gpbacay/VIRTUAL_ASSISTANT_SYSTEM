@@ -10,6 +10,7 @@ import wikipedia
 import subprocess
 import webbrowser
 from facerec import Image_Face_Recognition_System
+from facerec import Image_Face_Recognition_System_StartUp
 
 #______________________________________________________VOICE_BOX_PRIMARY_BLOCK/FUNCTION
 #Run Command: python haraya.py
@@ -61,7 +62,7 @@ except:
 def Initialize_Image_Face_Recognition_System():
     try:
         print("Recognizing face...")
-        Image_Face_Recognition_System()
+        Image_Face_Recognition_System_StartUp()
         def Play_Sound():
             from playsound import playsound
             playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
@@ -674,18 +675,16 @@ def run_haraya():
     #Run Command: python haraya.py
     if command in RunFaceRecog_KeyWords or command in InitializeFaceRecog_KeyWords or command in ActivateFaceRecog_KeyWords:
         if "run" in command:
-            response = "Running Image Face Recognition System..."
+            response = "Running Face Recognition System..."
         elif "initialize" in command:
-            response = "Initializing Image Face Recognition System..."
+            response = "Initializing Face Recognition System..."
         elif "activate" in command:
-            response = "Activating Image Face Recognition System..."
+            response = "Activating Face Recognition System..."
         else:
-            response = "Running Image Face Recognition System..."
+            response = "Running Face Recognition System..."
         print(response)
         talk(response)
-        
-        Initialize_Image_Face_Recognition_System()
-        
+        Image_Face_Recognition_System()
         MyName = Name[-1]
         response = "Hello " + PersonNameHA + " " + MyName + "!"
         print(response)

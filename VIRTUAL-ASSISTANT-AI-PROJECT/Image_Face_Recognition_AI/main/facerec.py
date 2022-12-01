@@ -77,44 +77,43 @@ def Image_Face_Recognition_System():
 
         return encoding
 
+    
+    #Capture video from webcam: 
+    cap = cv2.VideoCapture(0)
 
     # Classify Faces
     #Run Command: python facerec.py
-    def Classify_Faces():
-        """
-        Scans/Locates all of the faces in a given test image within test folder 
-        and labels them with their name if they are known faces
-        while, on the other hand, unknown faces are labeled as unknown
+    """
+    Scans/Locates all of the faces in a given test image within test folder 
+    and labels them with their name if they are known faces
+    while, on the other hand, unknown faces are labeled as unknown
 
-        :param im: str of file path
-        :return: list of face names
-        """
-        faces = get_encoded_faces()
-        faces_encoded = list(faces.values())
-        known_face_names = list(faces.keys())
+    :param im: str of file path
+    :return: list of face names
+    """
+    faces = get_encoded_faces()
+    faces_encoded = list(faces.values())
+    known_face_names = list(faces.keys())
+        
+    while True:
+        _, frame = cap.read()
 
         # Resize Image
-        #Run Command: python facerec.py
-        def resize(img, size) :
-            width = int(img.shape[1]*size)
-            height = int(img.shape[0] * size)
+        def resize(frame, size) :
+            width = int(frame.shape[1]*size)
+            height = int(frame.shape[0] * size)
             dimension = (width, height)
-            return cv2.resize(img, dimension, interpolation = cv2.INTER_AREA)
+            return cv2.resize(frame, dimension, interpolation = cv2.INTER_AREA)
 
         # Convert the Image Color/Resize the Image
-        #vid = cv2.VideoCapture(0)
-        #test, frame = vid.read() or frame = cv2.imread(vid, 0) img = cv2.imread(img, 1)
-        img_file_path = 'test/1.jpg'
-        img = fr.load_image_file(img_file_path)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        img = resize(img, 0.50)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame = resize(frame, 0.50)
 
         # Find Face Location
-        face_locations = face_recognition.face_locations(img)
-        unknown_face_encodings = face_recognition.face_encodings(img, face_locations)
+        face_locations = face_recognition.face_locations(frame)
+        unknown_face_encodings = face_recognition.face_encodings(frame, face_locations)
 
         # Identify if the face is a match for the known face(s)
-        #Run Command: python facerec.py
         face_names = []
         for face_encoding in unknown_face_encodings:
             matches = face_recognition.compare_faces(faces_encoded, face_encoding)
@@ -125,25 +124,22 @@ def Image_Face_Recognition_System():
             best_match_index = np.argmin(face_distances)
             if matches[best_match_index]:
                 name = known_face_names[best_match_index]
-
             face_names.append(name)
 
             # Create a box around the face
             for (top, right, bottom, left), name in zip(face_locations, face_names):
-                cv2.rectangle(img, (left-20, top-20), (right+20, bottom+20), (255, 0, 0), 2)
+                cv2.rectangle(frame, (left-20, top-20), (right+20, bottom+20), (255, 0, 0), 2)
 
             # Create a label with a name below the face
-                cv2.rectangle(img, (left-20, bottom -15), (right+20, bottom+20), (255, 0, 0), cv2.FILLED)
+                cv2.rectangle(frame, (left-20, bottom -15), (right+20, bottom+20), (255, 0, 0), cv2.FILLED)
                 font = cv2.FONT_HERSHEY_TRIPLEX
-                cv2.putText(img, name, (left -20, bottom + 15), font + 1, 1, (255, 255, 255), 1)
+                cv2.putText(frame, name, (left -20, bottom + 15), font + 1, 1, (255, 255, 255), 1)
                 MarkAttendance(name)
 
         # Display the Resulting Image
-        cv2.imshow('AI Face Recognition System', img)
-        key = cv2.waitKey(0)
-        if key == ord('q'):
-            return face_names
-    cv2.destroyAllWindows()
-    Classify_Faces()
-Image_Face_Recognition_System()
+        cv2.imshow('AI Face Recognition System', frame)
+        key = cv2.waitKey(30) & 0xff
+        if key == 27:
+            break
+    cap.release()
 #Run Command: python facerec.py
