@@ -19,3 +19,5 @@ setuptools
 dlib
 click
 random2
+googlesearch-python
+google-search

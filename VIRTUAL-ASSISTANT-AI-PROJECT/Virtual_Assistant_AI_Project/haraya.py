@@ -64,7 +64,7 @@ def Initialize_Image_Face_Recognition_System():
         Image_Face_Recognition_System()
         def Play_Sound():
             from playsound import playsound
-            playsound('C:\\Users\\Gianne Bacay\\Desktop\\loading3.mp3')
+            playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
         Play_Sound()
     except:
         response = "My apologies, a system error occured."
@@ -903,26 +903,33 @@ def run_haraya():
 
     #____________________________________________________________________INTERNET_SEARCH_BLOCK
     #Run Command: python haraya.py
-    elif "search in google" in command or "in google search" in command:
-        response = "Just a moment."
-        print(response)
-        talk(response)
-        information = command.replace("search in google", '')
-        information = information.replace("haraya", '')
-        print(information)
-        talk("Searching " + information)
-        search = information.replace(' ', '+')
-        browser = webdriver.Chrome('chromedriver.exe')
-        for i in range(4):
-            browser.get("https://www.google.com/search?q=" + search + "&start" + str(i))
-        talk("here's what I've found.")
-        Confirmation_SubFunction(command)
+    elif "in google" in command or "in google search" in command:
+        try:
+            response = "Just a moment."
+            print(response)
+            talk(response)
+            information = command.replace("search in google", '')
+            information = information.replace("haraya", '')
+            information = information.replace("search", '')
+            information = information.replace("in google", '')
+            information = information.replace("google", '')
+            print("Searching " + information)
+            talk("Searching " + information)
+            search = information.replace(' ', '+')
+            browser = webdriver.Chrome('chromedriver.exe')
+            for i in range(4):
+                browser.get("https://www.google.com/search?q=" + search + "&start" + str(i))
+            talk("here's what I've found.")
+            Confirmation_SubFunction(command)
+        except:
+            exit()
 
-    elif "in youtube play" in command or "play in youtube" in command or "search in youtube" in command or "in youtube search" in command:
+    elif "in youtube" in command:
         response = "Searching..."
         talk(response)
         song_title = command.replace("haraya", '')
         song_title = song_title.replace("play", '')
+        song_title = song_title.replace("search", '')
         song_title = song_title.replace("in", '')
         song_title = song_title.replace("youtube", '')
         song_title = song_title.replace("in youtube search", '')
