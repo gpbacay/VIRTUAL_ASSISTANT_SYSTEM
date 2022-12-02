@@ -61,7 +61,9 @@ except:
 #Run Command: python haraya.py
 def Initialize_Image_Face_Recognition_System():
     try:
-        print("Recognizing face...")
+        response = "Recognizing face..."
+        print(response)
+        talk(response)
         Image_Face_Recognition_System_StartUp()
         def Play_Sound():
             from playsound import playsound
@@ -473,7 +475,8 @@ def run_haraya():
                             "check the current date",
                             "tell me the current date",
                             "can you check the current date",
-                            "please tell me the current date"]
+                            "please tell me the current date",
+                            "tell me the date for today"]
     
     CurrentTime_Keywords = ["current time",
                             "current time is",
@@ -530,6 +533,7 @@ def run_haraya():
     
     RunFaceRecog_KeyWords = ["face recognition system",
                             "run face recognition system",
+                            "run face recognition",
                             "run the face recognition system",
                             "run the image face recognition system",
                             "run image face recognition system",
@@ -547,6 +551,7 @@ def run_haraya():
                             "run live face recognition system with smart attendance system"]
     
     InitializeFaceRecog_KeyWords = ["face recognition system",
+                        "initialize face recognition",
                         "initialize face recognition system",
                         "initialize the face recognition system",
                         "initialize the image face recognition system",
@@ -565,6 +570,7 @@ def run_haraya():
                         "initialize live face recognition system with smart attendance system"]
     
     ActivateFaceRecog_KeyWords = ["face recognition system",
+                        "activate face recognition",
                         "activate face recognition system",
                         "activate the face recognition system",
                         "activate the image face recognition system",
@@ -685,7 +691,11 @@ def run_haraya():
         print(response)
         talk(response)
         Image_Face_Recognition_System()
-        MyName = Name[-1]
+        def Play_Sound():
+            from playsound import playsound
+            playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
+        Play_Sound()
+        MyName = Name[0]
         response = "Hello " + PersonNameHA + " " + MyName + "!"
         print(response)
         talk(response)
@@ -877,6 +887,10 @@ def run_haraya():
         response = "As you wish. Signing off."
         print(response)
         talk(response)
+        def Play_Sound():
+            from playsound import playsound
+            playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
+        Play_Sound()
         exit()
 
     elif command in ThankYou_KeyWords or "thank you" in command:
@@ -884,6 +898,10 @@ def run_haraya():
         response = "it's my pleasure. Signing off."
         print(response)
         talk(response)
+        def Play_Sound():
+            from playsound import playsound
+            playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
+        Play_Sound()
         exit()
 
     elif command in No_KeyWords:
@@ -891,6 +909,10 @@ def run_haraya():
         response = "Is that so? all right then. Signing off."
         print(response)
         talk(response)
+        def Play_Sound():
+            from playsound import playsound
+            playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
+        Play_Sound()
         exit()
 
     elif command in GoodBye_KeyWords:
@@ -898,6 +920,10 @@ def run_haraya():
         response = "Goodbye Sir! Have a great day!"
         print(response)
         talk(response)
+        def Play_Sound():
+            from playsound import playsound
+            playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
+        Play_Sound()
         exit()
 
     #____________________________________________________________________INTERNET_SEARCH_BLOCK
@@ -921,6 +947,10 @@ def run_haraya():
             talk("here's what I've found.")
             Confirmation_SubFunction(command)
         except:
+            def Play_Sound():
+                from playsound import playsound
+                playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
+            Play_Sound()
             exit()
 
     elif "in youtube" in command:
@@ -1004,7 +1034,7 @@ def run_haraya():
                 talk(response)
                 Confirmation_SubFunction(command)
                 
-            elif "command prompt" in command:
+            elif "command prompt" in command or "cmd" in command:
                 response = "As you wish!"
                 print(response)
                 talk(response)
@@ -1062,7 +1092,7 @@ def run_haraya():
             response = """Access denied! It looks like I cannot access or open the said program."""
             print(response)
             talk(response)
-            exit(run_haraya())
+            Confirmation_SubFunction(command)
 
     #_______________________________________________DATE_and_TIME_BLOCK
     #Run Command: python haraya.py
