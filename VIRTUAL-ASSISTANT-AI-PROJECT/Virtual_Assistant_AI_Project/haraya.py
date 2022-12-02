@@ -10,7 +10,6 @@ import wikipedia
 import subprocess
 import webbrowser
 from facerec import Image_Face_Recognition_System
-from facerec import Image_Face_Recognition_System_StartUp
 
 #______________________________________________________VOICE_BOX_PRIMARY_BLOCK/FUNCTION
 #Run Command: python haraya.py
@@ -57,35 +56,17 @@ except:
     pass
 
 
-#_____________________________________________INITIALIZE_FACE_RECOGNITION_SYSTEM_BLOCK/FUNCTION
-#Run Command: python haraya.py
-def Initialize_Image_Face_Recognition_System():
-    try:
-        response = "Recognizing face..."
-        print(response)
-        talk(response)
-        Image_Face_Recognition_System_StartUp()
-        def Play_Sound():
-            from playsound import playsound
-            playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
-        Play_Sound()
-    except:
-        response = "My apologies, a system error occured."
-        print()
-        talk(response)
-        pass
-    Locate_MyFullName()
-Initialize_Image_Face_Recognition_System()
-
-
 #_______________________________________Binary-Gendered_Honorifics_Selection_BLOCK/FUNCTION
 #Run Command: python haraya.py
 def Locate_PersonNameHA():
     Male_PersonNames = ["Gianne Bacay",
                         "Earl Jay Tagud",
-                        "Gemmuel Balceda"]
+                        "Gemmuel Balceda",
+                        "Mark Anthony Lagrosa",
+                        "Klausmieir Villegas",
+                        "CK Zoe Villegas"]
 
-    Female_PersonNames = ["Kleinier Pearl Candis Bacay",
+    Female_PersonNames = ["Kleinieir Pearl Kandis Bacay",
                         "Princess Viznar",
                         "Nichi Bacay",
                         "Roz Waeschet Bacay"]
@@ -105,6 +86,28 @@ Locate_PersonNameHA()
 PersonNameHA = PersonName_Honorific_Address[-1]
 
 
+#_____________________________________________INITIALIZE_FACE_RECOGNITION_SYSTEM_BLOCK/FUNCTION
+#Run Command: python haraya.py
+def Initialize_Image_Face_Recognition_System():
+    try:
+        response = "Recognizing face..."
+        print(response)
+        talk(response)
+        Image_Face_Recognition_System()
+        def Play_Sound():
+            from playsound import playsound
+            playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
+        Play_Sound()
+    except:
+        response = "My apologies, a system error occured."
+        print()
+        talk(response)
+        pass
+    Locate_MyFullName()
+    Locate_PersonNameHA()
+Initialize_Image_Face_Recognition_System()
+
+
 #_______________________________________START_UP_MAIN_FUNCTION
 #Run Command: python haraya.py
 def Start_Up_command_MainFunction():
@@ -112,7 +115,7 @@ def Start_Up_command_MainFunction():
         from playsound import playsound
         playsound("C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
     StartUp_Sound()
-    
+    PersonNameHA = PersonName_Honorific_Address[-1]
     try:
         MyName = Name[-1]
         response = "Haraya is online. How can I help you " + PersonNameHA + " " + MyName + "?"
@@ -615,6 +618,10 @@ def run_haraya():
             response = "Is that so? all right then. Signing off."
             print(response)
             talk(response)
+            def Play_Sound():
+                from playsound import playsound
+                playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
+            Play_Sound()
             exit()
         elif '' == command:
             print(command)
@@ -690,12 +697,9 @@ def run_haraya():
             response = "Running Face Recognition System..."
         print(response)
         talk(response)
-        Image_Face_Recognition_System()
-        def Play_Sound():
-            from playsound import playsound
-            playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
-        Play_Sound()
-        MyName = Name[0]
+        Initialize_Image_Face_Recognition_System()
+        PersonNameHA = PersonName_Honorific_Address[-1]
+        MyName = Name[-1]
         response = "Hello " + PersonNameHA + " " + MyName + "!"
         print(response)
         talk(response)
@@ -1011,6 +1015,8 @@ def run_haraya():
     #_____________________________________________________________________OPEN/ACCESS_BLOCK
     #Run Command: python haraya.py
     elif "open" in command or "access" in command:
+        command = command.replace("open", '')
+        command = command.replace("access", '')
         try:
             if "chrome" in command:
                 response = "As you wish!"
@@ -1021,7 +1027,6 @@ def run_haraya():
                 response = "Opening Chrome"
                 print(response)
                 talk(response)
-                Confirmation_SubFunction(command)
                 
             elif "aqw game launcher" in command:
                 response = "As you wish!"
@@ -1032,7 +1037,6 @@ def run_haraya():
                 response = "Opening Artix game launcher"
                 print(response)
                 talk(response)
-                Confirmation_SubFunction(command)
                 
             elif "command prompt" in command or "cmd" in command:
                 response = "As you wish!"
@@ -1043,7 +1047,6 @@ def run_haraya():
                 response = "Opening Command Prompt"
                 print(response)
                 talk(response)
-                Confirmation_SubFunction(command)
                 
             elif "notepad" in command:
                 response = "As you wish!"
@@ -1054,7 +1057,6 @@ def run_haraya():
                 response = "Opening Notepad app"
                 print(response)
                 talk(response)
-                Confirmation_SubFunction(command)
                 
             elif "calculator" in command:
                 response = "As you wish!"
@@ -1065,18 +1067,16 @@ def run_haraya():
                 response = "Opening Calculator app"
                 print(response)
                 talk(response)
-                Confirmation_SubFunction(command)
                 
             elif "vlc" in command:
                 response = "As you wish!"
                 print(response)
                 talk(response)
-                program = "C:\\Program Files (x86)\\VideoLAN\VLC\\vlc.exe"
+                program = "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe"
                 subprocess.Popen([program])
                 response = "Opening VLC media player"
                 print(response)
                 talk(response)
-                Confirmation_SubFunction(command)
                 
             elif "visual studio code" in command:
                 response = "As you wish!"
@@ -1087,12 +1087,12 @@ def run_haraya():
                 response = "Opening Visual Studio Code"
                 print(response)
                 talk(response)
-                Confirmation_SubFunction(command)
+                
         except:
             response = """Access denied! It looks like I cannot access or open the said program."""
             print(response)
             talk(response)
-            Confirmation_SubFunction(command)
+        exit(Confirmation_SubFunction(command))
 
     #_______________________________________________DATE_and_TIME_BLOCK
     #Run Command: python haraya.py
