@@ -1,14 +1,10 @@
 #Import Libraries/Modules
-from distutils.cmd import Command
-from multiprocessing.connection import wait
-from click import CommandCollection
 import speech_recognition as sr
 import pyttsx3
 import pywhatkit
 import datetime
 import wikipedia
 import subprocess
-import webbrowser
 from facerec import Image_Face_Recognition_System
 
 #______________________________________________________VOICE_BOX_PRIMARY_BLOCK/FUNCTION
@@ -65,12 +61,14 @@ def Locate_NameHA():
                 "Mark Anthony Lagrosa",
                 "Klausmieir Villegas",
                 "CK Zoe Villegas", 
-                "Pio Bustamante"]
+                "Pio Bustamante",
+                "Rolyn Morales"]
 
     Female_Names = ["Kleinieir Pearl Kandis Bacay",
                     "Princess Viznar",
                     "Nichi Bacay",
-                    "Roz Waeschet Bacay"]
+                    "Roz Waeschet Bacay",
+                    "Killy Obligation"]
 
     try:
         Gender_Name = Name[-1]
@@ -90,20 +88,14 @@ NameHA = Name_Honorific_Address[-1]
 #_____________________________________________INITIALIZE_FACE_RECOGNITION_SYSTEM_BLOCK/FUNCTION
 #Run Command: python haraya.py
 def Initialize_Image_Face_Recognition_System():
-    try:
-        response = "Recognizing face..."
-        print(response)
-        talk(response)
-        Image_Face_Recognition_System()
-        def Play_Sound():
-            from playsound import playsound
-            playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
-        Play_Sound()
-    except:
-        response = "My apologies, a system error occured."
-        print()
-        talk(response)
-        pass
+    response = "Recognizing face..."
+    print(response)
+    talk(response)
+    Image_Face_Recognition_System()
+    def Play_Sound():
+        from playsound import playsound
+        playsound(u"C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+    Play_Sound()
     Locate_MyFullName()
     Locate_NameHA()
 Initialize_Image_Face_Recognition_System()
@@ -1216,3 +1208,9 @@ while True:
     Start_Up_command_MainFunction()
     run_haraya()
 #Run Command: python haraya.py
+
+#Run on openvino environment:
+#____________________________Get-ExecutionPolicy;
+#____________________________Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force;
+#____________________________python -m venv openvino_env
+#____________________________openvino_env\Scripts\activate

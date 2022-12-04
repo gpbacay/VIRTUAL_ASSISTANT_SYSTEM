@@ -1,5 +1,4 @@
 def Image_Face_Recognition_System():
-    try:
         # Import Libraries
         import os
         import cv2
@@ -99,18 +98,17 @@ def Image_Face_Recognition_System():
             
         while True:
             _, frame = cap.read()
-            #Flip the captured video
-            frame = cv2.flip(frame, 1)
+            
             # Resize Image
             def resize(frame, size) :
                 width = int(frame.shape[1]*size)
                 height = int(frame.shape[0] * size)
                 dimension = (width, height)
                 return cv2.resize(frame, dimension, interpolation = cv2.INTER_AREA)
-
-            # Convert the Image Color/Resize the Image
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame = resize(frame, 0.50)
+            
+            #Flip the captured video
+            frame = cv2.flip(frame, 1)
 
             # Find Face Location
             face_locations = face_recognition.face_locations(frame)
@@ -151,7 +149,5 @@ def Image_Face_Recognition_System():
                 return face_names
             else:
                 continue
-    except:
-        cv2.destroyAllWindows()
-        return face_names
+
 #Run Command: python facerec.py

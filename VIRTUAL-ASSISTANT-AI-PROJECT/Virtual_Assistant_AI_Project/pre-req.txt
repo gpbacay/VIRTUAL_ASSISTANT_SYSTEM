@@ -1,3 +1,6 @@
+ez_setup
+wheel
+setuptools
 PyAudio
 playsound==1.2.2
 pywhatkit
@@ -15,9 +18,9 @@ python-time
 requests
 selenium
 bs4
-setuptools
 dlib
 click
 random2
 googlesearch-python
 google-search
+mediapipe

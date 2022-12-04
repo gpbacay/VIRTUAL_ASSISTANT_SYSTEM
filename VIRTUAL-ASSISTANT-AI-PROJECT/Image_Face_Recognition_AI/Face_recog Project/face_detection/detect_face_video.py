@@ -11,8 +11,6 @@ while True:
     _, img = cap.read()
     #Flip the captured video
     img = cv2.flip(img, 1)
-    # Convert to grayscale
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # Detect the faces
     faces = face_cascade.detectMultiScale(gray, 1.1, 4)
     # Draw the rectangle around each face
