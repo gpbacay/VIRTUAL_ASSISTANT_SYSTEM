@@ -9,6 +9,8 @@ cap = cv2.VideoCapture(0)
 while True:
     # Read the frame
     _, img = cap.read()
+    #Flip the captured video
+    img = cv2.flip(img, 1)
     # Convert to grayscale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # Detect the faces

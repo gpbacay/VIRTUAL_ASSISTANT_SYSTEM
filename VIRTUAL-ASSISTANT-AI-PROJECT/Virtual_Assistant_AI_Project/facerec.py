@@ -99,7 +99,8 @@ def Image_Face_Recognition_System():
             
         while True:
             _, frame = cap.read()
-
+            #Flip the captured video
+            frame = cv2.flip(frame, 1)
             # Resize Image
             def resize(frame, size) :
                 width = int(frame.shape[1]*size)
