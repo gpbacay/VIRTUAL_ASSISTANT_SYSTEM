@@ -27,7 +27,7 @@ def talk(text):
 #______________________________________________________CORE_TEMPORARY_MEMORY_BANKS
 #Run Command: python haraya.py
 Name = []
-PersonName_Honorific_Address = []
+Name_Honorific_Address = []
 
 
 #______________________________________________________FACE_RECOGNITION_BLOCK/FUNCTION
@@ -58,32 +58,33 @@ except:
 
 #_______________________________________Binary-Gendered_Honorifics_Selection_BLOCK/FUNCTION
 #Run Command: python haraya.py
-def Locate_PersonNameHA():
-    Male_PersonNames = ["Gianne Bacay",
-                        "Earl Jay Tagud",
-                        "Gemmuel Balceda",
-                        "Mark Anthony Lagrosa",
-                        "Klausmieir Villegas",
-                        "CK Zoe Villegas"]
+def Locate_NameHA():
+    Male_Names = ["Gianne Bacay",
+                "Earl Jay Tagud",
+                "Gemmuel Balceda",
+                "Mark Anthony Lagrosa",
+                "Klausmieir Villegas",
+                "CK Zoe Villegas", 
+                "Pio Bustamante"]
 
-    Female_PersonNames = ["Kleinieir Pearl Kandis Bacay",
-                        "Princess Viznar",
-                        "Nichi Bacay",
-                        "Roz Waeschet Bacay"]
+    Female_Names = ["Kleinieir Pearl Kandis Bacay",
+                    "Princess Viznar",
+                    "Nichi Bacay",
+                    "Roz Waeschet Bacay"]
 
     try:
-        PersonName = Name[-1]
-        if PersonName in Male_PersonNames:
+        Gender_Name = Name[-1]
+        if Gender_Name in Male_Names:
             Honorific_Address = "Sir"
-        elif PersonName in Female_PersonNames:
+        elif Gender_Name in Female_Names:
             Honorific_Address = "Ma'am"
         else:
             Honorific_Address = "Boss"
     except:
         Honorific_Address = "Master"
-    PersonName_Honorific_Address.append(Honorific_Address)
-Locate_PersonNameHA()
-PersonNameHA = PersonName_Honorific_Address[-1]
+    Name_Honorific_Address.append(Honorific_Address)
+Locate_NameHA()
+NameHA = Name_Honorific_Address[-1]
 
 
 #_____________________________________________INITIALIZE_FACE_RECOGNITION_SYSTEM_BLOCK/FUNCTION
@@ -104,7 +105,7 @@ def Initialize_Image_Face_Recognition_System():
         talk(response)
         pass
     Locate_MyFullName()
-    Locate_PersonNameHA()
+    Locate_NameHA()
 Initialize_Image_Face_Recognition_System()
 
 
@@ -115,10 +116,10 @@ def Start_Up_command_MainFunction():
         from playsound import playsound
         playsound("C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
     StartUp_Sound()
-    PersonNameHA = PersonName_Honorific_Address[-1]
+    NameHA = Name_Honorific_Address[-1]
     try:
         MyName = Name[-1]
-        response = "Haraya is online. How can I help you " + PersonNameHA + " " + MyName + "?"
+        response = "Haraya is online. How can I help you " + NameHA + " " + MyName + "?"
     except:
         response = "Haraya is online. How can I help you?"
     print(response)
@@ -698,9 +699,9 @@ def run_haraya():
         print(response)
         talk(response)
         Initialize_Image_Face_Recognition_System()
-        PersonNameHA = PersonName_Honorific_Address[-1]
+        NameHA = Name_Honorific_Address[-1]
         MyName = Name[-1]
-        response = "Hello " + PersonNameHA + " " + MyName + "!"
+        response = "Hello " + NameHA + " " + MyName + "!"
         print(response)
         talk(response)
         Confirmation_SubFunction(command)    
