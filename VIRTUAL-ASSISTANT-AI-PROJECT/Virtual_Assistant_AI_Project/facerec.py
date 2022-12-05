@@ -1,14 +1,14 @@
-# Import Libraries
-import os
-import cv2
-import numpy as np
-import face_recognition
-import face_recognition as fr
-from datetime import  datetime
-import time
+def Face_Recognition_System():
+    # Import Libraries
+    import os
+    import cv2
+    import numpy as np
+    import face_recognition
+    import face_recognition as fr
+    from datetime import  datetime
+    import time
 
 
-class Image_Face_Recognition_System():
     #Clear the CSV file
     #Run Command: python facerec.py
     def ClearCSV():

@@ -5,6 +5,8 @@ import pywhatkit
 import datetime
 import wikipedia
 import subprocess
+from facerec import Face_Recognition_System
+
 
 #______________________________________________________VOICE_BOX_PRIMARY_BLOCK/FUNCTION
 #Run Command: python haraya.py
@@ -89,7 +91,7 @@ NameHA = Name_Honorific_Address[-1]
 def Initialize_Image_Face_Recognition_System():
     response = "Recognizing face..."
     print(response)
-    from facerec import Image_Face_Recognition_System
+    Face_Recognition_System()
     def Play_Sound():
         from playsound import playsound
         playsound(u"C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
@@ -525,8 +527,7 @@ def run_haraya():
                     "just like you",
                     "i'm very well"]
     
-    RunFaceRecog_KeyWords = ["face recognition system",
-                            "run face recognition system",
+    RunFaceRecog_KeyWords = ["run face recognition system",
                             "run face recognition",
                             "run the face recognition system",
                             "run the image face recognition system",
@@ -535,7 +536,6 @@ def run_haraya():
                             "run video face recognition system",
                             "run the live face recognition system",
                             "run live face recognition system",
-                            "face recognition system",
                             "face recognition system with smart attendance system",
                             "run the image face recognition system with smart attendance system",
                             "run image face recognition system with smart attendance system",
@@ -544,8 +544,7 @@ def run_haraya():
                             "run the live face recognition system with smart attendance system",
                             "run live face recognition system with smart attendance system"]
     
-    InitializeFaceRecog_KeyWords = ["face recognition system",
-                        "initialize face recognition",
+    InitializeFaceRecog_KeyWords = ["initialize face recognition",
                         "initialize face recognition system",
                         "initialize the face recognition system",
                         "initialize the image face recognition system",
@@ -554,7 +553,6 @@ def run_haraya():
                         "initialize video face recognition system",
                         "initialize the live face recognition system",
                         "initialize live face recognition system",
-                        "face recognition system",
                         "initialize recognition system with smart attendance system",
                         "initialize the image face recognition system with smart attendance system",
                         "initialize image face recognition system with smart attendance system",
@@ -563,8 +561,7 @@ def run_haraya():
                         "initialize the live face recognition system with smart attendance system",
                         "initialize live face recognition system with smart attendance system"]
     
-    ActivateFaceRecog_KeyWords = ["face recognition system",
-                        "activate face recognition",
+    ActivateFaceRecog_KeyWords = ["activate face recognition",
                         "activate face recognition system",
                         "activate the face recognition system",
                         "activate the image face recognition system",
@@ -698,7 +695,7 @@ def run_haraya():
         Confirmation_SubFunction(command)    
     #_________________________________________________________________CONVERSATIONAL_BLOCK
     #Run Command: python haraya.py
-    if command in Hello_Hi_KeyWords:
+    elif command in Hello_Hi_KeyWords:
         if "hello" in command:
             try:
                 if Name[-1] in Name:
@@ -859,7 +856,7 @@ def run_haraya():
 
     #________________________________________________________________REPEAT_BLOCK
     #Run Command: python haraya.py
-    if command in Repeat_KeyWords:
+    elif command in Repeat_KeyWords:
         Repeat_SubFunction()
 
     #_________________________________________________________________ARITHMETICAL_BLOCK
@@ -868,7 +865,7 @@ def run_haraya():
 
     #________________________________________________________________TERMINATION_BLOCK
     #Run Command: python haraya.py
-    if command in Stop_KeyWords:
+    elif command in Stop_KeyWords:
         print(command)
         response = "As you wish. Signing off."
         print(response)
@@ -1176,7 +1173,7 @@ def run_haraya():
 
     #_______________________________________________________NoCommands/NotClearCommands_BLOCK
     #Run Command: python haraya.py
-    if '' == command:
+    elif '' == command:
         time.sleep(3)
         print(command)
         response = """
