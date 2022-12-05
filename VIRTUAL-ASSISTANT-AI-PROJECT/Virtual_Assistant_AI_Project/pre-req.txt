@@ -1,26 +1,27 @@
-ez_setup
-wheel
-setuptools
-PyAudio
-playsound==1.2.2
-pywhatkit
-pyttsx3
-SpeechRecognition
-cmake
-face-recognition
-numpy
-opencv-python
-datetime
-wikipedia
-subprocess.run
-browser
-python-time
-requests
-selenium
-bs4
-dlib
-click
-random2
-googlesearch-python
-google-search
-mediapipe
+pip install ez_setup
+pip install wheel
+pip install setuptools
+pip install PyAudio
+pip install playsound==1.2.2
+pip install pywhatkit
+pip install pyttsx3
+pip install SpeechRecognition
+pip install cmake
+pip install dlib
+pip install face-recognition
+pip install numpy
+pip install opencv-python
+pip install datetime
+pip install wikipedia
+pip install subprocess.run
+pip install chromedriver
+pip install browser
+pip install python-time
+pip install requests
+pip install selenium
+pip install bs4
+pip install click
+pip install random2
+pip install googlesearch-python
+pip install google-search
+pip install mediapipe

@@ -1209,6 +1209,6 @@ while True:
 
 #Run on openvino environment:
 #____________________________Get-ExecutionPolicy;
-#____________________________Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force;
+#____________________________Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force;
 #____________________________python -m venv openvino_env
 #____________________________openvino_env\Scripts\activate
