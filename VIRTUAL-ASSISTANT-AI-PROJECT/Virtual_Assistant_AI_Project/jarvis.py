@@ -9,7 +9,7 @@ import datetime
 import wikipedia
 import subprocess
 import webbrowser
-from facerec import Image_Face_Recognition_System
+from facerec import Face_Recognition_System
 
 #______________________________________________________VOICE_BOX_PRIMARY_BLOCK/FUNCTION
 #Run Command: python jarvis.py
@@ -93,7 +93,7 @@ def Initialize_Image_Face_Recognition_System():
         response = "Recognizing face..."
         print(response)
         talk(response)
-        Image_Face_Recognition_System()
+        Face_Recognition_System()
         def Play_Sound():
             from playsound import playsound
             playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
