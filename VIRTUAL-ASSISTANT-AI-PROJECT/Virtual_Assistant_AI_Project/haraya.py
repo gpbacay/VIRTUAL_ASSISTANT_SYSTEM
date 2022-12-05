@@ -122,15 +122,12 @@ def Listen_command_MainFunction():
     global command
     command = ''
     
-    try:
-        with sr.Microphone() as source:
-            print("Listening...")
-            listener.adjust_for_ambient_noise(source, duration = 0.5)
-            voice = listener.listen(source)
-            command = listener.recognize_google(voice)
-            command = command.lower()
-    except:
-        pass
+    with sr.Microphone() as source:
+        print("Listening...")
+        listener.adjust_for_ambient_noise(source, duration=1)
+        voice = listener.listen(source)
+        command = listener.recognize_google(voice)
+        command = command.lower()
     return command
 
 
@@ -158,7 +155,7 @@ def Add_command_MainFunction(command):
             print(response)
             talk(response)
         with sr.Microphone() as source:
-            listener.adjust_for_ambient_noise(source, duration = 0.5)
+            listener.adjust_for_ambient_noise(source, duration=1)
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
@@ -176,7 +173,7 @@ def Wait_command_MainFunction():
     try:
         with sr.Microphone() as source:
             print("Waiting...")
-            listener.adjust_for_ambient_noise(source, duration = 0.5)
+            listener.adjust_for_ambient_noise(source, duration=1)
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
@@ -639,7 +636,7 @@ def run_haraya():
                 response = "Understood, I'm listening..."
                 print(response)
                 talk(response)
-                listener.adjust_for_ambient_noise(source, duration = 0.5)
+
                 voice = listener.listen(source)
                 command = listener.recognize_google(voice)
                 command = command.lower()
