@@ -29,6 +29,7 @@ def take_command():
         with sr.Microphone() as source:
             print('Listening...')
             talk("I'm listening")
+            listener.pause_threshold = 1
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
