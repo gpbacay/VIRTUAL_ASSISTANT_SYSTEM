@@ -130,12 +130,7 @@ def Listen_command_MainFunction():
             command = listener.recognize_google(voice)
             command = command.lower()
     except:
-        with sr.Microphone() as source:
-            print("Listening...")
-            listener.adjust_for_ambient_noise(source, duration=1)
-            voice = listener.listen(source)
-            command = listener.recognize_google(voice)
-            command = command.lower()
+        pass
     return command
 
 
@@ -168,11 +163,7 @@ def Add_command_MainFunction(command):
             command = listener.recognize_google(voice)
             command = command.lower()
     except:
-        with sr.Microphone() as source:
-            listener.adjust_for_ambient_noise(source, duration=1)
-            voice = listener.listen(source)
-            command = listener.recognize_google(voice)
-            command = command.lower()
+        pass
     return command
 
 
@@ -190,12 +181,7 @@ def Wait_command_MainFunction():
             command = listener.recognize_google(voice)
             command = command.lower()
     except:
-        with sr.Microphone() as source:
-            print("Waiting...")
-            listener.adjust_for_ambient_noise(source, duration=1)
-            voice = listener.listen(source)
-            command = listener.recognize_google(voice)
-            command = command.lower()
+        pass
     return command
 
 
@@ -653,19 +639,13 @@ def run_haraya():
                 response = "Understood, I'm listening..."
                 print(response)
                 talk(response)
+
                 listener.adjust_for_ambient_noise(source, duration=1)
                 voice = listener.listen(source)
                 command = listener.recognize_google(voice)
                 command = command.lower()
         except:
-            with sr.Microphone() as source:
-                response = "Understood, I'm listening..."
-                print(response)
-                talk(response)
-                listener.adjust_for_ambient_noise(source, duration=1)
-                voice = listener.listen(source)
-                command = listener.recognize_google(voice)
-                command = command.lower()
+            pass
         print(command)
         talk(command)
         time.sleep(5)
