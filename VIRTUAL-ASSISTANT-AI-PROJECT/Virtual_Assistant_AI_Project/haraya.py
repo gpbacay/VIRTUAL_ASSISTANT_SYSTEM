@@ -5,7 +5,6 @@ import pywhatkit
 import datetime
 import wikipedia
 import subprocess
-from facerec import Image_Face_Recognition_System
 
 #______________________________________________________VOICE_BOX_PRIMARY_BLOCK/FUNCTION
 #Run Command: python haraya.py
@@ -90,8 +89,7 @@ NameHA = Name_Honorific_Address[-1]
 def Initialize_Image_Face_Recognition_System():
     response = "Recognizing face..."
     print(response)
-    talk(response)
-    Image_Face_Recognition_System()
+    from facerec import Image_Face_Recognition_System
     def Play_Sound():
         from playsound import playsound
         playsound(u"C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")

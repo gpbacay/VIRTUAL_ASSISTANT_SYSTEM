@@ -1,35 +1,43 @@
-def Image_Face_Recognition_System():
-        # Import Libraries
-        import os
-        import cv2
-        import numpy as np
-        import face_recognition
-        import face_recognition as fr
-        from datetime import  datetime
-        import time
+# Import Libraries
+import os
+import cv2
+import numpy as np
+import face_recognition
+import face_recognition as fr
+from datetime import  datetime
+import time
 
 
-        #Clear the CSV file
-        #Run Command: python facerec.py
-        def ClearCSV():
-            import csv
-
-            file = open("attendance.csv", "r")
-            csvr = csv.reader(file)
-
-            namelist = []
-            Header = f'Name, Time'
-            Header = Header.split(',')
-            namelist.insert(0, Header)
-            
-            file = open("attendance.csv", "w", newline = '')
-            csvr = csv.writer(file)
-            csvr.writerows(namelist)
-            file.close()
-            
-        ClearCSV()
+class Image_Face_Recognition_System():
+    #Clear the CSV file
+    #Run Command: python facerec.py
+    def ClearCSV():
+        import csv
+        file = open("attendance.csv", "r")
+        csvr = csv.reader(file)
+        namelist = []
+        Header = f'Name, Time'
+        Header = Header.split(',')
+        namelist.insert(0, Header)
+        file = open("attendance.csv", "w", newline = '')
+        csvr = csv.writer(file)
+        csvr.writerows(namelist)
+        file.close()
+    ClearCSV()
 
 
+    # Classify Faces
+    #Run Command: python facerec.py
+    def Classify_Faces():
+        """
+        Scans/Locates all of the faces in a given test image within test folder 
+        and labels them with their name if they are known faces
+        while, on the other hand, unknown faces are labeled as unknown
+        :param im: str of file path
+        :return: list of face names
+        """
+        
+        
         #Encode Faces to the Attendance Sheet
         #Run Command: python facerec.py
         def MarkAttendance(name):
@@ -47,8 +55,7 @@ def Image_Face_Recognition_System():
                     now = datetime.now()
                     Time = now.strftime('%H:%M')
                     attendance.writelines(f'\n{name}, {Time}')
-
-
+        
         # Encode Faces
         #Run Command: python facerec.py
         def get_encoded_faces():
@@ -66,36 +73,24 @@ def Image_Face_Recognition_System():
                         face = fr.load_image_file("faces/" + f)
                         encoding = fr.face_encodings(face)[0]
                         encoded[f.split(".")[0]] = encoding
-                        
             return encoded
-
-        def unknown_image_encoded(img):
+        
+        
+        def unknown_image_encoded(frame):
             """
             Encode an unknown face given the file name as known face
             """
-            face = fr.load_image_file("faces/" + img)
+            face = fr.load_image_file("faces/" + frame)
             encoding = fr.face_encodings(face)[0]
-
             return encoding
 
-        
-        #Capture video from webcam: 
-        cap = cv2.VideoCapture(0)
 
-        # Classify Faces
-        #Run Command: python facerec.py
-        """
-        Scans/Locates all of the faces in a given test image within test folder 
-        and labels them with their name if they are known faces
-        while, on the other hand, unknown faces are labeled as unknown
-
-        :param im: str of file path
-        :return: list of face names
-        """
         faces = get_encoded_faces()
         faces_encoded = list(faces.values())
         known_face_names = list(faces.keys())
-            
+        
+        #Capture video from webcam: 
+        cap = cv2.VideoCapture(0)
         while True:
             _, frame = cap.read()
             
@@ -109,7 +104,7 @@ def Image_Face_Recognition_System():
             
             #Flip the captured video
             frame = cv2.flip(frame, 1)
-
+            
             # Find Face Location
             face_locations = face_recognition.face_locations(frame)
             unknown_face_encodings = face_recognition.face_encodings(frame, face_locations)
@@ -149,5 +144,5 @@ def Image_Face_Recognition_System():
                 return face_names
             else:
                 continue
-
+    Classify_Faces()
 #Run Command: python facerec.py
