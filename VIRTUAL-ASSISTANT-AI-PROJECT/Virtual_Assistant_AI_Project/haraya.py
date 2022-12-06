@@ -111,9 +111,9 @@ def Start_Up_command_MainFunction():
     NameHA = Name_Honorific_Address[-1]
     try:
         MyName = Name[-1]
-        response = "Haraya is online. How can I help you " + NameHA + " " + MyName + "?"
+        response = "Hello " + NameHA + " " + MyName + "! How can I help you?"
     except:
-        response = "Haraya is online. How can I help you?"
+        response = "Hello! How can I help you?"
     print(response)
     talk(response)
 
@@ -127,7 +127,8 @@ def Listen_command_MainFunction():
     try:
         with sr.Microphone() as source:
             print("Listening...")
-            listener.adjust_for_ambient_noise(source, duration=1)
+            listener.adjust_for_ambient_noise(source, duration = 0.5)
+            listener.pause_threshold = 1
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
@@ -160,7 +161,8 @@ def Add_command_MainFunction(command):
             print(response)
             talk(response)
         with sr.Microphone() as source:
-            listener.adjust_for_ambient_noise(source, duration=1)
+            listener.adjust_for_ambient_noise(source, duration = 0.5)
+            listener.pause_threshold = 1
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
@@ -178,7 +180,8 @@ def Wait_command_MainFunction():
     try:
         with sr.Microphone() as source:
             print("Waiting...")
-            listener.adjust_for_ambient_noise(source, duration=1)
+            listener.adjust_for_ambient_noise(source, duration = 0.5)
+            listener.pause_threshold = 1
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
@@ -584,6 +587,10 @@ def run_haraya():
         while True:
             command = Wait_command_MainFunction()
             if 'haraya' in command:
+                def Play_Sound():
+                    from playsound import playsound
+                    playsound(u"C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+                Play_Sound()
                 response = "Yes? How can I help you?"
                 print(response)
                 talk(response)
@@ -636,8 +643,8 @@ def run_haraya():
                 response = "Understood, I'm listening..."
                 print(response)
                 talk(response)
-
-                listener.adjust_for_ambient_noise(source, duration=1)
+                listener.adjust_for_ambient_noise(source, duration = 0.5)
+                listener.pause_threshold = 1
                 voice = listener.listen(source)
                 command = listener.recognize_google(voice)
                 command = command.lower()
@@ -726,13 +733,14 @@ def run_haraya():
         exit(run_haraya())
         
     elif command in ImFine_KeyWords:
-        response = ''
         if random.randint(0, 2) == 0:
-            response = "I am glad to hear that. How can I help you now?"
+            response = "I am glad to hear that! How can I help you now?"
         elif random.randint(0, 2) == 1:
-            response = "Good for you then. How can I help you now?"
+            response = "Ok then, How can I help you now?"
         elif random.randint(0, 2) == 2:
             response = "That's great! How can I help you now?"
+        else:
+            response = "All right then, How can I help you now?"
         print(response)
         talk(response)
         exit(run_haraya())
