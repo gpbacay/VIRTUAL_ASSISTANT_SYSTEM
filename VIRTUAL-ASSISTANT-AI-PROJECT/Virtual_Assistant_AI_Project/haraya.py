@@ -1177,14 +1177,13 @@ def run_haraya():
             command = command.replace("hello", '')
             command = command.replace("is my name", '')
             name = command.replace("my name is", '')
-            command = name
-            if '' in name:
+            if name != '':
                 Name.append(name)
                 response = Name[-1] + ", " + "I'll keep that in mind. Nice knowing you " + Name[-1] + "!"
                 print(response)
                 talk(response)
                 exit(run_haraya())
-            elif '' not in name:
+            elif name == '':
                 response = "Who are you?"
                 print(response)
                 talk(response)
