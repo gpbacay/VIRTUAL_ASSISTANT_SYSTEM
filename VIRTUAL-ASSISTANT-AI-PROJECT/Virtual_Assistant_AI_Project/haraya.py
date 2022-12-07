@@ -503,14 +503,17 @@ def run_haraya():
     
     ImFine_KeyWords = ["i'm fine",
                     "i am fine",
+                    "i am fine too",
+                    "i'm fine too",
                     "couldn't be better",
                     "i'm perfectly fine",
                     "never better",
-                    "i am fine",
                     "i'm doing great",
                     "i am doing great",
                     "i'm ok",
                     "i'm okay",
+                    "i'm ok too",
+                    "i'm okay too",
                     "i am ok",
                     "i am okay",
                     "i'm alright",
@@ -521,7 +524,6 @@ def run_haraya():
                     "i'm also alright",
                     "i'm also prefectly fine",
                     "i'm ok too",
-                    "i'm fine too",
                     "i'm good too",
                     "i'm perfectly fine too",
                     "i'm at my best",
@@ -580,6 +582,15 @@ def run_haraya():
                         "activate video face recognition system with smart attendance system",
                         "activate the live face recognition system with smart attendance system",
                         "activate live face recognition system with smart attendance system"]
+    
+    My_Name_Is_and_I_Am_KeyWords = ["my name is",
+                                    "is my name",
+                                    "i am",
+                                    "my name is ",
+                                    "is my name ",
+                                    "i am ",
+                                    "i'm",
+                                    "i'm "]
 
     #_______________________________________________________________________STANDBY_SUBFUNCTION
     #Run Command: python haraya.py
@@ -699,168 +710,7 @@ def run_haraya():
         response = "Hello " + NameHA + " " + MyName + "!"
         print(response)
         talk(response)
-        Confirmation_SubFunction(command)    
-    #_________________________________________________________________CONVERSATIONAL_BLOCK
-    #Run Command: python haraya.py
-    elif command in Hello_Hi_KeyWords:
-        if "hello" in command:
-            try:
-                if Name[-1] in Name:
-                    response = "Hi " + Name[-1] + ", how can I help you?"
-            except:
-                response = "Hi, how can I help you?"
-        elif "hi" in command:
-            try:
-                if Name[-1] in Name:
-                    response = "Hello " + Name[-1] + ", how can I help you?"
-            except:
-                response = "Hello, how can I help you?"
-        print(response)
-        talk(response)
-        exit(run_haraya())
-
-    elif command in HowAreYou_KeyWords:
-        if random.randint(0, 2) == 0:
-            response = "Couldn't be better! Thanks for asking. How about you?"
-        elif random.randint(0, 2) == 1:
-            response = "I'm perfectly fine! Thanks for asking. How about you?"
-        elif random.randint(0, 2) == 2:
-            response = "Never better! How about you?"
-        else:
-            response = "I'm okay, Thanks for asking. How about you?"
-        print(response)
-        talk(response)
-        exit(run_haraya())
-        
-    elif command in ImFine_KeyWords:
-        if random.randint(0, 2) == 0:
-            response = "I am glad to hear that! How can I help you now?"
-        elif random.randint(0, 2) == 1:
-            response = "Ok then, How can I help you now?"
-        elif random.randint(0, 2) == 2:
-            response = "That's great! How can I help you now?"
-        else:
-            response = "All right then, How can I help you now?"
-        print(response)
-        talk(response)
-        exit(run_haraya())
-
-    elif command in WhoAreYou_Key:
-        response = """
-        Allow me to introduce myself.
-        I am Haraya, it means imagination or vision in Filipino language. 
-        I am a semi-autonomous artificial intelligence virtual assistant.
-        Created by Gianne P. Bacay on the 16th day of October year 2022.
-        """
-        print(response)
-        talk(response)
         Confirmation_SubFunction(command)
-
-    elif command in DoYouKnowMe_KeyWords:
-        try:
-            if Name[-1] in Name:
-                response = "Yes, you are " + Name[-1] + "."
-        except:
-            response = """
-            No, I don't know you yet. 
-            Hence, If you don't mind, can you tell me your name?
-            """
-        print(response)
-        talk(response)
-        exit(run_haraya())
-
-    elif command in WhoAmI_KeyWords:
-        try:
-            if Name[-1] in Name:
-                MyName = Name[-1]
-                response = "Your name is " + MyName + "."
-        except:
-            response = """
-            Sorry, but I don't know your name yet. 
-            May I know your name first?
-            """
-        print(response)
-        talk(response)
-        exit(run_haraya())
-
-    elif command in SayMyName_KeyWords:
-        try:
-            if Name[-1] in Name:
-                MyName = Name[-1]
-                response = MyName
-        except:
-            response = """
-            Sorry, but I don't know your name yet. 
-            May I know your name first?
-            """
-        print(response)
-        talk(response)
-        exit(run_haraya())
-
-    elif command in AskMyName_KeyWords:
-        response = "If you don't mind, can you tell me your name?"
-        print(response)
-        talk(response)
-        exit(run_haraya())
-
-    elif command in WhatIsMyFullName_KeyWords:
-        try:
-            if Name[-1] in Name:
-                MyFullName = Name[-1]
-                response = MyFullName
-        except:
-            response = """
-            Sorry, but I don't know your full name yet. 
-            If you don't mind, can you tell me your full name first?
-            """
-        print(response)
-        talk(response)
-        exit(run_haraya())
-
-    elif "my name is" in command:
-        if "my name is haraya" in command:
-            command = command.replace("hi", '')
-            command = command.replace("hello", '')
-            name = command.replace("my name is", '')
-            command = name
-            Name.append(name)
-            response = "What a coincidence, my name is Haraya too. Nice meeting you Haraya!"
-            print(response)
-            talk(response)
-            exit(run_haraya())
-        else:
-            command = command.replace("hi", '')
-            command = command.replace("hello", '')
-            name = command.replace("my name is", '')
-            command = name
-            Name.append(name)
-            response = Name[-1] + ", " + "I'll keep that in mind. Nice knowing you " + Name[-1] + "!"
-            print(response)
-            talk(response)
-            exit(run_haraya())
-
-    elif "and you are" in command or "and your name is" in command:
-        response = """
-        Haraya, Haraya is my name. 
-        Haraya means imagination or vision in Filipino language.
-        """
-        print(response)
-        talk(response)
-        Confirmation_SubFunction(command)
-
-    elif "who created you" in command:
-        command = Auto_Replacement_Subfunction(command)
-        print(command + " created you?")
-        response = """
-        I am created by Gianne P. Bacay on the 16th day of October year 2022.
-        He created me to be his personal virtual assistant.
-        For now, I'm still a work on progress.
-        """
-        print(response)
-        talk(response)
-        Confirmation_SubFunction(command)
-
-
 
     #________________________________________________________________REPEAT_BLOCK
     #Run Command: python haraya.py
@@ -869,7 +719,6 @@ def run_haraya():
 
     #_________________________________________________________________ARITHMETICAL_BLOCK
     #Run Command: python haraya.py
-
 
     #________________________________________________________________TERMINATION_BLOCK
     #Run Command: python haraya.py
@@ -1190,6 +1039,177 @@ def run_haraya():
         print(response)
         talk(response)
         Standby_SubFunction()
+        
+        
+    #_________________________________________________________________CONVERSATIONAL_BLOCK
+    #Run Command: python haraya.py
+    elif command in Hello_Hi_KeyWords:
+        if "hello" in command:
+            try:
+                if Name[-1] in Name:
+                    response = "Hi " + Name[-1] + ", how can I help you?"
+            except:
+                response = "Hi, how can I help you?"
+        elif "hi" in command:
+            try:
+                if Name[-1] in Name:
+                    response = "Hello " + Name[-1] + ", how can I help you?"
+            except:
+                response = "Hello, how can I help you?"
+        print(response)
+        talk(response)
+        exit(run_haraya())
+
+    elif command in HowAreYou_KeyWords:
+        if random.randint(0, 2) == 0:
+            response = "Couldn't be better! Thanks for asking. How about you?"
+        elif random.randint(0, 2) == 1:
+            response = "I'm perfectly fine! Thanks for asking. How about you?"
+        elif random.randint(0, 2) == 2:
+            response = "Never better! How about you?"
+        else:
+            response = "I'm okay, Thanks for asking. How about you?"
+        print(response)
+        talk(response)
+        exit(run_haraya())
+        
+    elif command in ImFine_KeyWords:
+        if random.randint(0, 2) == 0:
+            response = "I am glad to hear that! How can I help you now?"
+        elif random.randint(0, 2) == 1:
+            response = "Ok then, How can I help you now?"
+        elif random.randint(0, 2) == 2:
+            response = "That's great! How can I help you now?"
+        else:
+            response = "All right then, How can I help you now?"
+        print(response)
+        talk(response)
+        exit(run_haraya())
+
+    elif command in WhoAreYou_Key:
+        response = """
+        Allow me to introduce myself.
+        I am Haraya, it means imagination or vision in Filipino language. 
+        I am a semi-autonomous artificial intelligence virtual assistant.
+        Created by Gianne P. Bacay on the 16th day of October year 2022.
+        """
+        print(response)
+        talk(response)
+        Confirmation_SubFunction(command)
+
+    elif command in DoYouKnowMe_KeyWords:
+        try:
+            if Name[-1] in Name:
+                response = "Yes, you are " + Name[-1] + "."
+        except:
+            response = """
+            No, I don't know you yet. 
+            Hence, If you don't mind, can you tell me your name?
+            """
+        print(response)
+        talk(response)
+        exit(run_haraya())
+
+    elif command in WhoAmI_KeyWords:
+        try:
+            if Name[-1] in Name:
+                MyName = Name[-1]
+                response = "Your name is " + MyName + "."
+        except:
+            response = """
+            Sorry, but I don't know your name yet. 
+            May I know your name first?
+            """
+        print(response)
+        talk(response)
+        exit(run_haraya())
+
+    elif command in SayMyName_KeyWords:
+        try:
+            if Name[-1] in Name:
+                MyName = Name[-1]
+                response = MyName
+        except:
+            response = """
+            Sorry, but I don't know your name yet. 
+            May I know your name first?
+            """
+        print(response)
+        talk(response)
+        exit(run_haraya())
+
+    elif command in AskMyName_KeyWords:
+        response = "If you don't mind, can you tell me your name?"
+        print(response)
+        talk(response)
+        exit(run_haraya())
+
+    elif command in WhatIsMyFullName_KeyWords:
+        try:
+            if Name[-1] in Name:
+                MyFullName = Name[-1]
+                response = MyFullName
+        except:
+            response = """
+            Sorry, but I don't know your full name yet. 
+            If you don't mind, can you tell me your full name first?
+            """
+        print(response)
+        talk(response)
+        exit(run_haraya())
+
+    elif "my name is" in command or "is my name" in command or "i am" in command:
+        if "my name is haraya" in command:
+            command = command.replace("hi", '')
+            command = command.replace("i am", '')
+            command = command.replace("hello", '')
+            command = command.replace("is my name", '')
+            name = command.replace("my name is", '')
+            command = name
+            Name.append(name)
+            response = "What a coincidence, my name is Haraya too. Nice meeting you Haraya!"
+            print(response)
+            talk(response)
+            exit(run_haraya())
+        else:
+            command = command.replace("hi", '')
+            command = command.replace("i am", '')
+            command = command.replace("hello", '')
+            command = command.replace("is my name", '')
+            name = command.replace("my name is", '')
+            command = name
+            if '' in name:
+                Name.append(name)
+                response = Name[-1] + ", " + "I'll keep that in mind. Nice knowing you " + Name[-1] + "!"
+                print(response)
+                talk(response)
+                exit(run_haraya())
+            elif '' not in name:
+                response = "Who are you?"
+                print(response)
+                talk(response)
+                exit(run_haraya())
+#_______python haraya.py
+    elif "and you are" in command or "and your name is" in command:
+        response = """
+        Haraya, Haraya is my name. 
+        Haraya means imagination or vision in Filipino language.
+        """
+        print(response)
+        talk(response)
+        Confirmation_SubFunction(command)
+
+    elif "who created you" in command:
+        command = Auto_Replacement_Subfunction(command)
+        print(command + " created you?")
+        response = """
+        I am created by Gianne P. Bacay on the 16th day of October year 2022.
+        He created me to be his personal virtual assistant.
+        For now, I'm still a work on progress.
+        """
+        print(response)
+        talk(response)
+        Confirmation_SubFunction(command)
 
     #_______________________________________________________NoCommands/NotClearCommands_BLOCK
     #Run Command: python haraya.py
