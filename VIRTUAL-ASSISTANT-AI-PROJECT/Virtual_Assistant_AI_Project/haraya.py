@@ -1155,6 +1155,10 @@ def run_haraya():
         print(response)
         talk(response)
         os.system("shutdown /s /t 0")
+        def StartUp_Sound():
+            from playsound import playsound
+            playsound("C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+        StartUp_Sound()
         exit()
 
     elif "restart my computer" in command:
@@ -1162,6 +1166,10 @@ def run_haraya():
         print(response)
         talk(response)
         os.system("shutdown /r")
+        def StartUp_Sound():
+            from playsound import playsound
+            playsound("C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+        StartUp_Sound()
         exit()
 
     elif "sign off my computer" in command:
@@ -1169,6 +1177,10 @@ def run_haraya():
         print(response)
         talk(response)
         os.system("shutdown /l")
+        def StartUp_Sound():
+            from playsound import playsound
+            playsound("C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+        StartUp_Sound()
         exit()
 
     #________________________________________________________________________STANDBY_BLOCK
