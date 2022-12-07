@@ -7,36 +7,39 @@ import imutils
 mp_holistic = mp.solutions.holistic
 mp_drawing = mp.solutions.drawing_utils
 
-cap = cv2.VideoCapture('PoseVideos/2.mp4')
-#cap =cv2.VideoCapture(0)
+#Capture video
+cap = cv2.VideoCapture(0)
 
 #Frames Per Second
 fps_start_time = datetime.datetime.now()
 fps = 0
 total_frames = 0
+
 # Initialize MediaPipe Holistic
+#Run command: python poserec.py
 with mp_holistic.Holistic(
     static_image_mode=True, min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
     while True:
-        success, image = cap.read()
+        success, frame = cap.read()
         
         if success:
             #Convert the BGR image to RGB and process it with MediaPipe Pose
-            img = imutils.resize(image, width=600)
+            frame = imutils.resize(frame, width=600)
+            frame = cv2.flip(frame, 1)
             total_frames = total_frames + 1
-            results = holistic.process(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+            results = holistic.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
             #Print Nose Coordinates.
-            image_hight, image_width, _ = image.shape
+            image_hight, image_width, _ = frame.shape
             if results.pose_landmarks:
                 print(
                 f'Nose Coordinates: ('
                 f'{results.pose_landmarks.landmark[mp_holistic.PoseLandmark.NOSE].x * image_width},'
-                f'{results.pose_landmarks.landmark[mp_holistic.PoseLandmark.NOSE].y * image_hight})'
-              )
+                f'{results.pose_landmarks.landmark[mp_holistic.PoseLandmark.NOSE].y * image_hight})')
 
             # Draw Landmarks
-            annotated_image = image.copy()
+            #Run Command: python poserec.py
+            annotated_image = frame.copy()
             #LEFT_HAND
             mp_drawing.draw_landmarks(
                 annotated_image, 
@@ -91,4 +94,4 @@ with mp_holistic.Holistic(
 cap.release()
 cv2.destroyAllWindows()
 
-#Run command: python main.py
+#Run command: python poserec.py
