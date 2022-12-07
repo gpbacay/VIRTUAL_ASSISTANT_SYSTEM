@@ -23,13 +23,16 @@ def get_encoded_faces():
 mp_holistic = mp.solutions.holistic
 mp_drawing = mp.solutions.drawing_utils
 
-cap = cv2.VideoCapture('PoseVideos/6.mp4')
+cap = cv2.VideoCapture(0)
 
 #Frames Per Second
+#Run command: python maincopy.py
 fps_start_time = datetime.datetime.now()
 fps = 0
 total_frames = 0
+
 # Initialize MediaPipe Holistic
+#Run command: python maincopy.py
 with mp_holistic.Holistic(
     static_image_mode=True, min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
     while True:
@@ -134,7 +137,7 @@ with mp_holistic.Holistic(
                 break
         else:
             break 
-   
+
 cap.release()
 cv2.destroyAllWindows()
 
