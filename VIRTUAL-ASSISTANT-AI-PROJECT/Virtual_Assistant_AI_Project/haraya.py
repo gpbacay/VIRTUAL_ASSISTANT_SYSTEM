@@ -1188,7 +1188,7 @@ def run_haraya():
                 print(response)
                 talk(response)
                 exit(run_haraya())
-#_______python haraya.py
+
     elif "and you are" in command or "and your name is" in command:
         response = """
         Haraya, Haraya is my name. 
