@@ -6,7 +6,7 @@ import datetime
 import wikipedia
 import subprocess
 from facerec import Face_Recognition_System
-
+from poserec import Pose_Recognition_System
 
 #______________________________________________________VOICE_BOX_PRIMARY_BLOCK/FUNCTION
 #Run Command: python haraya.py
@@ -88,7 +88,7 @@ NameHA = Name_Honorific_Address[-1]
 
 #_____________________________________________INITIALIZE_FACE_RECOGNITION_SYSTEM_BLOCK/FUNCTION
 #Run Command: python haraya.py
-def Initialize_Image_Face_Recognition_System():
+def Initialize_Face_Recognition_System():
     response = "Recognizing face..."
     print(response)
     Face_Recognition_System()
@@ -98,7 +98,19 @@ def Initialize_Image_Face_Recognition_System():
     Play_Sound()
     Locate_MyFullName()
     Locate_NameHA()
-Initialize_Image_Face_Recognition_System()
+Initialize_Face_Recognition_System()
+
+
+#_____________________________________________INITIALIZE_POSE_RECOGNITION_SYSTEM_BLOCK/FUNCTION
+#Run Command: python haraya.py
+def Initialize_Pose_Recognition_System():
+    response = "Recognizing pose..."
+    print(response)
+    Pose_Recognition_System()
+    def Play_Sound():
+        from playsound import playsound
+        playsound(u"C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+    Play_Sound()
 
 
 #_______________________________________START_UP_MAIN_FUNCTION
@@ -122,7 +134,7 @@ def Start_Up_command_MainFunction():
 #Run Command: python haraya.py
 def Listen_command_MainFunction():
     global command
-    command = ''
+    command = None
     
     try:
         with sr.Microphone() as source:
@@ -175,7 +187,7 @@ def Add_command_MainFunction(command):
 #Run Command: python haraya.py
 def Wait_command_MainFunction():
     global command
-    command = ''
+    command = None
     
     try:
         with sr.Microphone() as source:
@@ -535,53 +547,77 @@ def run_haraya():
     RunFaceRecog_KeyWords = ["run face recognition system",
                             "run face recognition",
                             "run the face recognition system",
-                            "run the image face recognition system",
-                            "run image face recognition system",
+                            "run the video face recognition system",
+                            "run video face recognition system",
                             "run the video face recognition system",
                             "run video face recognition system",
                             "run the live face recognition system",
                             "run live face recognition system",
                             "face recognition system with smart attendance system",
-                            "run the image face recognition system with smart attendance system",
-                            "run image face recognition system with smart attendance system",
                             "run the video face recognition system with smart attendance system",
                             "run video face recognition system with smart attendance system",
                             "run the live face recognition system with smart attendance system",
                             "run live face recognition system with smart attendance system"]
     
-    InitializeFaceRecog_KeyWords = ["initialize face recognition",
-                        "initialize face recognition system",
-                        "initialize the face recognition system",
-                        "initialize the image face recognition system",
-                        "initialize image face recognition system",
-                        "initialize the video face recognition system",
-                        "initialize video face recognition system",
-                        "initialize the live face recognition system",
-                        "initialize live face recognition system",
-                        "initialize recognition system with smart attendance system",
-                        "initialize the image face recognition system with smart attendance system",
-                        "initialize image face recognition system with smart attendance system",
-                        "initialize the video face recognition system with smart attendance system",
-                        "initialize video face recognition system with smart attendance system",
-                        "initialize the live face recognition system with smart attendance system",
-                        "initialize live face recognition system with smart attendance system"]
+    InitializeFaceRecog_KeyWords = ["initialize face recognition system",
+                            "initialize face recognition",
+                            "initialize the face recognition system",
+                            "initialize the video face recognition system",
+                            "initialize video face recognition system",
+                            "initialize the video face recognition system",
+                            "initialize video face recognition system",
+                            "initialize the live face recognition system",
+                            "initialize live face recognition system",
+                            "initialize recognition system with smart attendance system",
+                            "initialize the video face recognition system with smart attendance system",
+                            "initialize video face recognition system with smart attendance system",
+                            "initialize the live face recognition system with smart attendance system",
+                            "initialize live face recognition system with smart attendance system"]
     
-    ActivateFaceRecog_KeyWords = ["activate face recognition",
-                        "activate face recognition system",
-                        "activate the face recognition system",
-                        "activate the image face recognition system",
-                        "activate image face recognition system",
-                        "activate the video face recognition system",
-                        "activate video face recognition system",
-                        "activate the live face recognition system",
-                        "activate live face recognition system",
-                        "activate recognition system with smart attendance system",
-                        "activate the image face recognition system with smart attendance system",
-                        "activate image face recognition system with smart attendance system",
-                        "activate the video face recognition system with smart attendance system",
-                        "activate video face recognition system with smart attendance system",
-                        "activate the live face recognition system with smart attendance system",
-                        "activate live face recognition system with smart attendance system"]
+    ActivateFaceRecog_KeyWords = ["activate face recognition system",
+                            "activate face recognition",
+                            "activate the face recognition system",
+                            "activate the video face recognition system",
+                            "activate video face recognition system",
+                            "activate the video face recognition system",
+                            "activate video face recognition system",
+                            "activate the live face recognition system",
+                            "activate live face recognition system",
+                            "activate recognition system with smart attendance system",
+                            "activate the video face recognition system with smart attendance system",
+                            "activate video face recognition system with smart attendance system",
+                            "activate the live face recognition system with smart attendance system",
+                            "activate live face recognition system with smart attendance system"]
+    
+    RunPoseRecog_KeyWords = ["run pose recognition system",
+                            "run pose recognition",
+                            "run the pose recognition system",
+                            "run the video pose recognition system",
+                            "run video pose recognition system",
+                            "run the video pose recognition system",
+                            "run video pose recognition system",
+                            "run the live pose recognition system",
+                            "run live pose recognition system"]
+    
+    InitializePoseRecog_KeyWords = ["initialize pose recognition system",
+                            "initialize pose recognition",
+                            "initialize the pose recognition system",
+                            "initialize the video pose recognition system",
+                            "initialize video pose recognition system",
+                            "initialize the video pose recognition system",
+                            "initialize video pose recognition system",
+                            "initialize the live pose recognition system",
+                            "initialize live pose recognition system"]
+    
+    ActivatePoseRecog_KeyWords = ["activate pose recognition system",
+                            "activate pose recognition",
+                            "activate the pose recognition system",
+                            "activate the video pose recognition system",
+                            "activate video pose recognition system",
+                            "activate the video pose recognition system",
+                            "activate video pose recognition system",
+                            "activate the live pose recognition system",
+                            "activate live pose recognition system"]
     
     My_Name_Is_and_I_Am_KeyWords = ["my name is",
                                     "is my name",
@@ -647,7 +683,7 @@ def run_haraya():
     #_______________________________________________________________________REPEAT_SUBFUNCTION
     #Run Command: python haraya.py
     def Repeat_SubFunction():
-        command = ''
+        command = None
         
         try:
             with sr.Microphone() as source:
@@ -704,12 +740,28 @@ def run_haraya():
             response = "Running Face Recognition System..."
         print(response)
         talk(response)
-        Initialize_Image_Face_Recognition_System()
+        Initialize_Face_Recognition_System()
         NameHA = Name_Honorific_Address[-1]
         MyName = Name[-1]
         response = "Hello " + NameHA + " " + MyName + "!"
         print(response)
         talk(response)
+        Confirmation_SubFunction(command)
+        
+    #______________________________________________________POSE_RECOGNITION_BLOCK
+    #Run Command: python haraya.py
+    if command in RunPoseRecog_KeyWords or command in InitializePoseRecog_KeyWords or command in ActivatePoseRecog_KeyWords:
+        if "run" in command:
+            response = "Running Pose Recognition System..."
+        elif "initialize" in command:
+            response = "Initializing Pose Recognition System..."
+        elif "activate" in command:
+            response = "Activating Pose Recognition System..."
+        else:
+            response = "Running Pose Recognition System..."
+        print(response)
+        talk(response)
+        Initialize_Pose_Recognition_System()
         Confirmation_SubFunction(command)
 
     #________________________________________________________________REPEAT_BLOCK
