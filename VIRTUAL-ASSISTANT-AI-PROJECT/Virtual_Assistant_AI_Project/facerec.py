@@ -163,7 +163,7 @@ def Face_Recognition_System():
                     # Display the Resulting Image
                     cv2.imshow('AI Face Recognition System', frame)
                     key = cv2.waitKey(30) & 0xff
-                    min_faces = 6
+                    min_faces = 1
                     if len(face_names) >= min_faces:
                         cv2.destroyAllWindows()
                         return face_names
@@ -173,5 +173,5 @@ def Face_Recognition_System():
                     else:
                         continue
     Classify_Faces()
-Face_Recognition_System()
+
 #Run Command: python facerec.py
