@@ -7,7 +7,12 @@ def Face_Recognition_System():
     import face_recognition as fr
     from datetime import  datetime
     import time
+    import mediapipe as mp
+    import imutils
 
+
+    mp_holistic = mp.solutions.holistic
+    mp_drawing = mp.solutions.drawing_utils
 
     #Clear the CSV file
     #Run Command: python facerec.py
@@ -91,58 +96,82 @@ def Face_Recognition_System():
         
         #Capture video from webcam: 
         cap = cv2.VideoCapture(0)
-        while True:
-            _, frame = cap.read()
+        
+        # Initialize MediaPipe Holistic
+        #Run command: python poserec.py
+        with mp_holistic.Holistic(static_image_mode = True, 
+                            min_detection_confidence = 0.5, 
+                            min_tracking_confidence = 0.5
+                            ) as holistic:
             
-            # Resize Image
-            def resize(frame, size) :
-                width = int(frame.shape[1]*size)
-                height = int(frame.shape[0] * size)
-                dimension = (width, height)
-                return cv2.resize(frame, dimension, interpolation = cv2.INTER_AREA)
-            frame = resize(frame, 0.50)
-            
-            #Flip the captured video
-            frame = cv2.flip(frame, 1)
-            
-            # Find Face Location
-            face_locations = face_recognition.face_locations(frame)
-            unknown_face_encodings = face_recognition.face_encodings(frame, face_locations)
+            while True:
+                success, frame = cap.read()
+                
+                if success:
+                    # Resize Frame
+                    def resize(frame, size) :
+                        width = int(frame.shape[1]*size)
+                        height = int(frame.shape[0] * size)
+                        dimension = (width, height)
+                        return cv2.resize(frame, dimension, interpolation = cv2.INTER_AREA)
+                    frame = resize(frame, 0.50)
+                    
+                    #Flip the captured video
+                    frame = cv2.flip(frame, 1)
+                    results = holistic.process(frame)
+                    
+                    #Print Nose Coordinates.
+                    frame_height, frame_width, _ = frame.shape
+                    if results.pose_landmarks:
+                        print(
+                        f'Nose Coordinates: ('
+                        f'{round(results.pose_landmarks.landmark[mp_holistic.PoseLandmark.NOSE].x * frame_width)},'
+                        f'{round(results.pose_landmarks.landmark[mp_holistic.PoseLandmark.NOSE].y * frame_height)})')
+                    
+                    # Find Face Location
+                    face_locations = face_recognition.face_locations(frame)
+                    unknown_face_encodings = face_recognition.face_encodings(frame, face_locations)
 
-            # Identify if the face is a match for the known face(s)
-            face_names = []
-            for face_encoding in unknown_face_encodings:
-                matches = face_recognition.compare_faces(faces_encoded, face_encoding)
-                name = "Unknown"
+                    # Identify if the face is a match for the known face(s)
+                    face_names = []
+                    for face_encoding in unknown_face_encodings:
+                        matches = face_recognition.compare_faces(faces_encoded, face_encoding)
+                        name = "Unknown"
 
-                # Use the known face with the smallest distance to the new face
-                face_distances = face_recognition.face_distance(faces_encoded, face_encoding)
-                best_match_index = np.argmin(face_distances)
-                if matches[best_match_index]:
-                    name = known_face_names[best_match_index]
-                face_names.append(name)
+                        # Use the known face with the smallest distance to the new face
+                        face_distances = face_recognition.face_distance(faces_encoded, face_encoding)
+                        best_match_index = np.argmin(face_distances)
+                        if matches[best_match_index]:
+                            name = known_face_names[best_match_index]
+                        face_names.append(name)
 
-                # Create a box around the face
-                for (top, right, bottom, left), name in zip(face_locations, face_names):
-                    cv2.rectangle(frame, (left-20, top-20), (right+20, bottom+20), (255, 0, 0), 2)
+                        # Create a label with a name above the face and a facemesh around the face
+                        for (top, right, bottom, left), name in zip(face_locations, face_names):
+                            # Draw Face Landmarks (Tesselation)
+                            frame = frame.copy()
+                            mp_drawing.draw_landmarks(
+                            image = frame, 
+                            landmark_list = results.face_landmarks, 
+                            connections = mp_holistic.FACEMESH_TESSELATION,
+                            landmark_drawing_spec = mp_drawing.DrawingSpec(color = (0,255,0), thickness = 1, circle_radius = 1),
+                            connection_drawing_spec = mp_drawing.DrawingSpec(color = (0,255,0), thickness = 1, circle_radius = 1))
+                            
+                            font = cv2.FONT_HERSHEY_TRIPLEX
+                            cv2.putText(frame, name, (left -30, top -30), font + 1, 1, (255, 255, 255), 1)
+                            MarkAttendance(name)
 
-                # Create a label with a name below the face
-                    cv2.rectangle(frame, (left-20, bottom -15), (right+20, bottom+20), (255, 0, 0), cv2.FILLED)
-                    font = cv2.FONT_HERSHEY_TRIPLEX
-                    cv2.putText(frame, name, (left -20, bottom + 15), font + 1, 1, (255, 255, 255), 1)
-                    MarkAttendance(name)
-
-            # Display the Resulting Image
-            cv2.imshow('AI Face Recognition System', frame)
-            key = cv2.waitKey(30) & 0xff
-            min_faces = 1
-            if len(face_names) >= min_faces:
-                cv2.destroyAllWindows()
-                return face_names
-            elif key == 27:
-                cv2.destroyAllWindows()
-                return face_names
-            else:
-                continue
+                    # Display the Resulting Image
+                    cv2.imshow('AI Face Recognition System', frame)
+                    key = cv2.waitKey(30) & 0xff
+                    min_faces = 6
+                    if len(face_names) >= min_faces:
+                        cv2.destroyAllWindows()
+                        return face_names
+                    elif key == 27:
+                        cv2.destroyAllWindows()
+                        return face_names
+                    else:
+                        continue
     Classify_Faces()
+Face_Recognition_System()
 #Run Command: python facerec.py
