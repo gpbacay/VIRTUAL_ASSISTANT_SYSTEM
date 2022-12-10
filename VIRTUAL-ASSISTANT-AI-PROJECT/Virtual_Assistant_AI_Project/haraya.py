@@ -134,7 +134,7 @@ def Start_Up_command_MainFunction():
 #Run Command: python haraya.py
 def Listen_command_MainFunction():
     global command
-    command = None
+    command = ''
     
     try:
         with sr.Microphone() as source:
@@ -187,7 +187,7 @@ def Add_command_MainFunction(command):
 #Run Command: python haraya.py
 def Wait_command_MainFunction():
     global command
-    command = None
+    command = ''
     
     try:
         with sr.Microphone() as source:
@@ -683,7 +683,7 @@ def run_haraya():
     #_______________________________________________________________________REPEAT_SUBFUNCTION
     #Run Command: python haraya.py
     def Repeat_SubFunction():
-        command = None
+        command = ''
         
         try:
             with sr.Microphone() as source:
