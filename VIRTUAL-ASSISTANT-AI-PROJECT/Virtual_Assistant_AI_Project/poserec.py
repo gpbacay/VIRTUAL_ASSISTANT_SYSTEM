@@ -37,8 +37,8 @@ def Pose_Recognition_System():
                 if results.pose_landmarks:
                     print(
                     f'Nose Coordinates: ('
-                    f'{results.pose_landmarks.landmark[mp_holistic.PoseLandmark.NOSE].x * image_width},'
-                    f'{results.pose_landmarks.landmark[mp_holistic.PoseLandmark.NOSE].y * image_hight})')
+                    f'{round(results.pose_landmarks.landmark[mp_holistic.PoseLandmark.NOSE].x * image_width)},'
+                    f'{round(results.pose_landmarks.landmark[mp_holistic.PoseLandmark.NOSE].y * image_hight)}')
 
                 # Draw Landmarks
                 #Run Command: python poserec.py
@@ -62,16 +62,16 @@ def Pose_Recognition_System():
                     image = annotated_image, 
                     landmark_list = results.face_landmarks, 
                     connections = mp_holistic.FACEMESH_TESSELATION,
-                    landmark_drawing_spec = mp_drawing.DrawingSpec(color = (0,255,0), thickness = 1, circle_radius = 1),
-                    connection_drawing_spec = mp_drawing.DrawingSpec(color = (0,255,0), thickness = 1, circle_radius = 1))
+                    landmark_drawing_spec = mp_drawing.DrawingSpec(color = (255,255,0), thickness = 1, circle_radius = 1),
+                    connection_drawing_spec = mp_drawing.DrawingSpec(color = (255,255,0), thickness = 1, circle_radius = 1))
                 #POSE
                 if results.pose_landmarks:
                     mp_drawing.draw_landmarks(
                         image = annotated_image, 
                         landmark_list = results.pose_landmarks, 
                         connections = mp_holistic.POSE_CONNECTIONS,
-                        landmark_drawing_spec = mp_drawing.DrawingSpec(color = (255, 0, 255), thickness = 1, circle_radius = 1),
-                        connection_drawing_spec = mp_drawing.DrawingSpec(color = (255, 0, 255), thickness = 1, circle_radius = 1))
+                        landmark_drawing_spec = mp_drawing.DrawingSpec(color = (0, 255, 0), thickness = 1, circle_radius = 1),
+                        connection_drawing_spec = mp_drawing.DrawingSpec(color = (0, 255, 0), thickness = 1, circle_radius = 1))
                 
                 #Show Frames Per Second
                 fps_end_time = datetime.datetime.now()

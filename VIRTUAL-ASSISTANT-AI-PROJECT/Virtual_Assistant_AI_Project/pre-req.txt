@@ -26,3 +26,5 @@ pip install googlesearch-python
 pip install google-search
 pip install mediapipe
 pip install imutils
+pip install phonenumbers
+from phonenumbers import carrier, geocoder, timezone

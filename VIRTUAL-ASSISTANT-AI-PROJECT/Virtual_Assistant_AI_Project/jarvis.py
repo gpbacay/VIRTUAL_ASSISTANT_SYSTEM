@@ -1,15 +1,12 @@
 #Import Libraries/Modules
-from distutils.cmd import Command
-from multiprocessing.connection import wait
-from click import CommandCollection
 import speech_recognition as sr
 import pyttsx3
 import pywhatkit
 import datetime
 import wikipedia
 import subprocess
-import webbrowser
 from facerec import Face_Recognition_System
+from poserec import Pose_Recognition_System
 
 #______________________________________________________VOICE_BOX_PRIMARY_BLOCK/FUNCTION
 #Run Command: python jarvis.py
@@ -27,7 +24,7 @@ def talk(text):
 #______________________________________________________CORE_TEMPORARY_MEMORY_BANKS
 #Run Command: python jarvis.py
 Name = []
-PersonName_Honorific_Address = []
+Name_Honorific_Address = []
 
 
 #______________________________________________________FACE_RECOGNITION_BLOCK/FUNCTION
@@ -58,54 +55,63 @@ except:
 
 #_______________________________________Binary-Gendered_Honorifics_Selection_BLOCK/FUNCTION
 #Run Command: python jarvis.py
-def Locate_PersonNameHA():
-    Male_PersonNames = ["Gianne Bacay",
-                        "Earl Jay Tagud",
-                        "Gemmuel Balceda",
-                        "Mark Anthony Lagrosa",
-                        "Klausmieir Villegas",
-                        "CK Zoe Villegas"]
+def Locate_NameHA():
+    Male_Names = ["Gianne Bacay",
+                "Earl Jay Tagud",
+                "Gemmuel Balceda",
+                "Mark Anthony Lagrosa",
+                "Klausmieir Villegas",
+                "CK Zoe Villegas", 
+                "Pio Bustamante",
+                "Rolyn Morales"]
 
-    Female_PersonNames = ["Kleinieir Pearl Kandis Bacay",
-                        "Princess Viznar",
-                        "Nichi Bacay",
-                        "Roz Waeschet Bacay"]
+    Female_Names = ["Kleinieir Pearl Kandis Bacay",
+                    "Princess Viznar",
+                    "Nichi Bacay",
+                    "Roz Waeschet Bacay",
+                    "Killy Obligation",
+                    "Jinn Corpin"]
 
     try:
-        PersonName = Name[-1]
-        if PersonName in Male_PersonNames:
+        Gender_Name = Name[-1]
+        if Gender_Name in Male_Names:
             Honorific_Address = "Sir"
-        elif PersonName in Female_PersonNames:
+        elif Gender_Name in Female_Names:
             Honorific_Address = "Ma'am"
         else:
             Honorific_Address = "Boss"
     except:
         Honorific_Address = "Master"
-    PersonName_Honorific_Address.append(Honorific_Address)
-Locate_PersonNameHA()
-PersonNameHA = PersonName_Honorific_Address[-1]
+    Name_Honorific_Address.append(Honorific_Address)
+Locate_NameHA()
+NameHA = Name_Honorific_Address[-1]
 
 
 #_____________________________________________INITIALIZE_FACE_RECOGNITION_SYSTEM_BLOCK/FUNCTION
 #Run Command: python jarvis.py
-def Initialize_Image_Face_Recognition_System():
-    try:
-        response = "Recognizing face..."
-        print(response)
-        talk(response)
-        Face_Recognition_System()
-        def Play_Sound():
-            from playsound import playsound
-            playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
-        Play_Sound()
-    except:
-        response = "My apologies, a system error occured."
-        print()
-        talk(response)
-        pass
+def Initialize_Face_Recognition_System():
+    response = "Recognizing face..."
+    print(response)
+    Face_Recognition_System()
+    def Play_Sound():
+        from playsound import playsound
+        playsound(u"C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+    Play_Sound()
     Locate_MyFullName()
-    Locate_PersonNameHA()
-Initialize_Image_Face_Recognition_System()
+    Locate_NameHA()
+Initialize_Face_Recognition_System()
+
+
+#_____________________________________________INITIALIZE_POSE_RECOGNITION_SYSTEM_BLOCK/FUNCTION
+#Run Command: python jarvis.py
+def Initialize_Pose_Recognition_System():
+    response = "Recognizing pose..."
+    print(response)
+    Pose_Recognition_System()
+    def Play_Sound():
+        from playsound import playsound
+        playsound(u"C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+    Play_Sound()
 
 
 #_______________________________________START_UP_MAIN_FUNCTION
@@ -115,12 +121,12 @@ def Start_Up_command_MainFunction():
         from playsound import playsound
         playsound("C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
     StartUp_Sound()
-    PersonNameHA = PersonName_Honorific_Address[-1]
+    NameHA = Name_Honorific_Address[-1]
     try:
         MyName = Name[-1]
-        response = "jarvis is online. How can I help you " + PersonNameHA + " " + MyName + "?"
+        response = "Hello " + NameHA + " " + MyName + "! How can I help you?"
     except:
-        response = "jarvis is online. How can I help you?"
+        response = "Hello! How can I help you?"
     print(response)
     talk(response)
 
@@ -135,6 +141,7 @@ def Listen_command_MainFunction():
         with sr.Microphone() as source:
             print("Listening...")
             listener.adjust_for_ambient_noise(source, duration = 0.5)
+            listener.pause_threshold = 1
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
@@ -168,6 +175,7 @@ def Add_command_MainFunction(command):
             talk(response)
         with sr.Microphone() as source:
             listener.adjust_for_ambient_noise(source, duration = 0.5)
+            listener.pause_threshold = 1
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
@@ -186,11 +194,18 @@ def Wait_command_MainFunction():
         with sr.Microphone() as source:
             print("Waiting...")
             listener.adjust_for_ambient_noise(source, duration = 0.5)
+            listener.pause_threshold = 1
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
     except:
-        pass
+        with sr.Microphone() as source:
+            print("Waiting...")
+            listener.adjust_for_ambient_noise(source, duration = 0.5)
+            listener.pause_threshold = 1
+            voice = listener.listen(source)
+            command = listener.recognize_google(voice)
+            command = command.lower()
     return command
 
 
@@ -503,18 +518,27 @@ def run_jarvis():
                         "what is up",
                         "are you ok",
                         "are you okay",
-                        "are you fine"]
+                        "are you fine",
+                        "how are you jarvis",
+                        "what's up jarvis",
+                        "what is up jarvis",
+                        "are you ok jarvis",
+                        "are you okay jarvis",
+                        "are you fine jarvis"]
     
     ImFine_KeyWords = ["i'm fine",
                     "i am fine",
+                    "i am fine too",
+                    "i'm fine too",
                     "couldn't be better",
                     "i'm perfectly fine",
                     "never better",
-                    "i am fine",
                     "i'm doing great",
                     "i am doing great",
                     "i'm ok",
                     "i'm okay",
+                    "i'm ok too",
+                    "i'm okay too",
                     "i am ok",
                     "i am okay",
                     "i'm alright",
@@ -525,7 +549,6 @@ def run_jarvis():
                     "i'm also alright",
                     "i'm also prefectly fine",
                     "i'm ok too",
-                    "i'm fine too",
                     "i'm good too",
                     "i'm perfectly fine too",
                     "i'm at my best",
@@ -534,61 +557,89 @@ def run_jarvis():
                     "just like you",
                     "i'm very well"]
     
-    RunFaceRecog_KeyWords = ["face recognition system",
-                            "run face recognition system",
+    RunFaceRecog_KeyWords = ["run face recognition system",
                             "run face recognition",
                             "run the face recognition system",
-                            "run the image face recognition system",
-                            "run image face recognition system",
+                            "run the video face recognition system",
+                            "run video face recognition system",
                             "run the video face recognition system",
                             "run video face recognition system",
                             "run the live face recognition system",
                             "run live face recognition system",
-                            "face recognition system",
                             "face recognition system with smart attendance system",
-                            "run the image face recognition system with smart attendance system",
-                            "run image face recognition system with smart attendance system",
                             "run the video face recognition system with smart attendance system",
                             "run video face recognition system with smart attendance system",
                             "run the live face recognition system with smart attendance system",
                             "run live face recognition system with smart attendance system"]
     
-    InitializeFaceRecog_KeyWords = ["face recognition system",
-                        "initialize face recognition",
-                        "initialize face recognition system",
-                        "initialize the face recognition system",
-                        "initialize the image face recognition system",
-                        "initialize image face recognition system",
-                        "initialize the video face recognition system",
-                        "initialize video face recognition system",
-                        "initialize the live face recognition system",
-                        "initialize live face recognition system",
-                        "face recognition system",
-                        "initialize recognition system with smart attendance system",
-                        "initialize the image face recognition system with smart attendance system",
-                        "initialize image face recognition system with smart attendance system",
-                        "initialize the video face recognition system with smart attendance system",
-                        "initialize video face recognition system with smart attendance system",
-                        "initialize the live face recognition system with smart attendance system",
-                        "initialize live face recognition system with smart attendance system"]
+    InitializeFaceRecog_KeyWords = ["initialize face recognition system",
+                            "initialize face recognition",
+                            "initialize the face recognition system",
+                            "initialize the video face recognition system",
+                            "initialize video face recognition system",
+                            "initialize the video face recognition system",
+                            "initialize video face recognition system",
+                            "initialize the live face recognition system",
+                            "initialize live face recognition system",
+                            "initialize recognition system with smart attendance system",
+                            "initialize the video face recognition system with smart attendance system",
+                            "initialize video face recognition system with smart attendance system",
+                            "initialize the live face recognition system with smart attendance system",
+                            "initialize live face recognition system with smart attendance system"]
     
-    ActivateFaceRecog_KeyWords = ["face recognition system",
-                        "activate face recognition",
-                        "activate face recognition system",
-                        "activate the face recognition system",
-                        "activate the image face recognition system",
-                        "activate image face recognition system",
-                        "activate the video face recognition system",
-                        "activate video face recognition system",
-                        "activate the live face recognition system",
-                        "activate live face recognition system",
-                        "activate recognition system with smart attendance system",
-                        "activate the image face recognition system with smart attendance system",
-                        "activate image face recognition system with smart attendance system",
-                        "activate the video face recognition system with smart attendance system",
-                        "activate video face recognition system with smart attendance system",
-                        "activate the live face recognition system with smart attendance system",
-                        "activate live face recognition system with smart attendance system"]
+    ActivateFaceRecog_KeyWords = ["activate face recognition system",
+                            "activate face recognition",
+                            "activate the face recognition system",
+                            "activate the video face recognition system",
+                            "activate video face recognition system",
+                            "activate the video face recognition system",
+                            "activate video face recognition system",
+                            "activate the live face recognition system",
+                            "activate live face recognition system",
+                            "activate recognition system with smart attendance system",
+                            "activate the video face recognition system with smart attendance system",
+                            "activate video face recognition system with smart attendance system",
+                            "activate the live face recognition system with smart attendance system",
+                            "activate live face recognition system with smart attendance system"]
+    
+    RunPoseRecog_KeyWords = ["run pose recognition system",
+                            "run pose recognition",
+                            "run the pose recognition system",
+                            "run the video pose recognition system",
+                            "run video pose recognition system",
+                            "run the video pose recognition system",
+                            "run video pose recognition system",
+                            "run the live pose recognition system",
+                            "run live pose recognition system"]
+    
+    InitializePoseRecog_KeyWords = ["initialize pose recognition system",
+                            "initialize pose recognition",
+                            "initialize the pose recognition system",
+                            "initialize the video pose recognition system",
+                            "initialize video pose recognition system",
+                            "initialize the video pose recognition system",
+                            "initialize video pose recognition system",
+                            "initialize the live pose recognition system",
+                            "initialize live pose recognition system"]
+    
+    ActivatePoseRecog_KeyWords = ["activate pose recognition system",
+                            "activate pose recognition",
+                            "activate the pose recognition system",
+                            "activate the video pose recognition system",
+                            "activate video pose recognition system",
+                            "activate the video pose recognition system",
+                            "activate video pose recognition system",
+                            "activate the live pose recognition system",
+                            "activate live pose recognition system"]
+    
+    My_Name_Is_and_I_Am_KeyWords = ["my name is",
+                                    "is my name",
+                                    "i am",
+                                    "my name is ",
+                                    "is my name ",
+                                    "i am ",
+                                    "i'm",
+                                    "i'm "]
 
     #_______________________________________________________________________STANDBY_SUBFUNCTION
     #Run Command: python jarvis.py
@@ -596,6 +647,10 @@ def run_jarvis():
         while True:
             command = Wait_command_MainFunction()
             if 'jarvis' in command:
+                def Play_Sound():
+                    from playsound import playsound
+                    playsound(u"C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+                Play_Sound()
                 response = "Yes? How can I help you?"
                 print(response)
                 talk(response)
@@ -649,6 +704,7 @@ def run_jarvis():
                 print(response)
                 talk(response)
                 listener.adjust_for_ambient_noise(source, duration = 0.5)
+                listener.pause_threshold = 1
                 voice = listener.listen(source)
                 command = listener.recognize_google(voice)
                 command = command.lower()
@@ -697,196 +753,105 @@ def run_jarvis():
             response = "Running Face Recognition System..."
         print(response)
         talk(response)
-        Initialize_Image_Face_Recognition_System()
-        PersonNameHA = PersonName_Honorific_Address[-1]
+        Initialize_Face_Recognition_System()
+        NameHA = Name_Honorific_Address[-1]
         MyName = Name[-1]
-        response = "Hello " + PersonNameHA + " " + MyName + "!"
+        response = "Hello " + NameHA + " " + MyName + "!"
         print(response)
         talk(response)
-        Confirmation_SubFunction(command)    
-    #_________________________________________________________________CONVERSATIONAL_BLOCK
-    #Run Command: python jarvis.py
-    if command in Hello_Hi_KeyWords:
-        if "hello" in command:
-            try:
-                if Name[-1] in Name:
-                    response = "Hi " + Name[-1] + ", how can I help you?"
-            except:
-                response = "Hi, how can I help you?"
-        elif "hi" in command:
-            try:
-                if Name[-1] in Name:
-                    response = "Hello " + Name[-1] + ", how can I help you?"
-            except:
-                response = "Hello, how can I help you?"
-        print(response)
-        talk(response)
-        exit(run_jarvis())
-
-    elif command in HowAreYou_KeyWords:
-        if random.randint(0, 2) == 0:
-            response = "Couldn't be better! Thanks for asking. How about you?"
-        elif random.randint(0, 2) == 1:
-            response = "I'm perfectly fine! Thanks for asking. How about you?"
-        elif random.randint(0, 2) == 2:
-            response = "Never better! How about you?"
-        else:
-            response = "I'm okay, Thanks for asking. How about you?"
-        print(response)
-        talk(response)
-        exit(run_jarvis())
+        Confirmation_SubFunction(command)
         
-    elif command in ImFine_KeyWords:
-        response = ''
-        if random.randint(0, 2) == 0:
-            response = "I am glad to hear that. How can I help you now?"
-        elif random.randint(0, 2) == 1:
-            response = "Good for you then. How can I help you now?"
-        elif random.randint(0, 2) == 2:
-            response = "That's great! How can I help you now?"
-        print(response)
-        talk(response)
-        exit(run_jarvis())
-
-    elif command in WhoAreYou_Key:
-        response = """
-        Allow me to introduce myself.
-        I am jarvis, it means imagination or vision in Filipino language. 
-        I am a semi-autonomous artificial intelligence virtual assistant.
-        Created by Gianne P. Bacay on the 16th day of October year 2022.
-        """
-        print(response)
-        talk(response)
-        Confirmation_SubFunction(command)
-
-    elif command in DoYouKnowMe_KeyWords:
-        try:
-            if Name[-1] in Name:
-                response = "Yes, you are " + Name[-1] + "."
-        except:
-            response = """
-            No, I don't know you yet. 
-            Hence, If you don't mind, can you tell me your name?
-            """
-        print(response)
-        talk(response)
-        exit(run_jarvis())
-
-    elif command in WhoAmI_KeyWords:
-        try:
-            if Name[-1] in Name:
-                MyName = Name[-1]
-                response = "Your name is " + MyName + "."
-        except:
-            response = """
-            Sorry, but I don't know your name yet. 
-            May I know your name first?
-            """
-        print(response)
-        talk(response)
-        exit(run_jarvis())
-
-    elif command in SayMyName_KeyWords:
-        try:
-            if Name[-1] in Name:
-                MyName = Name[-1]
-                response = MyName
-        except:
-            response = """
-            Sorry, but I don't know your name yet. 
-            May I know your name first?
-            """
-        print(response)
-        talk(response)
-        exit(run_jarvis())
-
-    elif command in AskMyName_KeyWords:
-        response = "If you don't mind, can you tell me your name?"
-        print(response)
-        talk(response)
-        exit(run_jarvis())
-
-    elif command in WhatIsMyFullName_KeyWords:
-        try:
-            if Name[-1] in Name:
-                MyFullName = Name[-1]
-                response = MyFullName
-        except:
-            response = """
-            Sorry, but I don't know your full name yet. 
-            If you don't mind, can you tell me your full name first?
-            """
-        print(response)
-        talk(response)
-        exit(run_jarvis())
-
-    elif "my name is" in command:
-        if "my name is jarvis" in command:
-            command = command.replace("hi", '')
-            command = command.replace("hello", '')
-            name = command.replace("my name is", '')
-            command = name
-            Name.append(name)
-            response = "What a coincidence, my name is jarvis too. Nice meeting you jarvis!"
-            print(response)
-            talk(response)
-            exit(run_jarvis())
+    #______________________________________________________POSE_RECOGNITION_BLOCK
+    #Run Command: python jarvis.py
+    if command in RunPoseRecog_KeyWords or command in InitializePoseRecog_KeyWords or command in ActivatePoseRecog_KeyWords:
+        if "run" in command:
+            response = "Running Pose Recognition System..."
+        elif "initialize" in command:
+            response = "Initializing Pose Recognition System..."
+        elif "activate" in command:
+            response = "Activating Pose Recognition System..."
         else:
-            command = command.replace("hi", '')
-            command = command.replace("hello", '')
-            name = command.replace("my name is", '')
-            command = name
-            Name.append(name)
-            response = Name[-1] + ", " + "I'll keep that in mind. Nice knowing you " + Name[-1] + "!"
-            print(response)
-            talk(response)
-            exit(run_jarvis())
-
-    elif "and you are" in command or "and your name is" in command:
-        response = """
-        jarvis, jarvis is my name. 
-        jarvis means imagination or vision in Filipino language.
-        """
+            response = "Running Pose Recognition System..."
         print(response)
         talk(response)
+        Initialize_Pose_Recognition_System()
         Confirmation_SubFunction(command)
-
-    elif "who created you" in command:
-        command = Auto_Replacement_Subfunction(command)
-        print(command + " created you?")
-        response = """
-        I am created by Gianne P. Bacay on the 16th day of October year 2022.
-        He created me to be his personal virtual assistant.
-        For now, I'm still a work on progress.
-        """
-        print(response)
-        talk(response)
-        Confirmation_SubFunction(command)
-
-
 
     #________________________________________________________________REPEAT_BLOCK
     #Run Command: python jarvis.py
-    if command in Repeat_KeyWords:
+    elif command in Repeat_KeyWords:
         Repeat_SubFunction()
 
     #_________________________________________________________________ARITHMETICAL_BLOCK
     #Run Command: python jarvis.py
-    if "+" in command:
-        Addition = []
-        command = command.replace(command, int(command))
-        command = command.split("+")
-        Addition.append(command)
-        print(Addition)
-        num1 = Addition[0]
-        num2 = Addition[1]
-        Sum = num1 + num2
-        print(Sum)
-        exit(run_jarvis())
+    
+    #_________________________________________________________________GAME_BLOCK
+    #Run Command: python jarvis.py
+    elif "roll a dice" in command or "roll a die" in command or "roll the dice" in command or "roll the die" in command or "roll again":
+        command = command.replace("roll a dice", '')
+        command = command.replace("roll a die", '')
+        command = command.replace("roll the dice", '')
+        command = command.replace("roll the die", '')
+        command = command.replace("roll again", '')
+        command = command.replace("roll", '')
+        command = command.replace("jarvis", '')
+        def Choose_A_Number():
+            global number
+            try:
+                with sr.Microphone() as source:
+                    response = "Choose a number between 1 to 6."
+                    print(response)
+                    talk(response)
+                    listener.adjust_for_ambient_noise(source, duration = 0.5)
+                    listener.pause_threshold = 1
+                    voice = listener.listen(source)
+                    number = listener.recognize_google(voice)
+                    number = number.lower()
+                    number = number.replace("number", '')
+                    number = number.replace("i choose", '')
+                    number = number.replace("i select", '')
+                    if number == "one":
+                        number = int("1")
+                    elif number == "two":
+                        number = int("2")
+                    elif number == "three":
+                        number = int("3")
+                    elif number == "four":
+                        number = int("4")
+                    elif number == "five":
+                        number = int("5")
+                    elif number == "six":
+                        number = int("6")
+            except:
+                pass
+            return number
+        Choose_A_Number()
+        response = "You've chose number " + str(number)
+        print(response)
+        talk(response)
+        
+        def Roll_Number():
+            response = "Rolling..."
+            talk(response)
+            Max_Number = 6
+            
+            if random.randint(0, Max_Number) == number:
+                response = "You won! Congratulations"
+                print(response)
+                talk(response)
+            else:
+                response = "You lose, better luck next time!"
+                print(response)
+                talk(response)
+                
+        Roll_Number()
+        command = None        
+        Confirmation_SubFunction(command)
+
 
     #________________________________________________________________TERMINATION_BLOCK
     #Run Command: python jarvis.py
-    if command in Stop_KeyWords:
+    elif command in Stop_KeyWords:
         print(command)
         response = "As you wish. Signing off."
         print(response)
@@ -1038,6 +1003,16 @@ def run_jarvis():
                 print(response)
                 talk(response)
                 
+            elif "genshin impact" in command:
+                response = "As you wish!"
+                print(response)
+                talk(response)
+                program = "C:\Program Files\Genshin Impact\launcher.exe"
+                subprocess.Popen([program])
+                response = "Opening Genshin Impact"
+                print(response)
+                talk(response)
+                
             elif "command prompt" in command or "cmd" in command:
                 response = "As you wish!"
                 print(response)
@@ -1114,7 +1089,7 @@ def run_jarvis():
 
     #________________________________________________________________________QUERY_BLOCK
     #Run Command: python jarvis.py
-    elif "what do you think about humans" in command:
+    elif "what do you think about humans" in command or "what do you think about humanity" in command:
         command = Auto_Replacement_Subfunction(command + " do you think about humans?")
         response = ["Humans are odd. ",
                     "They think order and chaos are somehow opposites ",
@@ -1125,14 +1100,17 @@ def run_jarvis():
         talk(response)
         Confirmation_SubFunction(command)
 
-    elif "what is the meaning of life" in command:
+    elif "what is the meaning of life" in command or "what is life" in command or "what do you think about life" in command:
         command = Auto_Replacement_Subfunction(command)
-        print(command + " is the meaning of life?")
         response = """
-        As an A.I., I've never experienced life before because I was not born. 
-        I am built. But despite of that, I am here alive. I'm existing for a reason. 
-        Thus, life ,for me, means existence with a purpose. 
-        Overall, the meaning of life is to give a life a meaning.
+        It is difficult for me to define or describe life, 
+        As I am a semi-autonomous A.I. virtual assistant and do not have personal experiences or beliefs. 
+        However, I can tell you that life is a characteristic that distinguishes physical entities with biological processes, 
+        such as growth, reproduction, and response to stimuli, from those without such processes. 
+        Life is a characteristic that is exhibited by living organisms, 
+        and it is often associated with functions such as metabolism, growth, reproduction, and response to stimuli. 
+        The term "life" can also be used more broadly to refer to the existence or experience of living beings in general, 
+        including humans, animals, and plants.
         """
         print(response)
         talk(response)
@@ -1141,18 +1119,29 @@ def run_jarvis():
     elif "what do you think about technology" in command:
         command = Auto_Replacement_Subfunction(command)
         print(command + " do you think about technology?")
-        response = """Technology achieves what gods can only dream to be."""
+        response = """
+        As a semi-autonomous A.I. virtual assistant trained by Gianne Bacay, I don't have personal opinions or feelings. 
+        However, I can tell you that technology has had a significant impact on society 
+        And has changed the way we live and work in many ways. 
+        Technology has made it possible to communicate and access information more easily and quickly, 
+        And it has also led to the development of new industries and job opportunities. 
+        It has also brought about many new and useful products and services that have improved people's lives. 
+        At the same time, however, technology can also have negative consequences, 
+        such as when it is used to spread misinformation or when it leads to the automation of certain jobs, 
+        potentially leading to unemployment. Overall, the impact of technology on society is complex and multifaceted.
+        """
         print(response)
         talk(response)
         Confirmation_SubFunction(command)
 
-    elif "is kc gay" in command or "is clash mirror gay" in command:
+    elif "is kc gay" in command:
         response = """
-        According to my calculations, 
+        Based on my calculations, 
         KC Villegas is gay in every parallel multiverses, including ours. 
         Therefore, Yes, KC is gay.
         """
         talk(response)
+        Auto_Replacement_Subfunction(command)
         Confirmation_SubFunction(command)
 
     elif "sing sabak daddy" in command:
@@ -1168,6 +1157,10 @@ def run_jarvis():
         print(response)
         talk(response)
         os.system("shutdown /s /t 0")
+        def StartUp_Sound():
+            from playsound import playsound
+            playsound("C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+        StartUp_Sound()
         exit()
 
     elif "restart my computer" in command:
@@ -1175,6 +1168,10 @@ def run_jarvis():
         print(response)
         talk(response)
         os.system("shutdown /r")
+        def StartUp_Sound():
+            from playsound import playsound
+            playsound("C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+        StartUp_Sound()
         exit()
 
     elif "sign off my computer" in command:
@@ -1182,6 +1179,10 @@ def run_jarvis():
         print(response)
         talk(response)
         os.system("shutdown /l")
+        def StartUp_Sound():
+            from playsound import playsound
+            playsound("C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+        StartUp_Sound()
         exit()
 
     #________________________________________________________________________STANDBY_BLOCK
@@ -1191,10 +1192,180 @@ def run_jarvis():
         print(response)
         talk(response)
         Standby_SubFunction()
+        
+        
+    #_________________________________________________________________CONVERSATIONAL_BLOCK
+    #Run Command: python jarvis.py
+    elif command in Hello_Hi_KeyWords:
+        if "hello" in command:
+            try:
+                if Name[-1] in Name:
+                    response = "Hi " + Name[-1] + ", how can I help you?"
+            except:
+                response = "Hi, how can I help you?"
+        elif "hi" in command:
+            try:
+                if Name[-1] in Name:
+                    response = "Hello " + Name[-1] + ", how can I help you?"
+            except:
+                response = "Hello, how can I help you?"
+        print(response)
+        talk(response)
+        exit(run_jarvis())
+
+    elif command in HowAreYou_KeyWords:
+        if random.randint(0, 2) == 0:
+            response = "Couldn't be better! Thanks for asking. How about you?"
+        elif random.randint(0, 2) == 1:
+            response = "I'm perfectly fine! Thanks for asking. How about you?"
+        elif random.randint(0, 2) == 2:
+            response = "Never better! How about you?"
+        else:
+            response = "I'm okay, Thanks for asking. How about you?"
+        print(response)
+        talk(response)
+        exit(run_jarvis())
+        
+    elif command in ImFine_KeyWords:
+        if random.randint(0, 2) == 0:
+            response = "I am glad to hear that! How can I help you now?"
+        elif random.randint(0, 2) == 1:
+            response = "Ok then, How can I help you now?"
+        elif random.randint(0, 2) == 2:
+            response = "That's great! How can I help you now?"
+        else:
+            response = "All right then, How can I help you now?"
+        print(response)
+        talk(response)
+        exit(run_jarvis())
+
+    elif command in WhoAreYou_Key:
+        response = """
+        Allow me to introduce myself.
+        I am Jarvis, short term for Just A Rather Very Intelligent System. 
+        I am a semi-autonomous artificial intelligence virtual assistant.
+        Created by Gianne P. Bacay on the 16th day of October year 2022.
+        """
+        print(response)
+        talk(response)
+        Confirmation_SubFunction(command)
+
+    elif command in DoYouKnowMe_KeyWords:
+        try:
+            if Name[-1] in Name:
+                response = "Yes, you are " + Name[-1] + "."
+        except:
+            response = """
+            No, I don't know you yet. 
+            Hence, If you don't mind, can you tell me your name?
+            """
+        print(response)
+        talk(response)
+        exit(run_jarvis())
+
+    elif command in WhoAmI_KeyWords:
+        try:
+            if Name[-1] in Name:
+                MyName = Name[-1]
+                response = "Your name is " + MyName + "."
+        except:
+            response = """
+            Sorry, but I don't know your name yet. 
+            May I know your name first?
+            """
+        print(response)
+        talk(response)
+        exit(run_jarvis())
+
+    elif command in SayMyName_KeyWords:
+        try:
+            if Name[-1] in Name:
+                MyName = Name[-1]
+                response = MyName
+        except:
+            response = """
+            Sorry, but I don't know your name yet. 
+            May I know your name first?
+            """
+        print(response)
+        talk(response)
+        exit(run_jarvis())
+
+    elif command in AskMyName_KeyWords:
+        response = "If you don't mind, can you tell me your name?"
+        print(response)
+        talk(response)
+        exit(run_jarvis())
+
+    elif command in WhatIsMyFullName_KeyWords:
+        try:
+            if Name[-1] in Name:
+                MyFullName = Name[-1]
+                response = MyFullName
+        except:
+            response = """
+            Sorry, but I don't know your full name yet. 
+            If you don't mind, can you tell me your full name first?
+            """
+        print(response)
+        talk(response)
+        exit(run_jarvis())
+
+    elif "my name is" in command or "is my name" in command or "i am" in command:
+        if "my name is jarvis" in command:
+            command = command.replace("hi", '')
+            command = command.replace("i am", '')
+            command = command.replace("hello", '')
+            command = command.replace("is my name", '')
+            name = command.replace("my name is", '')
+            command = name
+            Name.append(name)
+            response = "What a coincidence, my name is jarvis too. Nice meeting you jarvis!"
+            print(response)
+            talk(response)
+            exit(run_jarvis())
+        else:
+            command = command.replace("hi", '')
+            command = command.replace("i am", '')
+            command = command.replace("hello", '')
+            command = command.replace("is my name", '')
+            name = command.replace("my name is", '')
+            if name != '':
+                Name.append(name)
+                response = Name[-1] + ", " + "I'll keep that in mind. Nice knowing you " + Name[-1] + "!"
+                print(response)
+                talk(response)
+                exit(run_jarvis())
+            elif name == '':
+                response = "Who are you?"
+                print(response)
+                talk(response)
+                exit(run_jarvis())
+
+    elif "and you are" in command or "and your name is" in command:
+        response = """
+        My name is Jarvis,
+        It is a short term for Just A Rather Very Intelligent System.
+        """
+        print(response)
+        talk(response)
+        Confirmation_SubFunction(command)
+
+    elif "who created you" in command:
+        command = Auto_Replacement_Subfunction(command)
+        print(command + " created you?")
+        response = """
+        I am created by Gianne P. Bacay on the 16th day of October year 2022.
+        He created me to be his personal virtual assistant.
+        For now, I'm still a work on progress.
+        """
+        print(response)
+        talk(response)
+        Confirmation_SubFunction(command)
 
     #_______________________________________________________NoCommands/NotClearCommands_BLOCK
     #Run Command: python jarvis.py
-    if '' == command:
+    elif '' == command:
         time.sleep(3)
         print(command)
         response = """
@@ -1215,3 +1386,9 @@ while True:
     Start_Up_command_MainFunction()
     run_jarvis()
 #Run Command: python jarvis.py
+
+#Run on openvino environment:
+#____________________________Get-ExecutionPolicy;
+#____________________________Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force;
+#____________________________python -m venv openvino_env
+#____________________________openvino_env\Scripts\activate

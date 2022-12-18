@@ -69,7 +69,8 @@ def Locate_NameHA():
                     "Princess Viznar",
                     "Nichi Bacay",
                     "Roz Waeschet Bacay",
-                    "Killy Obligation"]
+                    "Killy Obligation",
+                    "Jinn Corpin"]
 
     try:
         Gender_Name = Name[-1]
@@ -923,6 +924,16 @@ def run_haraya():
                 program = "C:\Program Files\Artix Game Launcher\Artix Game Launcher.exe"
                 subprocess.Popen([program])
                 response = "Opening Artix game launcher"
+                print(response)
+                talk(response)
+                
+            elif "genshin impact" in command:
+                response = "As you wish!"
+                print(response)
+                talk(response)
+                program = "C:\Program Files\Genshin Impact\launcher.exe"
+                subprocess.Popen([program])
+                response = "Opening Genshin Impact"
                 print(response)
                 talk(response)
                 
