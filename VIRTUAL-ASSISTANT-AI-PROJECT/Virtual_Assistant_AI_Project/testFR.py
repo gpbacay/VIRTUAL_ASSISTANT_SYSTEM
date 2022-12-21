@@ -1,14 +1,7 @@
-#from facerec import Image_Face_Recognition_System as fr
-#fr()
+from geopy.geocoders import Nominatim
 
-with open('attendance.csv', 'r+') as attendance:
-    MyDatalist =  attendance.readlines()
-    NameList = []
-    NameList.append(MyDatalist[2])
-    MyName = NameList[0]
-    MyName = MyName.replace("'", '')
-    MyName = MyName.split(",")
-    MyName = MyName[0]
-    print(MyName)
+geolocator = Nominatim(user_agent="my-custom-application")
+location = geolocator.geocode("my location")
+print(location.latitude, location.longitude)
 
 #python testFR.py

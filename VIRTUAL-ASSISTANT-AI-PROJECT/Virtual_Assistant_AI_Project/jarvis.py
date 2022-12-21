@@ -199,13 +199,7 @@ def Wait_command_MainFunction():
             command = listener.recognize_google(voice)
             command = command.lower()
     except:
-        with sr.Microphone() as source:
-            print("Waiting...")
-            listener.adjust_for_ambient_noise(source, duration = 0.5)
-            listener.pause_threshold = 1
-            voice = listener.listen(source)
-            command = listener.recognize_google(voice)
-            command = command.lower()
+        pass
     return command
 
 
@@ -640,6 +634,22 @@ def run_jarvis():
                                     "i am ",
                                     "i'm",
                                     "i'm "]
+    
+    Roll_A_Die_KeyWords = ["roll a die",
+                "roll a dice",
+                "roll the die",
+                "roll the dice",
+                "jarvis roll a die",
+                "jarvis roll a dice",
+                "jarvis roll the die",
+                "jarvis roll the dice",
+                "roll a die jarvis",
+                "roll a dice jarvis",
+                "roll the die jarvis",
+                "roll the dice jarvis",
+                "roll again",
+                "roll again jarvis",
+                "jarvis roll again"]
 
     #_______________________________________________________________________STANDBY_SUBFUNCTION
     #Run Command: python jarvis.py
@@ -785,9 +795,9 @@ def run_jarvis():
     #_________________________________________________________________ARITHMETICAL_BLOCK
     #Run Command: python jarvis.py
     
-    #_________________________________________________________________GAME_BLOCK
+    #_________________________________________________________________ROLL_A_DIE_GAME_BLOCK
     #Run Command: python jarvis.py
-    elif "roll a dice" in command or "roll a die" in command or "roll the dice" in command or "roll the die" in command or "roll again":
+    elif command in Roll_A_Die_KeyWords:
         command = command.replace("roll a dice", '')
         command = command.replace("roll a die", '')
         command = command.replace("roll the dice", '')
@@ -795,59 +805,96 @@ def run_jarvis():
         command = command.replace("roll again", '')
         command = command.replace("roll", '')
         command = command.replace("jarvis", '')
-        def Choose_A_Number():
-            global number
+        def Roll_The_Dice():
+            def Choose_A_Number():
+                global number
+                number = ''
+                try:
+                    with sr.Microphone() as source:
+                        response = "Choose a number between 1 to 6."
+                        print(response)
+                        talk(response)
+                        listener.adjust_for_ambient_noise(source, duration = 0.5)
+                        listener.pause_threshold = 1
+                        voice = listener.listen(source)
+                        number = listener.recognize_google(voice)
+                        number = number.lower()
+                        number = number.replace("number", '')
+                        number = number.replace("i choose", '')
+                        number = number.replace("i select", '')
+                        if "one" in number:
+                            number = int("1")
+                        elif "two" in number:
+                            number = int("2")
+                        elif "three" in number:
+                            number = int("3")
+                        elif "four" in number:
+                            number = int("4")
+                        elif "five" in number:
+                            number = int("5")
+                        elif "six" in number:
+                            number = int("6")
+                        else:
+                            exit(Choose_A_Number())
+                except:
+                    pass
+                return number
+            Choose_A_Number()
+            response = "You've chose number " + str(number)
+            print(response)
+            talk(response)
+            
+            def Roll_Number():
+                response = "Rolling..."
+                talk(response)
+                Max_Number = 6
+                
+                if random.randint(0, Max_Number) == number:
+                    response = "You won! Congratulations"
+                    print(response)
+                    talk(response)
+                else:
+                    response = "You lose, better luck next time!"
+                    print(response)
+                    talk(response)
+            Roll_Number()
+            
+        def Try_Again():
+            global confirmation
+            confirmation = ''
             try:
                 with sr.Microphone() as source:
-                    response = "Choose a number between 1 to 6."
+                    response = "Would you like to try again?"
                     print(response)
                     talk(response)
                     listener.adjust_for_ambient_noise(source, duration = 0.5)
                     listener.pause_threshold = 1
                     voice = listener.listen(source)
-                    number = listener.recognize_google(voice)
-                    number = number.lower()
-                    number = number.replace("number", '')
-                    number = number.replace("i choose", '')
-                    number = number.replace("i select", '')
-                    if number == "one":
-                        number = int("1")
-                    elif number == "two":
-                        number = int("2")
-                    elif number == "three":
-                        number = int("3")
-                    elif number == "four":
-                        number = int("4")
-                    elif number == "five":
-                        number = int("5")
-                    elif number == "six":
-                        number = int("6")
+                    confirmation = listener.recognize_google(voice)
+                    confirmation = command.lower()
+                    if "yes" in confirmation:
+                        confirmation = 'yes'
+                    elif "no" in confirmation:
+                        confirmation = 'no'
+                    else:
+                        confirmation = 'no'
             except:
                 pass
-            return number
-        Choose_A_Number()
-        response = "You've chose number " + str(number)
-        print(response)
-        talk(response)
+            return confirmation
         
-        def Roll_Number():
-            response = "Rolling..."
-            talk(response)
-            Max_Number = 6
-            
-            if random.randint(0, Max_Number) == number:
-                response = "You won! Congratulations"
-                print(response)
-                talk(response)
-            else:
-                response = "You lose, better luck next time!"
-                print(response)
-                talk(response)
-                
-        Roll_Number()
-        command = None        
+        def Loop_Roll_The_Dice():
+            loop = True
+            while loop:
+                Roll_The_Dice()
+                Try_Again()
+                if confirmation == "yes":
+                    continue
+                elif confirmation == "no":
+                    break
+                else:
+                    break
+        Loop_Roll_The_Dice()
         Confirmation_SubFunction(command)
-
 
     #________________________________________________________________TERMINATION_BLOCK
     #Run Command: python jarvis.py

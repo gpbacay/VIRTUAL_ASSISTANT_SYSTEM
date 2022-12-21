@@ -43,24 +43,6 @@ def Face_Recognition_System():
         """
         
         
-        #Encode Faces to the Attendance Sheet
-        #Run Command: python facerec.py
-        def MarkAttendance(name):
-            """
-            Encode the name of the scanned faces into the attendance sheet
-            and the time it was encoded
-            """
-            with open('attendance.csv', 'r+') as attendance:
-                MyDatalist =  attendance.readlines()
-                NameList = []
-                for line in MyDatalist :
-                    entry = line.split(',')
-                    NameList.append(entry[0])
-                if name not in NameList:
-                    now = datetime.now()
-                    Time = now.strftime('%H:%M')
-                    attendance.writelines(f'\n{name}, {Time}')
-        
         # Encode Faces
         #Run Command: python facerec.py
         def get_encoded_faces():
@@ -108,6 +90,24 @@ def Face_Recognition_System():
                 success, frame = cap.read()
                 
                 if success:
+                    #Encode Faces to the Attendance Sheet
+                    #Run Command: python facerec.py
+                    def MarkAttendance(name):
+                        """
+                        Encode the name of the scanned faces into the attendance sheet
+                        and the time it was encoded
+                        """
+                        with open('attendance.csv', 'r+') as attendance:
+                            MyDatalist =  attendance.readlines()
+                            NameList = []
+                            for line in MyDatalist :
+                                entry = line.split(',')
+                                NameList.append(entry[0])
+                            if name not in NameList:
+                                now = datetime.now()
+                                Time = now.strftime('%H:%M')
+                                attendance.writelines(f'\n{name}, {Time}')
+                    
                     # Resize Frame
                     def resize(frame, size) :
                         width = int(frame.shape[1]*size)
@@ -163,8 +163,8 @@ def Face_Recognition_System():
                     # Display the Resulting Image
                     cv2.imshow('AI Face Recognition System', frame)
                     key = cv2.waitKey(30) & 0xff
-                    min_faces = 1
-                    if len(face_names) >= min_faces:
+                    max_faces = 1
+                    if len(face_names) >= max_faces:
                         cv2.destroyAllWindows()
                         return face_names
                     elif key == 27:
@@ -172,6 +172,7 @@ def Face_Recognition_System():
                         return face_names
                     else:
                         continue
+                else:
+                    break
     Classify_Faces()
-
 #Run Command: python facerec.py
