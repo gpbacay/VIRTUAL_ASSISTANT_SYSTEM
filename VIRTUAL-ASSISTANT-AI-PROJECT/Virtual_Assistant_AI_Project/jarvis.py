@@ -823,38 +823,66 @@ def run_jarvis():
                         number = number.replace("i choose", '')
                         number = number.replace("i select", '')
                         if "one" in number:
-                            number = int("1")
+                            number = number.replace(number, str(1))
                         elif "two" in number:
-                            number = int("2")
+                            number = number.replace(number, str(2))
                         elif "three" in number:
-                            number = int("3")
+                            number = number.replace(number, str(3))
                         elif "four" in number:
-                            number = int("4")
+                            number = number.replace(number, str(4))
                         elif "five" in number:
-                            number = int("5")
+                            number = number.replace(number, str(5))
                         elif "six" in number:
-                            number = int("6")
+                            number = number.replace(number, str(6))
                         else:
                             exit(Choose_A_Number())
                 except:
                     pass
                 return number
             Choose_A_Number()
-            response = "You've chose number " + str(number)
+            response = "You've chose number " + number
             print(response)
             talk(response)
             
             def Roll_Number():
                 response = "Rolling..."
+                print(response)
                 talk(response)
                 Max_Number = 6
                 
-                if random.randint(0, Max_Number) == number:
-                    response = "You won! Congratulations"
+                def Result():
+                    global result
+                    result = random.randint(1, Max_Number)
+                    return result
+                Result()
+
+                if result == int(number):
+                    response = "The result is number " + number + ", You won! Congratulations!"
                     print(response)
                     talk(response)
-                else:
-                    response = "You lose, better luck next time!"
+                    pass
+                elif result == 1:
+                    response = "The result is number 1, You lose, better luck next time!"
+                    print(response)
+                    talk(response)
+                elif result == 2:
+                    response = "The result is number 2, You lose, better luck next time!"
+                    print(response)
+                    talk(response)
+                elif result == 3:
+                    response = "The result is number 3, You lose, better luck next time!"
+                    print(response)
+                    talk(response)
+                elif result == 4:
+                    response = "The result is number 4, You lose, better luck next time!"
+                    print(response)
+                    talk(response)
+                elif result == 5:
+                    response = "The result is number 5, You lose, better luck next time!"
+                    print(response)
+                    talk(response)
+                elif result == 6:
+                    response = "The result is number 6, You lose, better luck next time!"
                     print(response)
                     talk(response)
             Roll_Number()
@@ -871,27 +899,23 @@ def run_jarvis():
                     listener.pause_threshold = 1
                     voice = listener.listen(source)
                     confirmation = listener.recognize_google(voice)
-                    confirmation = command.lower()
+                    confirmation = confirmation.lower()
                     if "yes" in confirmation:
-                        confirmation = 'yes'
+                        confirmation = confirmation.replace(confirmation, 'yes')
                     elif "no" in confirmation:
-                        confirmation = 'no'
-                    else:
-                        confirmation = 'no'
+                        confirmation = confirmation.replace(confirmation, 'no')
+                        print(confirmation)
             except:
                 pass
             return confirmation
         
         def Loop_Roll_The_Dice():
-            loop = True
-            while loop:
+            while True:
                 Roll_The_Dice()
                 Try_Again()
-                if confirmation == "yes":
+                if "yes" in confirmation:
                     continue
-                elif confirmation == "no":
-                    break
-                else:
+                elif "no" in confirmation:
                     break
         Loop_Roll_The_Dice()
         Confirmation_SubFunction(command)
