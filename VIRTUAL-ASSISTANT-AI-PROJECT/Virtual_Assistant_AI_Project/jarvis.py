@@ -995,6 +995,7 @@ def run_jarvis():
 
     elif "in youtube" in command:
         response = "Searching..."
+        print(response)
         talk(response)
         song_title = command.replace("jarvis", '')
         song_title = song_title.replace("play", '')
@@ -1433,6 +1434,17 @@ def run_jarvis():
         print(response)
         talk(response)
         Confirmation_SubFunction(command)
+        
+    elif "merry christmas" in command or "merry christmas jarvis" in command or "jarvis merry christmas" in command:
+        NameHA = Name_Honorific_Address[-1]
+        try:
+            if Name[-1] in Name:
+                response = "Merry Christmas " + NameHA + " " + Name[-1] + ", how can I help you?"
+        except:
+            response = "Merry Christmas, how can I help you?"
+        print(response)
+        talk(response)
+        exit(run_jarvis())
 
     #_______________________________________________________NoCommands/NotClearCommands_BLOCK
     #Run Command: python jarvis.py
