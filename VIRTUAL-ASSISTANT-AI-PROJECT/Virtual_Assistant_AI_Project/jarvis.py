@@ -993,7 +993,7 @@ def run_jarvis():
             Play_Sound()
             exit()
 
-    elif "in youtube" in command:
+    elif "in youtube" in command or "play" in command:
         response = "Searching..."
         print(response)
         talk(response)
