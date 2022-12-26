@@ -26,7 +26,10 @@ def talk(text):
 Name = []
 Name_Honorific_Address = []
 Arithmetic_Addition = []
-
+Arithmetic_Subtraction = []
+Arithmetic_Multiplication = []
+Arithmetic_Division = []
+Arithmetic_Modulo = []
 
 #______________________________________________________FACE_RECOGNITION_BLOCK/FUNCTION
 #Run Command: python jarvis.py
@@ -799,17 +802,130 @@ def run_jarvis():
 
     #_________________________________________________________________ARITHMETICAL_BLOCK
     #Run Command: python jarvis.py
-    elif '+' in command:
-        command = command.replace("one", str(1))
-        command = command.split(' ')
-        Arithmetic_Addition.append(command)
-        print(Arithmetic_Addition[0])
-        Addend1 = Arithmetic_Addition[0][0]
-        Addend2 = Arithmetic_Addition[0][-1]
-        Sum = int(Addend1) + int(Addend2)
-        response = "1 + 1 is equal to " + str(Sum)
-        print(response)
-        talk(response)
+    elif '+' in command or 'plus' in command:
+        def Sum_Calculator():
+            global command
+            try:
+                command = command.replace("is equal to", '')
+                command = command.replace("is equivalent to", '')
+                command = command.replace("equals", '')
+                command = command.replace("is equals", '')
+                command = command.split(' ')
+                Arithmetic_Addition.append(command)
+                Addend1 = Arithmetic_Addition[-1][0]
+                Addend2 = Arithmetic_Addition[-1][2]
+                Sum = int(Addend1) + int(Addend2)
+                response =  Addend1 + " plus " + Addend2 + " is equal to " + str(Sum)
+                print(response)
+                talk(response)
+            except:
+                print(command)
+                response = "Pardon me, come again?"
+                print(response)
+                talk(response)
+                exit(run_jarvis())
+        Sum_Calculator()
+        Confirmation_SubFunction(command)
+        
+    elif '-' in command or 'minus' in command:
+        def Difference_Calculator():
+            global command
+            try:
+                command = command.replace("is equal to", '')
+                command = command.replace("is equivalent to", '')
+                command = command.replace("equals", '')
+                command = command.replace("is equals", '')
+                command = command.split(' ')
+                Arithmetic_Subtraction.append(command)
+                Minuend = Arithmetic_Subtraction[-1][0]
+                Subtrahend = Arithmetic_Subtraction[-1][2]
+                Difference = int(Minuend) - int(Subtrahend)
+                response =  Minuend + " minus " + Subtrahend + " is equal to " + str(Difference)
+                print(response)
+                talk(response)
+            except:
+                print(command)
+                response = "Pardon me, come again?"
+                print(response)
+                talk(response)
+                exit(run_jarvis())
+        Difference_Calculator()
+        Confirmation_SubFunction(command)
+        
+    elif '*' in command or 'times' in command:
+        def Product_Calculator():
+            global command
+            try:
+                command = command.replace("is equal to", '')
+                command = command.replace("is equivalent to", '')
+                command = command.replace("equals", '')
+                command = command.replace("is equals", '')
+                command = command.split(' ')
+                Arithmetic_Multiplication.append(command)
+                Multiplier = Arithmetic_Multiplication[-1][0]
+                Multiplicand = Arithmetic_Multiplication[-1][2]
+                Product = int(Multiplier) * int(Multiplicand)
+                response =  Multiplier + " times " + Multiplicand + " is equal to " + str(Product)
+                print(response)
+                talk(response)
+            except:
+                print(command)
+                response = "Pardon me, come again?"
+                print(response)
+                talk(response)
+                exit(run_jarvis())
+        Product_Calculator()
+        Confirmation_SubFunction(command)
+    
+    elif '/' in command or 'divided by' in command:
+        def Quotient_Calculator():
+            global command
+            try:
+                command = command.replace("is equal to", '')
+                command = command.replace("is equivalent to", '')
+                command = command.replace("equals", '')
+                command = command.replace("is equals", '')
+                command = command.split(' ')
+                Arithmetic_Division.append(command)
+                Dividend = Arithmetic_Division[-1][0]
+                Divisor = Arithmetic_Division[-1][2]
+                Quotient = int(Dividend) // int(Divisor)
+                Remainder = int(Dividend) % int(Divisor)
+                response =  Dividend + " divided by " + Divisor + " is equal to " + str(Quotient) + ", Remainder " + str(Remainder)
+                print(response)
+                talk(response)
+            except:
+                print(command)
+                response = "Pardon me, come again?"
+                print(response)
+                talk(response)
+                exit(run_jarvis())
+        Quotient_Calculator()
+        Confirmation_SubFunction(command)
+    
+    elif 'mod' in command or 'modulo' in command:
+        def Modulo_Calculator():
+            global command
+            try:
+                command = command.replace("is equal to", '')
+                command = command.replace("is equivalent to", '')
+                command = command.replace("equals", '')
+                command = command.replace("is equals", '')
+                command = command.split(' ')
+                Arithmetic_Modulo.append(command)
+                Dividend = Arithmetic_Modulo[-1][0]
+                Divisor = Arithmetic_Modulo[-1][2]
+                Modulo = int(Dividend) % int(Divisor)
+                response =  Dividend + " modulo " + Divisor + " is equal to " + str(Modulo)
+                print(response)
+                talk(response)
+            except:
+                print(command)
+                response = "Pardon me, come again?"
+                print(response)
+                talk(response)
+                exit(run_jarvis())
+        Modulo_Calculator()
         Confirmation_SubFunction(command)
     
     #_________________________________________________________________ROLL_A_DIE_GAME_BLOCK
