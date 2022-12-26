@@ -25,6 +25,7 @@ def talk(text):
 #Run Command: python jarvis.py
 Name = []
 Name_Honorific_Address = []
+Arithmetic_Addition = []
 
 
 #______________________________________________________FACE_RECOGNITION_BLOCK/FUNCTION
@@ -140,6 +141,10 @@ def Listen_command_MainFunction():
     try:
         with sr.Microphone() as source:
             print("Listening...")
+            def Play_Sound():
+                from playsound import playsound
+                playsound(u"C:\\Users\\Gianne Bacay\\Desktop\\Listening.mp3")
+            Play_Sound()
             listener.adjust_for_ambient_noise(source, duration = 0.5)
             listener.pause_threshold = 1
             voice = listener.listen(source)
@@ -794,6 +799,18 @@ def run_jarvis():
 
     #_________________________________________________________________ARITHMETICAL_BLOCK
     #Run Command: python jarvis.py
+    elif '+' in command:
+        command = command.replace("one", str(1))
+        command = command.split(' ')
+        Arithmetic_Addition.append(command)
+        print(Arithmetic_Addition[0])
+        Addend1 = Arithmetic_Addition[0][0]
+        Addend2 = Arithmetic_Addition[0][-1]
+        Sum = int(Addend1) + int(Addend2)
+        response = "1 + 1 is equal to " + str(Sum)
+        print(response)
+        talk(response)
+        Confirmation_SubFunction(command)
     
     #_________________________________________________________________ROLL_A_DIE_GAME_BLOCK
     #Run Command: python jarvis.py
@@ -1202,22 +1219,6 @@ def run_jarvis():
         such as when it is used to spread misinformation or when it leads to the automation of certain jobs, 
         potentially leading to unemployment. Overall, the impact of technology on society is complex and multifaceted.
         """
-        print(response)
-        talk(response)
-        Confirmation_SubFunction(command)
-
-    elif "is kc gay" in command:
-        response = """
-        Based on my calculations, 
-        KC Villegas is gay in every parallel multiverses, including ours. 
-        Therefore, Yes, KC is gay.
-        """
-        talk(response)
-        Auto_Replacement_Subfunction(command)
-        Confirmation_SubFunction(command)
-
-    elif "sing sabak daddy" in command:
-        response = "Dai ali diri, Sabak daddy bie, Sabak daddy bie, Sabak daddy bie."
         print(response)
         talk(response)
         Confirmation_SubFunction(command)
