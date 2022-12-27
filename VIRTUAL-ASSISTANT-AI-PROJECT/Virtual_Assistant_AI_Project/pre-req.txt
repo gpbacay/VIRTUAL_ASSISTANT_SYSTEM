@@ -28,3 +28,4 @@ pip install mediapipe
 pip install imutils
 pip install phonenumbers
 from phonenumbers import carrier, geocoder, timezone
+pip install cvzone
