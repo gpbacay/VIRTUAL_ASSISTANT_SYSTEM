@@ -50,10 +50,11 @@ while True:
             imgWhite[hGap:hCal+hGap, :] = imgResize
             prediction, index = classifier.getPrediction(imgWhite, draw = False)
         
-        
-        cv2.putText(imgOutput, labels[index],(x,y-20), cv2.FONT_HERSHEY_COMPLEX, 2, (255,0,255), 2)
-        cv2.rectangle(imgOutput, (x - offset,y - offset), 
-                    (x+w+offset,y+h+offset), (255,0,255), 2)
+        cv2.rectangle(imgOutput, (x - offset,y - offset - 50), 
+                    (x - offset + 90, y - offset - 50 + 50), (0,255,0), 2)
+        cv2.putText(imgOutput, labels[index],(x,y-25), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,255), 2)
+        cv2.rectangle(imgOutput, (x - offset,y - offset - 50), 
+                    (x + w+offset, y + h+offset), (0,255,0), 2)
         cv2.imshow("Image Crop", imgCrop)
         cv2.imshow("Image White", imgWhite)
     
