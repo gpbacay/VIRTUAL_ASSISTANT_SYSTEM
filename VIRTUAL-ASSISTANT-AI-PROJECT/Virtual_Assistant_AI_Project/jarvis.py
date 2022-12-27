@@ -30,6 +30,7 @@ Arithmetic_Subtraction = []
 Arithmetic_Multiplication = []
 Arithmetic_Division = []
 Arithmetic_Modulo = []
+Date = []
 
 #______________________________________________________FACE_RECOGNITION_BLOCK/FUNCTION
 #Run Command: python jarvis.py
@@ -217,6 +218,7 @@ def run_jarvis():
     #_________________________________Import Libraries/Packages
     import os
     import time
+    import calendar
     import requests
     from selenium import webdriver
     from bs4 import BeautifulSoup as bs
@@ -489,6 +491,7 @@ def run_jarvis():
                             "do you know who i am"]
     
     CurrentDate_KeyWords = ["today is",
+                            "date check",
                             "current date",
                             "what day is today",
                             "the current date is",
@@ -496,9 +499,12 @@ def run_jarvis():
                             "tell me the current date",
                             "can you check the current date",
                             "please tell me the current date",
-                            "tell me the date for today"]
+                            "tell me the date for today",
+                            "tell me the date today",
+                            "what is the date today"]
     
-    CurrentTime_Keywords = ["current time",
+    CurrentTime_Keywords = ["time check",
+                            "current time",
                             "current time is",
                             "what time is it",
                             "the time now is",
@@ -800,7 +806,7 @@ def run_jarvis():
     elif command in Repeat_KeyWords:
         Repeat_SubFunction()
 
-    #_________________________________________________________________ARITHMETICAL_BLOCK
+    #_________________________________________________________________BASIC_ARITHMETIC_CALCULATIONS_BLOCK
     #Run Command: python jarvis.py
     elif '+' in command or 'plus' in command:
         def Sum_Calculator():
@@ -1182,7 +1188,7 @@ def run_jarvis():
         talk(response)
         Confirmation_SubFunction(command)
 
-    #_____________________________________________________________________OPEN/ACCESS_BLOCK
+    #________________________________________________________________________________________________OPEN/ACCESS_BLOCK
     #Run Command: python jarvis.py
     elif "open" in command or "access" in command:
         command = command.replace("open", '')
@@ -1274,14 +1280,33 @@ def run_jarvis():
             talk(response)
         exit(Confirmation_SubFunction(command))
 
-    #_______________________________________________DATE_and_TIME_BLOCK
+    #_________________________________________________________________________________________________DATE_and_TIME_BLOCK
     #Run Command: python jarvis.py
     elif command in CurrentDate_KeyWords:
-        print(command)
-        date = datetime.datetime.now().strftime("%m/%d/%y")
-        print(date)
-        date = date.replace('/', ' ')
-        talk("Todays' date is" + date)
+        Date_format = datetime.datetime.now().strftime("%m/%d/%y")
+        Date_format = Date_format.replace('/', ' ')
+        Date_format = Date_format.split(' ')
+        Date.append(Date_format)
+        Year_number = Date[-1][2]
+        Year_number = int(Year_number) + 2000
+        Month_number = Date[-1][0]
+        Month_number = int(Month_number)
+        Day_number = Date[-1][1]
+        Day_number = int(Day_number)
+        def determine_weekday_name(Year_number, Month_number, Day_number):
+            day_of_week = calendar.weekday(Year_number, Month_number, Day_number)
+            weekday_name = calendar.day_name[day_of_week]
+            return weekday_name
+        WeekDay_Name = determine_weekday_name(Year_number, Month_number, Day_number)
+        
+        def determine_month_name(Month_number):
+            month_name = calendar.month_name[Month_number]
+            return month_name
+        Month_Name = determine_month_name(Month_number)
+        
+        response = "Today is " + WeekDay_Name + ", " + Month_Name + " " + str(Day_number) + ", " + str(Year_number)
+        print(response)
+        talk(response)
         Confirmation_SubFunction(command)
 
     elif command in CurrentTime_Keywords:
