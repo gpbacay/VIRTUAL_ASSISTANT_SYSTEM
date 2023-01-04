@@ -13,7 +13,7 @@ from poserec import Pose_Recognition_System
 listener = sr.Recognizer()
 jarvis_engine = pyttsx3.init()
 voices = jarvis_engine.getProperty('voices')
-jarvis_engine.setProperty('voice', voices[1].id)
+jarvis_engine.setProperty('voice', voices[3].id)
 
 
 def talk(text):
@@ -35,7 +35,7 @@ Date = []
 #______________________________________________________FACE_RECOGNITION_BLOCK/FUNCTION
 #Run Command: python jarvis.py
 def Locate_MyFullName():
-    with open('attendance.csv', 'r+') as attendance:
+    with open("C:\\Users\\Gianne Bacay\\Desktop\\VIRTUAL_ASSISTANT_PROJECT\\VIRTUAL-ASSISTANT-AI-PROJECT\\Virtual_Assistant_AI_Project\\attendance.csv", "r+") as attendance:
         MyDatalist =  attendance.readlines()
         NameList = []
         NameList.append(MyDatalist[2])
@@ -223,6 +223,7 @@ def run_jarvis():
     from selenium import webdriver
     from bs4 import BeautifulSoup as bs
     import random
+    import re
 
     #________________________________________________LISTS_OF_COMMAND_KEY_WORDS
     #Run Command: python jarvis.py
@@ -664,6 +665,14 @@ def run_jarvis():
                 "roll again",
                 "roll again jarvis",
                 "jarvis roll again"]
+    
+    Coundown_KeyWords = ["countdown",
+                        "set countdown",
+                        "set the countdown to",
+                        "start countdown",
+                        "start the countdown",
+                        "countdown again",
+                        "do a count down"]
 
     #_______________________________________________________________________STANDBY_SUBFUNCTION
     #Run Command: python jarvis.py
@@ -759,6 +768,67 @@ def run_jarvis():
         except:
             pass
         return command
+    
+    #______________________________________________________________________SPELLED_NUMBER_CONVERTER_SUBFUNCTION
+    #Run Command: python jarvis.py
+    def SpelledNumber_Converter(StrNumbers):
+            # Create a dictionary with the spelled numbers as keys and their integer values as values
+            number_words = {"zero": 0,
+                            "one": 1,
+                            "two": 2,
+                            "three": 3,
+                            "four": 4,
+                            "five": 5,
+                            "six": 6,
+                            "seven": 7,
+                            "eight": 8,
+                            "nine": 9,
+                            "ten": 10,
+                            "eleven": 11,
+                            "twelve": 12,
+                            "thirteen": 13,
+                            "fourteen": 14,
+                            "fifteen": 15,
+                            "sixteen": 16,
+                            "seventeen": 17,
+                            "eighteen": 18,
+                            "nineteen": 19,
+                            "twenty": 20,
+                            "thirty": 30,
+                            "forty": 40,
+                            "fifty": 50,
+                            "sixty": 60,
+                            "seventy": 70,
+                            "eighty": 80,
+                            "ninety": 90,
+                            "hundred": 100,
+                            "thousand": 1000,
+                            "million": 1000000}
+            
+            # Split the spelled numbers into a list of words
+            words = StrNumbers.split()
+            
+            # Initialize a variable to store the integer value
+            total = 0
+            
+            for word in words:
+                # If the word is in the dictionary, add its integer value to the total
+                if word in number_words:
+                    total += number_words[word]
+            # Return the total
+            return total
+        
+    #______________________________________________________________NON_SPELLED_NUMBER_LOCATOR_and_CONVERTER_SUBFUNCTION
+    #Run Command: python jarvis.py
+    def NonSpelledNumber_Converter(string_numbers):
+        # Use a regular expression to find all the words that represent numbers
+        # The regular expression looks for words that start with an optional negative sign,
+        # followed by one or more digits
+        numbers = re.findall(r"-?\d+", string_numbers)
+    
+        # Convert the words to integers and return them
+        return [int(number) for number in numbers]
+    
 
     #_____________________________________________________COMMAND_ASSIGNMENT_BLOCK (CORE SCRIPT)
     #Run Command: python jarvis.py
@@ -937,13 +1007,6 @@ def run_jarvis():
     #_________________________________________________________________ROLL_A_DIE_GAME_BLOCK
     #Run Command: python jarvis.py
     elif command in Roll_A_Die_KeyWords:
-        command = command.replace("roll a dice", '')
-        command = command.replace("roll a die", '')
-        command = command.replace("roll the dice", '')
-        command = command.replace("roll the die", '')
-        command = command.replace("roll again", '')
-        command = command.replace("roll", '')
-        command = command.replace("jarvis", '')
         def Roll_The_Dice():
             def Choose_A_Number():
                 global number
@@ -974,12 +1037,15 @@ def run_jarvis():
                         elif "six" in number:
                             number = number.replace(number, str(6))
                         else:
+                            response = "Come again?"
+                            print(response)
+                            talk(response)
                             exit(Choose_A_Number())
                 except:
                     pass
                 return number
-            Choose_A_Number()
-            response = "You've chose number " + number
+            number = int(Choose_A_Number())
+            response = "You've chose number " + str(number)
             print(response)
             talk(response)
             
@@ -996,7 +1062,7 @@ def run_jarvis():
                 Result()
 
                 if result == int(number):
-                    response = "The result is number " + number + ", You won! Congratulations!"
+                    response = "The result is number " + str(number) + ", You won! Congratulations!"
                     print(response)
                     talk(response)
                     pass
@@ -1587,7 +1653,58 @@ def run_jarvis():
         print(response)
         talk(response)
         exit(run_jarvis())
-
+        
+    #_______________________________________________________________________________COUNTDOWN_BLOCK
+    #Run Command: python jarvis.py
+    
+    elif command in Coundown_KeyWords:
+        def Choose_A_Starting_Number():
+            global number
+            number = ''
+            try:
+                with sr.Microphone() as source:
+                    response = "Choose a starting number in seconds"
+                    print(response)
+                    talk(response)
+                    voice = listener.listen(source)
+                    number = listener.recognize_google(voice)
+                    number_input = number.lower()
+                    number = NonSpelledNumber_Converter(number_input)
+                    if number:
+                        number = number[-1]
+                        number = int(number)
+                    else:
+                        number = SpelledNumber_Converter(number_input)
+            except:
+                pass
+            return number
+        number = Choose_A_Starting_Number()
+        if number == '':
+            exit(Choose_A_Starting_Number())
+        
+        response = "You've chose " + str(number) + " as a starting number"
+        print(response)
+        talk(response)
+        
+        response = "Initializing Countdown..."
+        print(response)
+        talk(response)
+        
+        for x in reversed(range(0, int(number))):
+            seconds = x % 60
+            minutes = int(x / 60) % 60
+            hours = int(x / 3600)
+            countdown_format = f"{hours:02}:{minutes:02}:{seconds:02}"
+            print(countdown_format)
+            talk(x)
+            time.sleep(1)
+            
+        response = "TIME'S UP!"
+        print(response)
+        talk(response)
+        Confirmation_SubFunction(command)
+        
+        
     #_______________________________________________________NoCommands/NotClearCommands_BLOCK
     #Run Command: python jarvis.py
     elif '' == command:
