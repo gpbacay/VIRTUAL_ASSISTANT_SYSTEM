@@ -35,7 +35,7 @@ Date = []
 #______________________________________________________FACE_RECOGNITION_BLOCK/FUNCTION
 #Run Command: python jarvis.py
 def Locate_MyFullName():
-    with open("C:\\Users\\Gianne Bacay\\Desktop\\VIRTUAL_ASSISTANT_PROJECT\\VIRTUAL-ASSISTANT-AI-PROJECT\\Virtual_Assistant_AI_Project\\attendance.csv", "r+") as attendance:
+    with open("C:\\Users\\Gianne Bacay\\Desktop\\VIRTUAL_ASSISTANT_SYSTEM\\VIRTUAL-ASSISTANT-AI-PROJECT\\Virtual_Assistant_AI_Project\\attendance.csv", "r+") as attendance:
         MyDatalist =  attendance.readlines()
         NameList = []
         NameList.append(MyDatalist[2])
@@ -1657,7 +1657,7 @@ def run_jarvis():
     #_______________________________________________________________________________COUNTDOWN_BLOCK
     #Run Command: python jarvis.py
     
-    elif command in Coundown_KeyWords:
+    elif command in Coundown_KeyWords or "countdown" in command:
         def Choose_A_Starting_Number():
             global number
             number = ''

@@ -18,13 +18,13 @@ def Face_Recognition_System():
     #Run Command: python facerec.py
     def ClearCSV():
         import csv
-        file = open("attendance.csv", "r")
+        file = open("C:\\Users\\Gianne Bacay\\Desktop\\VIRTUAL_ASSISTANT_SYSTEM\\VIRTUAL-ASSISTANT-AI-PROJECT\\Virtual_Assistant_AI_Project\\attendance.csv", "r")
         csvr = csv.reader(file)
         namelist = []
         Header = f'Name, Time'
         Header = Header.split(',')
         namelist.insert(0, Header)
-        file = open("attendance.csv", "w", newline = '')
+        file = open("C:\\Users\\Gianne Bacay\\Desktop\\VIRTUAL_ASSISTANT_SYSTEM\\VIRTUAL-ASSISTANT-AI-PROJECT\\Virtual_Assistant_AI_Project\\attendance.csv", "w", newline = '')
         csvr = csv.writer(file)
         csvr.writerows(namelist)
         file.close()
@@ -97,7 +97,7 @@ def Face_Recognition_System():
                         Encode the name of the scanned faces into the attendance sheet
                         and the time it was encoded
                         """
-                        with open('attendance.csv', 'r+') as attendance:
+                        with open("C:\\Users\\Gianne Bacay\\Desktop\\VIRTUAL_ASSISTANT_SYSTEM\\VIRTUAL-ASSISTANT-AI-PROJECT\\Virtual_Assistant_AI_Project\\attendance.csv", 'r+') as attendance:
                             MyDatalist =  attendance.readlines()
                             NameList = []
                             for line in MyDatalist :
