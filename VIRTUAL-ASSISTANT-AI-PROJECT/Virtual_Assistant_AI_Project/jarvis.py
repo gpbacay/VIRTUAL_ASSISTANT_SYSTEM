@@ -13,10 +13,10 @@ from poserec import Pose_Recognition_System
 listener = sr.Recognizer()
 jarvis_engine = pyttsx3.init()
 voices = jarvis_engine.getProperty('voices')
-jarvis_engine.setProperty('voice', voices[3].id)
+jarvis_engine.setProperty('voice', voices[0].id)
 
 
-def talk(text):
+def speak(text):
     jarvis_engine.say(text)
     jarvis_engine.runAndWait()
 
@@ -133,7 +133,7 @@ def Start_Up_command_MainFunction():
     except:
         response = "Hello! How can I help you?"
     print(response)
-    talk(response)
+    speak(response)
 
 
 #______________________________LISTEN_COMMAND_MAIN_FUNCTION
@@ -173,15 +173,15 @@ def Add_command_MainFunction(command):
         if command in Interrogative_words:
             response = "Would you like to ask me anything else?"
             print(response)
-            talk(response)
+            speak(response)
         elif command not in Interrogative_words:
             response = "Is there anything else I could do for you?"
             print(response)
-            talk(response)
+            speak(response)
         else:
             response = ''
             print(response)
-            talk(response)
+            speak(response)
         with sr.Microphone() as source:
             listener.adjust_for_ambient_noise(source, duration = 0.5)
             listener.pause_threshold = 1
@@ -686,7 +686,7 @@ def run_jarvis():
                 Play_Sound()
                 response = "Yes? How can I help you?"
                 print(response)
-                talk(response)
+                speak(response)
                 exit(run_jarvis())
 
     #_______________________________________________________________________CONFIRMATION_SUBFUNCTION
@@ -699,13 +699,13 @@ def run_jarvis():
             command = command.replace(command, '')
             response = "Then, please do tell."
             print(response)
-            talk(response)
+            speak(response)
             exit(run_jarvis())
         elif command in No_KeyWords:
             command = command.replace(command, '')
             response = "Is that so? all right then. Signing off."
             print(response)
-            talk(response)
+            speak(response)
             def Play_Sound():
                 from playsound import playsound
                 playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
@@ -718,12 +718,12 @@ def run_jarvis():
             Just call me if you need me. I'll wait.
             """
             print(response)
-            talk(response)
+            speak(response)
             Standby_SubFunction()
         else:
             response = "Come again?"
             print(response)
-            talk(response)
+            speak(response)
             exit(run_jarvis())
 
     #_______________________________________________________________________REPEAT_SUBFUNCTION
@@ -735,7 +735,7 @@ def run_jarvis():
             with sr.Microphone() as source:
                 response = "Understood, I'm listening..."
                 print(response)
-                talk(response)
+                speak(response)
                 listener.adjust_for_ambient_noise(source, duration = 0.5)
                 listener.pause_threshold = 1
                 voice = listener.listen(source)
@@ -744,7 +744,7 @@ def run_jarvis():
         except:
             pass
         print(command)
-        talk(command)
+        speak(command)
         time.sleep(5)
         Confirmation_SubFunction(command)
 
@@ -846,13 +846,13 @@ def run_jarvis():
         else:
             response = "Running Face Recognition System..."
         print(response)
-        talk(response)
+        speak(response)
         Initialize_Face_Recognition_System()
         NameHA = Name_Honorific_Address[-1]
         MyName = Name[-1]
         response = "Hello " + NameHA + " " + MyName + "!"
         print(response)
-        talk(response)
+        speak(response)
         Confirmation_SubFunction(command)
         
     #______________________________________________________POSE_RECOGNITION_BLOCK
@@ -867,7 +867,7 @@ def run_jarvis():
         else:
             response = "Running Pose Recognition System..."
         print(response)
-        talk(response)
+        speak(response)
         Initialize_Pose_Recognition_System()
         Confirmation_SubFunction(command)
 
@@ -893,12 +893,12 @@ def run_jarvis():
                 Sum = int(Addend1) + int(Addend2)
                 response =  Addend1 + " plus " + Addend2 + " is equal to " + str(Sum)
                 print(response)
-                talk(response)
+                speak(response)
             except:
                 print(command)
                 response = "Pardon me, come again?"
                 print(response)
-                talk(response)
+                speak(response)
                 exit(run_jarvis())
         Sum_Calculator()
         Confirmation_SubFunction(command)
@@ -918,12 +918,12 @@ def run_jarvis():
                 Difference = int(Minuend) - int(Subtrahend)
                 response =  Minuend + " minus " + Subtrahend + " is equal to " + str(Difference)
                 print(response)
-                talk(response)
+                speak(response)
             except:
                 print(command)
                 response = "Pardon me, come again?"
                 print(response)
-                talk(response)
+                speak(response)
                 exit(run_jarvis())
         Difference_Calculator()
         Confirmation_SubFunction(command)
@@ -943,12 +943,12 @@ def run_jarvis():
                 Product = int(Multiplier) * int(Multiplicand)
                 response =  Multiplier + " times " + Multiplicand + " is equal to " + str(Product)
                 print(response)
-                talk(response)
+                speak(response)
             except:
                 print(command)
                 response = "Pardon me, come again?"
                 print(response)
-                talk(response)
+                speak(response)
                 exit(run_jarvis())
         Product_Calculator()
         Confirmation_SubFunction(command)
@@ -969,12 +969,12 @@ def run_jarvis():
                 Remainder = int(Dividend) % int(Divisor)
                 response =  Dividend + " divided by " + Divisor + " is equal to " + str(Quotient) + ", Remainder " + str(Remainder)
                 print(response)
-                talk(response)
+                speak(response)
             except:
                 print(command)
                 response = "Pardon me, come again?"
                 print(response)
-                talk(response)
+                speak(response)
                 exit(run_jarvis())
         Quotient_Calculator()
         Confirmation_SubFunction(command)
@@ -994,12 +994,12 @@ def run_jarvis():
                 Modulo = int(Dividend) % int(Divisor)
                 response =  Dividend + " modulo " + Divisor + " is equal to " + str(Modulo)
                 print(response)
-                talk(response)
+                speak(response)
             except:
                 print(command)
                 response = "Pardon me, come again?"
                 print(response)
-                talk(response)
+                speak(response)
                 exit(run_jarvis())
         Modulo_Calculator()
         Confirmation_SubFunction(command)
@@ -1015,7 +1015,7 @@ def run_jarvis():
                     with sr.Microphone() as source:
                         response = "Choose a number between 1 to 6."
                         print(response)
-                        talk(response)
+                        speak(response)
                         listener.adjust_for_ambient_noise(source, duration = 0.5)
                         listener.pause_threshold = 1
                         voice = listener.listen(source)
@@ -1039,7 +1039,7 @@ def run_jarvis():
                         else:
                             response = "Come again?"
                             print(response)
-                            talk(response)
+                            speak(response)
                             exit(Choose_A_Number())
                 except:
                     pass
@@ -1047,12 +1047,12 @@ def run_jarvis():
             number = int(Choose_A_Number())
             response = "You've chose number " + str(number)
             print(response)
-            talk(response)
+            speak(response)
             
             def Roll_Number():
                 response = "Rolling..."
                 print(response)
-                talk(response)
+                speak(response)
                 Max_Number = 6
                 
                 def Result():
@@ -1064,32 +1064,32 @@ def run_jarvis():
                 if result == int(number):
                     response = "The result is number " + str(number) + ", You won! Congratulations!"
                     print(response)
-                    talk(response)
+                    speak(response)
                     pass
                 elif result == 1:
                     response = "The result is number 1, You lose, better luck next time!"
                     print(response)
-                    talk(response)
+                    speak(response)
                 elif result == 2:
                     response = "The result is number 2, You lose, better luck next time!"
                     print(response)
-                    talk(response)
+                    speak(response)
                 elif result == 3:
                     response = "The result is number 3, You lose, better luck next time!"
                     print(response)
-                    talk(response)
+                    speak(response)
                 elif result == 4:
                     response = "The result is number 4, You lose, better luck next time!"
                     print(response)
-                    talk(response)
+                    speak(response)
                 elif result == 5:
                     response = "The result is number 5, You lose, better luck next time!"
                     print(response)
-                    talk(response)
+                    speak(response)
                 elif result == 6:
                     response = "The result is number 6, You lose, better luck next time!"
                     print(response)
-                    talk(response)
+                    speak(response)
             Roll_Number()
             
         def Try_Again():
@@ -1099,7 +1099,7 @@ def run_jarvis():
                 with sr.Microphone() as source:
                     response = "Would you like to try again?"
                     print(response)
-                    talk(response)
+                    speak(response)
                     listener.adjust_for_ambient_noise(source, duration = 0.5)
                     listener.pause_threshold = 1
                     voice = listener.listen(source)
@@ -1131,7 +1131,7 @@ def run_jarvis():
         print(command)
         response = "As you wish. Signing off."
         print(response)
-        talk(response)
+        speak(response)
         def Play_Sound():
             from playsound import playsound
             playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
@@ -1142,7 +1142,7 @@ def run_jarvis():
         print(command)
         response = "it's my pleasure. Signing off."
         print(response)
-        talk(response)
+        speak(response)
         def Play_Sound():
             from playsound import playsound
             playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
@@ -1153,7 +1153,7 @@ def run_jarvis():
         print(command)
         response = "Is that so? all right then. Signing off."
         print(response)
-        talk(response)
+        speak(response)
         def Play_Sound():
             from playsound import playsound
             playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
@@ -1164,7 +1164,7 @@ def run_jarvis():
         print(command)
         response = "Goodbye Sir! Have a great day!"
         print(response)
-        talk(response)
+        speak(response)
         def Play_Sound():
             from playsound import playsound
             playsound('C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3')
@@ -1177,19 +1177,19 @@ def run_jarvis():
         try:
             response = "Just a moment."
             print(response)
-            talk(response)
+            speak(response)
             information = command.replace("search in google", '')
             information = information.replace("jarvis", '')
             information = information.replace("search", '')
             information = information.replace("in google", '')
             information = information.replace("google", '')
             print("Searching " + information)
-            talk("Searching " + information)
+            speak("Searching " + information)
             search = information.replace(' ', '+')
             browser = webdriver.Chrome('chromedriver.exe')
             for i in range(4):
                 browser.get("https://www.google.com/search?q=" + search + "&start" + str(i))
-            talk("here's what I've found.")
+            speak("here's what I've found.")
             Confirmation_SubFunction(command)
         except:
             def Play_Sound():
@@ -1201,7 +1201,7 @@ def run_jarvis():
     elif "in youtube" in command or "play" in command:
         response = "Searching..."
         print(response)
-        talk(response)
+        speak(response)
         song_title = command.replace("jarvis", '')
         song_title = song_title.replace("play", '')
         song_title = song_title.replace("search", '')
@@ -1216,20 +1216,20 @@ def run_jarvis():
         pywhatkit.playonyt(song_title)
         response = "Playing " + song_title
         print(response)
-        talk(response)
+        speak(response)
         Confirmation_SubFunction(command)
 
     elif "search in wikipedia" in command or "in wikipedia search" in command:
         response = "Searching..."
         print(response)
-        talk(response)
+        speak(response)
         person = command.replace("search in wikipedia", '')
         person = person.replace("in wikipedia search", '')
         person = person.replace("jarvis", '')
         person = person.replace("who is", '')
         info = wikipedia.summary(person, 1)
         print(info)
-        talk(info)
+        speak(info)
         Confirmation_SubFunction(command)
 
     elif "temperature in santa cruz davao del sur" in command:
@@ -1240,7 +1240,7 @@ def run_jarvis():
         temp = data.find("div",class_="BNeawe").text
         response = f"current {search} is {temp}"
         print(response)
-        talk(response)
+        speak(response)
         Confirmation_SubFunction(command)
 
     elif "temperature in davao city" in command:
@@ -1251,7 +1251,7 @@ def run_jarvis():
         temp = data.find("div",class_="BNeawe").text
         response = f"current {search} is {temp}"
         print(response)
-        talk(response)
+        speak(response)
         Confirmation_SubFunction(command)
 
     #________________________________________________________________________________________________OPEN/ACCESS_BLOCK
@@ -1263,87 +1263,87 @@ def run_jarvis():
             if "chrome" in command:
                 response = "As you wish!"
                 print(response)
-                talk(response)
+                speak(response)
                 program = "C:\Program Files\Google\Chrome\Application\chrome.exe"
                 subprocess.Popen([program])
                 response = "Opening Chrome"
                 print(response)
-                talk(response)
+                speak(response)
                 
             elif "aqw game launcher" in command:
                 response = "As you wish!"
                 print(response)
-                talk(response)
+                speak(response)
                 program = "C:\Program Files\Artix Game Launcher\Artix Game Launcher.exe"
                 subprocess.Popen([program])
                 response = "Opening Artix game launcher"
                 print(response)
-                talk(response)
+                speak(response)
                 
             elif "genshin impact" in command:
                 response = "As you wish!"
                 print(response)
-                talk(response)
+                speak(response)
                 program = "C:\Program Files\Genshin Impact\launcher.exe"
                 subprocess.Popen([program])
                 response = "Opening Genshin Impact"
                 print(response)
-                talk(response)
+                speak(response)
                 
             elif "command prompt" in command or "cmd" in command:
                 response = "As you wish!"
                 print(response)
-                talk(response)
+                speak(response)
                 program = "cmd.exe"
                 subprocess.Popen([program])
                 response = "Opening Command Prompt"
                 print(response)
-                talk(response)
+                speak(response)
                 
             elif "notepad" in command:
                 response = "As you wish!"
                 print(response)
-                talk(response)
+                speak(response)
                 program = "notepad.exe"
                 subprocess.Popen([program])
                 response = "Opening Notepad app"
                 print(response)
-                talk(response)
+                speak(response)
                 
             elif "calculator" in command:
                 response = "As you wish!"
                 print(response)
-                talk(response)
+                speak(response)
                 program = "calc.exe"
                 subprocess.Popen([program])
                 response = "Opening Calculator app"
                 print(response)
-                talk(response)
+                speak(response)
                 
             elif "vlc" in command:
                 response = "As you wish!"
                 print(response)
-                talk(response)
+                speak(response)
                 program = "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe"
                 subprocess.Popen([program])
                 response = "Opening VLC media player"
                 print(response)
-                talk(response)
+                speak(response)
                 
             elif "visual studio code" in command:
                 response = "As you wish!"
                 print(response)
-                talk(response)
+                speak(response)
                 program = "C:\\Users\Gianne Bacay\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
                 subprocess.Popen([program])
                 response = "Opening Visual Studio Code"
                 print(response)
-                talk(response)
+                speak(response)
                 
         except:
             response = """Access denied! It looks like I cannot access or open the said program."""
             print(response)
-            talk(response)
+            speak(response)
         exit(Confirmation_SubFunction(command))
 
     #_________________________________________________________________________________________________DATE_and_TIME_BLOCK
@@ -1372,7 +1372,7 @@ def run_jarvis():
         
         response = "Today is " + WeekDay_Name + ", " + Month_Name + " " + str(Day_number) + ", " + str(Year_number)
         print(response)
-        talk(response)
+        speak(response)
         Confirmation_SubFunction(command)
 
     elif command in CurrentTime_Keywords:
@@ -1380,7 +1380,7 @@ def run_jarvis():
         time = datetime.datetime.now().strftime("%I:%M %p")
         print(time)
         time = time.replace(':', ' ')
-        talk("Current time is" + time)
+        speak("Current time is" + time)
         Confirmation_SubFunction(command)
 
     #________________________________________________________________________QUERY_BLOCK
@@ -1393,7 +1393,7 @@ def run_jarvis():
                     "But there is grace in their failings. And its a privilege to be among them."]
         response = response[0]+response[1]+response[2]+response[3]
         print(response)
-        talk(response)
+        speak(response)
         Confirmation_SubFunction(command)
 
     elif "what is the meaning of life" in command or "what is life" in command or "what do you think about life" in command:
@@ -1409,7 +1409,7 @@ def run_jarvis():
         including humans, animals, and plants.
         """
         print(response)
-        talk(response)
+        speak(response)
         Confirmation_SubFunction(command)
 
     elif "what do you think about technology" in command:
@@ -1427,7 +1427,7 @@ def run_jarvis():
         potentially leading to unemployment. Overall, the impact of technology on society is complex and multifaceted.
         """
         print(response)
-        talk(response)
+        speak(response)
         Confirmation_SubFunction(command)
 
     #________________________________________________________________________SHUTDOWN_BLOCK
@@ -1435,7 +1435,7 @@ def run_jarvis():
     elif "shutdown my computer" in command:
         response = "as you wish! shutting down your computer."
         print(response)
-        talk(response)
+        speak(response)
         os.system("shutdown /s /t 0")
         def StartUp_Sound():
             from playsound import playsound
@@ -1446,7 +1446,7 @@ def run_jarvis():
     elif "restart my computer" in command:
         response = "as you wish! restarting your computer."
         print(response)
-        talk(response)
+        speak(response)
         os.system("shutdown /r")
         def StartUp_Sound():
             from playsound import playsound
@@ -1457,7 +1457,7 @@ def run_jarvis():
     elif "sign off my computer" in command:
         response = "as you wish! signing off your computer."
         print(response)
-        talk(response)
+        speak(response)
         os.system("shutdown /l")
         def StartUp_Sound():
             from playsound import playsound
@@ -1470,7 +1470,7 @@ def run_jarvis():
     elif command in Standby_KeyWords:
         response = "Understood! Take your time. Just call me if you need anything."
         print(response)
-        talk(response)
+        speak(response)
         Standby_SubFunction()
         
         
@@ -1490,7 +1490,7 @@ def run_jarvis():
             except:
                 response = "Hello, how can I help you?"
         print(response)
-        talk(response)
+        speak(response)
         exit(run_jarvis())
 
     elif command in HowAreYou_KeyWords:
@@ -1503,7 +1503,7 @@ def run_jarvis():
         else:
             response = "I'm okay, Thanks for asking. How about you?"
         print(response)
-        talk(response)
+        speak(response)
         exit(run_jarvis())
         
     elif command in ImFine_KeyWords:
@@ -1516,7 +1516,7 @@ def run_jarvis():
         else:
             response = "All right then, How can I help you now?"
         print(response)
-        talk(response)
+        speak(response)
         exit(run_jarvis())
 
     elif command in WhoAreYou_Key:
@@ -1527,7 +1527,7 @@ def run_jarvis():
         Created by Gianne P. Bacay on the 16th day of October year 2022.
         """
         print(response)
-        talk(response)
+        speak(response)
         Confirmation_SubFunction(command)
 
     elif command in DoYouKnowMe_KeyWords:
@@ -1540,7 +1540,7 @@ def run_jarvis():
             Hence, If you don't mind, can you tell me your name?
             """
         print(response)
-        talk(response)
+        speak(response)
         exit(run_jarvis())
 
     elif command in WhoAmI_KeyWords:
@@ -1554,7 +1554,7 @@ def run_jarvis():
             May I know your name first?
             """
         print(response)
-        talk(response)
+        speak(response)
         exit(run_jarvis())
 
     elif command in SayMyName_KeyWords:
@@ -1568,13 +1568,13 @@ def run_jarvis():
             May I know your name first?
             """
         print(response)
-        talk(response)
+        speak(response)
         exit(run_jarvis())
 
     elif command in AskMyName_KeyWords:
         response = "If you don't mind, can you tell me your name?"
         print(response)
-        talk(response)
+        speak(response)
         exit(run_jarvis())
 
     elif command in WhatIsMyFullName_KeyWords:
@@ -1588,7 +1588,7 @@ def run_jarvis():
             If you don't mind, can you tell me your full name first?
             """
         print(response)
-        talk(response)
+        speak(response)
         exit(run_jarvis())
 
     elif "my name is" in command or "is my name" in command or "i am" in command:
@@ -1602,7 +1602,7 @@ def run_jarvis():
             Name.append(name)
             response = "What a coincidence, my name is jarvis too. Nice meeting you jarvis!"
             print(response)
-            talk(response)
+            speak(response)
             exit(run_jarvis())
         else:
             command = command.replace("hi", '')
@@ -1614,12 +1614,12 @@ def run_jarvis():
                 Name.append(name)
                 response = Name[-1] + ", " + "I'll keep that in mind. Nice knowing you " + Name[-1] + "!"
                 print(response)
-                talk(response)
+                speak(response)
                 exit(run_jarvis())
             elif name == '':
                 response = "Who are you?"
                 print(response)
-                talk(response)
+                speak(response)
                 exit(run_jarvis())
 
     elif "and you are" in command or "and your name is" in command:
@@ -1628,7 +1628,7 @@ def run_jarvis():
         It is a short term for Just A Rather Very Intelligent System.
         """
         print(response)
-        talk(response)
+        speak(response)
         Confirmation_SubFunction(command)
 
     elif "who created you" in command:
@@ -1640,7 +1640,7 @@ def run_jarvis():
         For now, I'm still a work on progress.
         """
         print(response)
-        talk(response)
+        speak(response)
         Confirmation_SubFunction(command)
         
     elif "merry christmas" in command or "merry christmas jarvis" in command or "jarvis merry christmas" in command:
@@ -1651,7 +1651,7 @@ def run_jarvis():
         except:
             response = "Merry Christmas, how can I help you?"
         print(response)
-        talk(response)
+        speak(response)
         exit(run_jarvis())
         
     #_______________________________________________________________________________COUNTDOWN_BLOCK
@@ -1665,7 +1665,7 @@ def run_jarvis():
                 with sr.Microphone() as source:
                     response = "Choose a starting number in seconds"
                     print(response)
-                    talk(response)
+                    speak(response)
                     voice = listener.listen(source)
                     number = listener.recognize_google(voice)
                     number_input = number.lower()
@@ -1684,11 +1684,11 @@ def run_jarvis():
         
         response = "You've chose " + str(number) + " as a starting number"
         print(response)
-        talk(response)
+        speak(response)
         
         response = "Initializing Countdown..."
         print(response)
-        talk(response)
+        speak(response)
         
         for x in reversed(range(0, int(number))):
             seconds = x % 60
@@ -1696,12 +1696,12 @@ def run_jarvis():
             hours = int(x / 3600)
             countdown_format = f"{hours:02}:{minutes:02}:{seconds:02}"
             print(countdown_format)
-            talk(x)
+            speak(x)
             time.sleep(1)
             
         response = "TIME'S UP!"
         print(response)
-        talk(response)
+        speak(response)
         Confirmation_SubFunction(command)
         
         
@@ -1714,13 +1714,13 @@ def run_jarvis():
         My apologies, I can't hear anything. Just call me if you need me. 
         I'll wait.
         """
-        talk(response)
+        speak(response)
         Standby_SubFunction()
     else:
         print(command)
         response = "Pardon me, come again?"
         print(response)
-        talk(response)
+        speak(response)
         exit(run_jarvis())
 
 #______________________________________RUN_jarvis_IN_A_LOOP_BLOCK
