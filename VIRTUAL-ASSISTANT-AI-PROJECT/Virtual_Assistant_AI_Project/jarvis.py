@@ -882,14 +882,89 @@ def run_jarvis():
 
     #_________________________________________________________________BASIC_ARITHMETIC_CALCULATIONS_BLOCK
     #Run Command: python jarvis.py
-    elif '+' in command or 'plus' in command:
+    elif '*' in command or 'times' in command:
+        def Product_Calculator():
+            global command
+            try:
+                numbers = NonSpelledNumber_Converter(command)
+                Arithmetic_Multiplication.append(numbers)
+                Converted_numbers = []
+                converted_numbers = SpelledNumber_Converter(command)
+                Converted_numbers.append(converted_numbers)
+                if Converted_numbers == 0:
+                    Converted_numbers = 1
+                    Arithmetic_Multiplication[-1].extend(Converted_numbers)
+                
+                numbers_length = len(Arithmetic_Multiplication[-1])
+                if numbers_length <= 2:
+                    Multiplier = Arithmetic_Multiplication[-1][0]
+                    Multiplicand = Arithmetic_Multiplication[-1][1]
+                    Product = Multiplier * Multiplicand
+                    response =  str(Multiplier) + " times " + str(Multiplicand) + " is equal to " + str(Product)
+                elif numbers_length > 2:
+                    input_numbers = Arithmetic_Multiplication[-1]
+                    print(input_numbers)
+                    def Product(numbers):
+                        result = 1
+                        for number in numbers:
+                            result *= number
+                        return result
+                    Product = Product(input_numbers)
+                    response =  "The Product is equal to " + str(Product)
+            except:
+                print(command)
+                response = "Pardon me, come again?"
+                print(response)
+                speak(response)
+                exit(run_jarvis())
+            print(response)
+            speak(response)
+        Product_Calculator()
+        Confirmation_SubFunction(command)
+    
+    elif '/' in command or 'divided by' in command:
+        def Quotient_Calculator():
+            global command
+            
+            numbers = NonSpelledNumber_Converter(command)
+            Arithmetic_Division.append(numbers)
+            
+            numbers_length = len(Arithmetic_Division[-1])
+            if numbers_length <= 2:
+                Dividend = Arithmetic_Division[-1][0]
+                Divisor = Arithmetic_Division[-1][1]
+                Quotient = Dividend // Divisor
+                Remainder = Dividend % Divisor
+                response =  str(Dividend) + " divided by " + str(Divisor) + " is equal to " + str(Quotient) + ", Remainder " + str(Remainder)
+            elif numbers_length > 2:
+                input_numbers = Arithmetic_Division[-1]
+                def Quotient(numbers):
+                    result = numbers[0]
+                    for number in numbers[1:]:
+                        result, remainder = divmod(result, number)
+                    return result, remainder
+                Result = Quotient(input_numbers)
+                Quotient = Result[0]
+                Remainder = Result[1]
+                print(Quotient)
+                response =  "The Quotient is equal to " + str(Quotient) + ", Remainder " + str(Remainder)
+            print(response)
+            speak(response)
+        Quotient_Calculator()
+        Confirmation_SubFunction(command)
+        #python jarvis.py
+    elif '+' in command or 'plus' in command or "add" in command:
         def Sum_Calculator():
             global command
             try:
-                command = NonSpelledNumber_Converter(command)
-                Arithmetic_Addition.append(command)
-                numbers_length = len(Arithmetic_Addition[-1])
+                numbers = NonSpelledNumber_Converter(command)
+                Arithmetic_Addition.append(numbers)
+                Converted_numbers = []
+                converted_numbers = SpelledNumber_Converter(command)
+                Converted_numbers.append(converted_numbers)
+                Arithmetic_Addition[-1].extend(Converted_numbers)
                 
+                numbers_length = len(Arithmetic_Addition[-1])
                 if numbers_length <= 2:
                     Addend1 = Arithmetic_Addition[-1][0]
                     Addend2 = Arithmetic_Addition[-1][1]
@@ -904,19 +979,18 @@ def run_jarvis():
                         return result
                     Sum = Sum(input_numbers)
                     response =  "The Sum is equal to " + str(Sum)
-                
-                print(response)
-                speak(response)
             except:
                 print(command)
                 response = "Pardon me, come again?"
                 print(response)
                 speak(response)
                 exit(run_jarvis())
+            print(response)
+            speak(response)
         Sum_Calculator()
         Confirmation_SubFunction(command)
         
-    elif '-' in command or 'minus' in command:
+    elif '-' in command or 'minus' in command or "subtract" in command:
         def Difference_Calculator():
             global command
             try:
@@ -947,61 +1021,6 @@ def run_jarvis():
                 speak(response)
                 exit(run_jarvis())
         Difference_Calculator()
-        Confirmation_SubFunction(command)
-        
-    elif '*' in command or 'times' in command:
-        def Product_Calculator():
-            global command
-            try:
-                command = command.replace("is equal to", '')
-                command = command.replace("is equivalent to", '')
-                command = command.replace("equals", '')
-                command = command.replace("is equals", '')
-                command = command.split(' ')
-                Arithmetic_Multiplication.append(command)
-                
-                Multiplier = Arithmetic_Multiplication[-1][0]
-                Multiplicand = Arithmetic_Multiplication[-1][2]
-                Product = int(Multiplier) * int(Multiplicand)
-                
-                response =  Multiplier + " times " + Multiplicand + " is equal to " + str(Product)
-                print(response)
-                speak(response)
-            except:
-                print(command)
-                response = "Pardon me, come again?"
-                print(response)
-                speak(response)
-                exit(run_jarvis())
-        Product_Calculator()
-        Confirmation_SubFunction(command)
-    
-    elif '/' in command or 'divided by' in command:
-        def Quotient_Calculator():
-            global command
-            try:
-                command = command.replace("is equal to", '')
-                command = command.replace("is equivalent to", '')
-                command = command.replace("equals", '')
-                command = command.replace("is equals", '')
-                command = command.split(' ')
-                Arithmetic_Division.append(command)
-                
-                Dividend = Arithmetic_Division[-1][0]
-                Divisor = Arithmetic_Division[-1][2]
-                Quotient = int(Dividend) // int(Divisor)
-                Remainder = int(Dividend) % int(Divisor)
-                
-                response =  Dividend + " divided by " + Divisor + " is equal to " + str(Quotient) + ", Remainder " + str(Remainder)
-                print(response)
-                speak(response)
-            except:
-                print(command)
-                response = "Pardon me, come again?"
-                print(response)
-                speak(response)
-                exit(run_jarvis())
-        Quotient_Calculator()
         Confirmation_SubFunction(command)
     
     elif 'mod' in command or 'modulo' in command:
