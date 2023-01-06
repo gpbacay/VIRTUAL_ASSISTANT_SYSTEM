@@ -129,9 +129,9 @@ def Start_Up_command_MainFunction():
     NameHA = Name_Honorific_Address[-1]
     try:
         MyName = Name[-1]
-        response = "Hello " + NameHA + " " + MyName + "! How can I help you?"
+        response = "Hi " + NameHA + " " + MyName + "! How can I help you?"
     except:
-        response = "Hello! How can I help you?"
+        response = "Hi! How can I help you?"
     print(response)
     speak(response)
 
@@ -567,6 +567,10 @@ def run_jarvis():
                     "i'm very well"]
     
     RunFaceRecog_KeyWords = ["run face recognition system",
+                            "run face rec again",
+                            "recognize my face again",
+                            "face recognition again",
+                            "run face recognition system",
                             "run face recognition",
                             "run the face recognition system",
                             "run the video face recognition system",
@@ -882,16 +886,25 @@ def run_jarvis():
         def Sum_Calculator():
             global command
             try:
-                command = command.replace("is equal to", '')
-                command = command.replace("is equivalent to", '')
-                command = command.replace("equals", '')
-                command = command.replace("is equals", '')
-                command = command.split(' ')
+                command = NonSpelledNumber_Converter(command)
                 Arithmetic_Addition.append(command)
-                Addend1 = Arithmetic_Addition[-1][0]
-                Addend2 = Arithmetic_Addition[-1][2]
-                Sum = int(Addend1) + int(Addend2)
-                response =  Addend1 + " plus " + Addend2 + " is equal to " + str(Sum)
+                numbers_length = len(Arithmetic_Addition[-1])
+                
+                if numbers_length <= 2:
+                    Addend1 = Arithmetic_Addition[-1][0]
+                    Addend2 = Arithmetic_Addition[-1][1]
+                    Sum = Addend1 + Addend2
+                    response =  str(Addend1) + " plus " + str(Addend2) + " is equal to " + str(Sum)
+                elif numbers_length > 2:
+                    input_numbers = Arithmetic_Addition[-1]
+                    def Sum(numbers):
+                        result = 0
+                        for number in numbers:
+                            result += number
+                        return result
+                    Sum = Sum(input_numbers)
+                    response =  "The Sum is equal to " + str(Sum)
+                
                 print(response)
                 speak(response)
             except:
@@ -913,9 +926,11 @@ def run_jarvis():
                 command = command.replace("is equals", '')
                 command = command.split(' ')
                 Arithmetic_Subtraction.append(command)
+                
                 Minuend = Arithmetic_Subtraction[-1][0]
                 Subtrahend = Arithmetic_Subtraction[-1][2]
                 Difference = int(Minuend) - int(Subtrahend)
+                
                 response =  Minuend + " minus " + Subtrahend + " is equal to " + str(Difference)
                 print(response)
                 speak(response)
@@ -938,9 +953,11 @@ def run_jarvis():
                 command = command.replace("is equals", '')
                 command = command.split(' ')
                 Arithmetic_Multiplication.append(command)
+                
                 Multiplier = Arithmetic_Multiplication[-1][0]
                 Multiplicand = Arithmetic_Multiplication[-1][2]
                 Product = int(Multiplier) * int(Multiplicand)
+                
                 response =  Multiplier + " times " + Multiplicand + " is equal to " + str(Product)
                 print(response)
                 speak(response)
@@ -963,10 +980,12 @@ def run_jarvis():
                 command = command.replace("is equals", '')
                 command = command.split(' ')
                 Arithmetic_Division.append(command)
+                
                 Dividend = Arithmetic_Division[-1][0]
                 Divisor = Arithmetic_Division[-1][2]
                 Quotient = int(Dividend) // int(Divisor)
                 Remainder = int(Dividend) % int(Divisor)
+                
                 response =  Dividend + " divided by " + Divisor + " is equal to " + str(Quotient) + ", Remainder " + str(Remainder)
                 print(response)
                 speak(response)
@@ -1105,7 +1124,7 @@ def run_jarvis():
                     voice = listener.listen(source)
                     confirmation = listener.recognize_google(voice)
                     confirmation = confirmation.lower()
-                    if "yes" in confirmation:
+                    if "yes" in confirmation or "again" in confirmation:
                         confirmation = confirmation.replace(confirmation, 'yes')
                     elif "no" in confirmation:
                         confirmation = confirmation.replace(confirmation, 'no')
@@ -1187,9 +1206,9 @@ def run_jarvis():
             speak("Searching " + information)
             search = information.replace(' ', '+')
             browser = webdriver.Chrome('chromedriver.exe')
-            for i in range(4):
+            for i in range(3):
                 browser.get("https://www.google.com/search?q=" + search + "&start" + str(i))
-            speak("here's what I've found.")
+            speak("Here's what I've found.")
             Confirmation_SubFunction(command)
         except:
             def Play_Sound():
@@ -1681,28 +1700,28 @@ def run_jarvis():
         number = Choose_A_Starting_Number()
         if number == '':
             exit(Choose_A_Starting_Number())
-        
-        response = "You've chose " + str(number) + " as a starting number"
-        print(response)
-        speak(response)
-        
-        response = "Initializing Countdown..."
-        print(response)
-        speak(response)
-        
-        for x in reversed(range(0, int(number))):
-            seconds = x % 60
-            minutes = int(x / 60) % 60
-            hours = int(x / 3600)
-            countdown_format = f"{hours:02}:{minutes:02}:{seconds:02}"
-            print(countdown_format)
-            speak(x)
-            time.sleep(1)
+        else:
+            response = "You've chose " + str(number) + " as a starting number"
+            print(response)
+            speak(response)
             
-        response = "TIME'S UP!"
-        print(response)
-        speak(response)
-        Confirmation_SubFunction(command)
+            response = "Initializing Countdown..."
+            print(response)
+            speak(response)
+            
+            for x in reversed(range(0, int(number))):
+                seconds = x % 60
+                minutes = int(x / 60) % 60
+                hours = int(x / 3600)
+                countdown_format = f"{hours:02}:{minutes:02}:{seconds:02}"
+                print(countdown_format)
+                speak(x)
+                time.sleep(1)
+                
+            response = "TIME'S UP!"
+            print(response)
+            speak(response)
+            Confirmation_SubFunction(command)
         
         
     #_______________________________________________________NoCommands/NotClearCommands_BLOCK
