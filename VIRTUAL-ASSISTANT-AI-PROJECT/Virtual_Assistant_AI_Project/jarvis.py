@@ -920,18 +920,24 @@ def run_jarvis():
         def Difference_Calculator():
             global command
             try:
-                command = command.replace("is equal to", '')
-                command = command.replace("is equivalent to", '')
-                command = command.replace("equals", '')
-                command = command.replace("is equals", '')
-                command = command.split(' ')
+                command = NonSpelledNumber_Converter(command)
                 Arithmetic_Subtraction.append(command)
+                numbers_length = len(Arithmetic_Subtraction[-1])
                 
-                Minuend = Arithmetic_Subtraction[-1][0]
-                Subtrahend = Arithmetic_Subtraction[-1][2]
-                Difference = int(Minuend) - int(Subtrahend)
-                
-                response =  Minuend + " minus " + Subtrahend + " is equal to " + str(Difference)
+                if numbers_length <= 2:
+                    Minuend = Arithmetic_Subtraction[-1][0]
+                    Subtrahend = Arithmetic_Subtraction[-1][1]
+                    Difference = Minuend - Subtrahend
+                    response =  str(Minuend) + " minus " + str(Subtrahend) + " is equal to " + str(Difference)
+                elif numbers_length > 2:
+                    input_numbers = Arithmetic_Subtraction[-1]  
+                    def Difference(numbers):
+                        result = numbers[0]
+                        for number in numbers[1:]:
+                            result -= number
+                        return result
+                    Difference = Difference(input_numbers)
+                    response =  "The Differencce is equal to " + str(Difference)
                 print(response)
                 speak(response)
             except:
