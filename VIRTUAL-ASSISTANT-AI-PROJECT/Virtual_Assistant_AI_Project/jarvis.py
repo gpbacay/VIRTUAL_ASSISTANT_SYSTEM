@@ -224,6 +224,7 @@ def run_jarvis():
     from bs4 import BeautifulSoup as bs
     import random
     import re
+    import pyautogui
 
     #________________________________________________LISTS_OF_COMMAND_KEY_WORDS
     #Run Command: python jarvis.py
@@ -1509,16 +1510,27 @@ def run_jarvis():
         StartUp_Sound()
         exit()
         
-    elif "increase volume" in command:
-        response = "as you wish! signing off your computer."
+    elif "increase" in command and "volume" in command or "volume up" in command:
+        response = "as you wish!"
         print(response)
         speak(response)
-        os.system("shutdown /l")
+        pyautogui.press("volumeup", 10)
         def StartUp_Sound():
             from playsound import playsound
             playsound("C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
         StartUp_Sound()
-        exit()
+        exit(run_jarvis())
+        
+    elif "decrease" in command and "volume" in command or "volume down" in command:
+        response = "as you wish!"
+        print(response)
+        speak(response)
+        pyautogui.press("volumedown", 10)
+        def StartUp_Sound():
+            from playsound import playsound
+            playsound("C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+        StartUp_Sound()
+        exit(run_jarvis())
 
     #________________________________________________________________________STANDBY_BLOCK
     #Run Command: python jarvis.py
