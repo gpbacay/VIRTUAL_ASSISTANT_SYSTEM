@@ -1474,7 +1474,7 @@ def run_jarvis():
         speak(response)
         Confirmation_SubFunction(command)
 
-    #________________________________________________________________________SHUTDOWN_BLOCK
+    #________________________________________________________________________COMPUTER_AUTOMATION_BLOCK
     #Run Command: python jarvis.py
     elif "shutdown my computer" in command:
         response = "as you wish! shutting down your computer."
@@ -1499,6 +1499,17 @@ def run_jarvis():
         exit()
 
     elif "sign off my computer" in command:
+        response = "as you wish! signing off your computer."
+        print(response)
+        speak(response)
+        os.system("shutdown /l")
+        def StartUp_Sound():
+            from playsound import playsound
+            playsound("C:\\Users\\Gianne Bacay\\Desktop\\button1.mp3")
+        StartUp_Sound()
+        exit()
+        
+    elif "increase volume" in command:
         response = "as you wish! signing off your computer."
         print(response)
         speak(response)
