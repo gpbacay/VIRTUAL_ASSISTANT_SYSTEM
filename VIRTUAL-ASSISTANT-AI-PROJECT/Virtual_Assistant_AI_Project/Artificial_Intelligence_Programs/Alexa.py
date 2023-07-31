@@ -4,7 +4,6 @@ import pyttsx3
 import pywhatkit
 import datetime
 import wikipedia
-import pyjokes
 
 
 #Declare Variables
@@ -22,7 +21,6 @@ def talk(text):
 
 
 def take_command():
-    global command
     command = ''
     
     try:
@@ -30,7 +28,7 @@ def take_command():
             print('Listening...')
             talk("I'm listening")
             listener.pause_threshold = 1
-            voice = listener.listen(source)
+            voice = listener.listen(source, duration = 0.5)
             command = listener.recognize_google(voice)
             command = command.lower()
             if 'alexa' in command:
@@ -48,6 +46,8 @@ def run_alexa():
         song = command.replace('play', '')
         talk('playing' + song)
         pywhatkit.playonyt(song)
+    elif "hello" in command:
+        talk("hi! how can I help you?")
     elif 'time' in command:
         time = datetime.datetime.now().strftime('%I:%M %p')
         print(time)
@@ -59,8 +59,6 @@ def run_alexa():
         talk(info)
     elif 'Who created you?' in command:
         talk('Gianne Bacay was my creator')
-    elif 'tell me a joke' in command:
-        talk(pyjokes.get_joke())
     else:
         talk('pardon me, please say the command again.')
 
